@@ -19,10 +19,6 @@ const userSchema = new mongoose.Schema({
     required: true,
     select: false
   },
-  age: {
-    type: Number,
-    required: true
-  },
   timestamp: {
     type: Date,
     default: Date.now
