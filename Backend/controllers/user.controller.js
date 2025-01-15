@@ -12,7 +12,7 @@ module.exports.registerUser = async (req, res, next) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { name, email, password, age } = req.body;
+  const { name, email, password, gender, dob, weight, height } = req.body;
 
   const isUserAlready = await userModel.findOne({ email });
   if (isUserAlready) {
@@ -25,7 +25,10 @@ module.exports.registerUser = async (req, res, next) => {
     name,
     email,
     password: hashedPassword,
-    age
+    gender,
+    dob,
+    weight,
+    height
   });
 
   const token = User.generateAuthToken();
@@ -54,8 +57,10 @@ module.exports.loginUser = async (req, res, next) => {
 
   const token = user.generateAuthToken();
   res.cookie('token', token)
-  res.status(200).json({ token, user });
+  res.status(200).json({ message: `Welcome ${user.name}`, token, user });
 }
+
+
 
 //Profile
 module.exports.getUserProfile = async (req, res, next) => {
@@ -69,3 +74,4 @@ module.exports.logoutUser = async (req, res, next) => {
   await blackListTokenModel.create({ token });
   res.status(200).json({ message: 'Logout Successfully' });
 }
+

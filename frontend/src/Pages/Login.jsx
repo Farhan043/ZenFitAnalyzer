@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserDataContext } from '../Context/userContext'
 import axios from 'axios'
+import { toast, ToastContainer } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -18,12 +20,23 @@ const Login = () => {
       password: password
     }
 
-    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/login`, userData)
-    if (response.status === 200) {
-      const data = response.data
-      setUser(data.user)
-      localStorage.setItem('token', data.token)
-      navigate('/home')
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/login`, userData)
+      if (response.status === 200) {
+        const data = response.data
+        setUser(data.user)
+        localStorage.setItem('token', data.token)
+        toast.success('Login successful! Redirecting...', {
+          position: 'top-right',
+          theme: "dark",
+        });
+        setTimeout(() => navigate('/goal'), 1000);
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Login failed. Please check your credentials.', {
+        position: 'top-right',
+        theme: "dark",
+      });
     }
     setEmail('')
     setPassword('')
@@ -73,7 +86,7 @@ const Login = () => {
         <p className='text-center font-semibold'> Don't have an account yet? <Link to='/register' className='text-blue-600 text-xl cursor-pointer'>Register</Link></p>
       </div>
 
-
+      <ToastContainer></ToastContainer>
     </div>
   )
 }

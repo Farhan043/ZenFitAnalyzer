@@ -10,6 +10,10 @@ import Logout from './Pages/Logout'
 import Start3 from './Pages/Start3'
 import Start4 from './Pages/Start4'
 import Start5 from './Pages/Start5'
+import Goal from './Pages/Goal'
+import Goal2 from './Pages/Goal2'
+import Goal3 from './Pages/Goal3'
+import Welcome from './Pages/Welcome'
 
 const App = () => {
   return (
@@ -26,6 +30,10 @@ const App = () => {
         <Route path="/start4" element={<Start4 />} />
         <Route path="/start5" element={<Start5 />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/goal" element={<Goal />} />
+        <Route path="/goal2" element={<Goal2 />} />
+        <Route path="/goal3" element={<Goal3 />} />
+        <Route path="/welcome" element={<Welcome />} />
         <Route path="/register" element={<Register />} />
         <Route path="logout" element={
           <UserProtectWrapper>

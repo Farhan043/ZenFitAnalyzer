@@ -7,7 +7,10 @@ const UserContext = ({ children }) => {
     name: '',
     email: '',
     password: '',
-    age: ''
+    gender: '',
+    dob: '',
+    weight: '',
+    height: '',
   })
   return (
     <div>

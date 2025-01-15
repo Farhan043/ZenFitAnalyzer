@@ -19,11 +19,30 @@ const userSchema = new mongoose.Schema({
     required: true,
     select: false
   },
+  gender: {
+    type: String,
+    enum: ['male', 'female', 'other'],
+    required: true,
+  },
+  dob: {
+    type: Date,
+    required: true,
+  },
+  weight: {
+    type: Number,
+    required: true,
+  },
+  height: {
+    type: Number,
+    required: true,
+  },
   timestamp: {
     type: Date,
     default: Date.now
   }
 });
+
+
 
 userSchema.methods.generateAuthToken = function () {
   const token = jwt.sign({ _id: this._id }, process.env.JWT_SECRET, { expiresIn: '24h' });

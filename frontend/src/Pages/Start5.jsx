@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Start5 = () => {
   return (
     <>
-      <div className="bg-cover bg-center bg-[url(https://th.bing.com/th/id/OIP.bUzuU63dIvzBca1hYVWLigHaEo?w=254&h=180&c=7&r=0&o=5&pid=1.7)] h-[450px] flex flex-col justify-between items-center px-6 py-8">
+      <div className="bg-cover bg-center bg-[url(https://th.bing.com/th/id/OIP.NH14NnMbA7liC7q0HXrboQHaHa?rs=1&pid=ImgDetMain)] h-[450px] flex flex-col justify-between items-center px-6 py-8">
       </div>
 
       <div className=" w-full flex flex-col items-start justify-start mt-16">
