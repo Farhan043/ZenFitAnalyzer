@@ -4,6 +4,7 @@ var { body } = require('express-validator');
 var userController = require('../controllers/user.controller');
 var authMiddleware = require('../middlewares/auth.middleware');
 
+
 router.post('/register', [
   body('name').isLength({ min: 4 }).withMessage(' name must be 4 characters long'),
   body('email').isEmail().withMessage('Please enter a valid email'),
@@ -19,9 +20,15 @@ router.post('/login', [
   userController.loginUser
 )
 
-
 router.get('/profile', authMiddleware.authUser, userController.getUserProfile);
 router.get('/logout', authMiddleware.authUser, userController.logoutUser);
+router.get('/bmi', authMiddleware.authUser, userController.getBMI);
+router.post('/water-intake', authMiddleware.authUser, userController.updateWaterIntake);
+router.get('/water-intake', authMiddleware.authUser, userController.getWaterIntake);
+
+
+// router.get('/heart-rate', authMiddleware.authUser, userController.getHeartRateData);
+
 
 
 module.exports = router;

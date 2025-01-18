@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserDataContext } from '../Context/userContext';
+import { UserDataContext } from '../Context/UserContext';
 import { Link } from 'react-router-dom';
 
 const Welcome = () => {

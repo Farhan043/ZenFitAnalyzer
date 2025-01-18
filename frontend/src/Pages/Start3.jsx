@@ -18,6 +18,7 @@ const Start3 = () => {
         <Link to='/start4'><i className="bg-blue-500 text-white text-2xl py-4 px-4 rounded-full shadow-md hover:bg-blue-100 ri-arrow-right-wide-line"></i>
         </Link>
       </div>
+
     </>
 
   );

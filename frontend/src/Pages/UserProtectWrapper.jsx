@@ -32,6 +32,7 @@ const UserProtectWrapper = ({ children }) => {
       })
   }, [token])
 
+
   if (isLoading) {
     return (
       <>
