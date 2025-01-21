@@ -25,6 +25,11 @@ router.get('/logout', authMiddleware.authUser, userController.logoutUser);
 router.get('/bmi', authMiddleware.authUser, userController.getBMI);
 router.post('/water-intake', authMiddleware.authUser, userController.updateWaterIntake);
 router.get('/water-intake', authMiddleware.authUser, userController.getWaterIntake);
+router.post('/sleep-data', authMiddleware.authUser, userController.updateSleepData);
+router.get('/sleep-data', authMiddleware.authUser, userController.getSleepData);
+router.post("/alarm", authMiddleware.authUser, userController.setAlarmAndBedtime);
+router.get("/alarm", authMiddleware.authUser, userController.getAlarmAndBedtime);
+
 
 
 // router.get('/heart-rate', authMiddleware.authUser, userController.getHeartRateData);

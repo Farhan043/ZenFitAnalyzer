@@ -17,6 +17,7 @@ import Notification from './Pages/Notification'
 import Profile from './Pages/Profile'
 import Camera from './Pages/Camera'
 import Meal from './Pages/Meal'
+import Sleeps from './Pages/Sleep/Sleeps'
 
 const App = () => {
   return (
@@ -43,6 +44,7 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/camera" element={<Camera />} />
         <Route path="/meal" element={<Meal />} />
+        <Route path="/sleeps" element={<Sleeps />} />
         {/* <Route path="logout" element={
           <UserProtectWrapper>
             <Logout />

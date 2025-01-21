@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const Bmi = () => {
@@ -11,7 +11,7 @@ const Bmi = () => {
         const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/users/bmi`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setBmiData(response.data);
+        setBmiData(response.data); // this line means that the response data will be stored in the bmiData state
       } catch (error) {
         console.error('Error fetching BMI data:', error);
       }
@@ -21,7 +21,7 @@ const Bmi = () => {
   }, []);
 
   return (
-    <div className="bg-gradient-to-r from-blue-500 to-purple-500 text-white p-6 rounded-lg shadow-md w-96">
+    <div className="bg-gradient-to-r from-blue-500 to-purple-500 text-white p-6 rounded-lg shadow-md max-w-sm">
       <h2 className="text-xl font-bold">BMI (Body Mass Index)</h2>
       {bmiData.bmi ? (
         <>
@@ -30,8 +30,8 @@ const Bmi = () => {
             <div
               className="w-24 h-24 rounded-full bg-white flex items-center justify-center"
               style={{
-                background: `conic-gradient(#ec4899 ${(bmiData.bmi / 40) * 360
-                  }deg, #e5e7eb 0deg)`,
+                background: `conic-gradient(#93c5fd ${(bmiData.bmi / 40) * 360
+                  }deg, #93c5fd 0deg)`,
               }}
             >
               <span className="text-2xl text-white font-bold">
@@ -44,7 +44,10 @@ const Bmi = () => {
           </div>
         </>
       ) : (
-        <p className="mt-2">Loading...</p>
+        // <p className="mt-2">Loading...</p>
+        <div className='flex justify-center items-center h-screen bg-black'>
+          <div className='w-16 h-16  border-4 border-green-500 border-solid border-t-transparent rounded-full animate-spin'></div>
+        </div>
       )}
     </div>
   );

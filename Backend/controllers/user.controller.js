@@ -60,8 +60,6 @@ module.exports.loginUser = async (req, res, next) => {
   res.status(200).json({ message: `Welcome ${user.name}`, token, user });
 }
 
-
-
 //Profile
 module.exports.getUserProfile = async (req, res, next) => {
   res.status(200).json({ user: req.user });
@@ -84,28 +82,45 @@ module.exports.getBMI = async (req, res, next) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
+    // Ensure weight and height are valid
+    if (!user.weight || !user.height || user.weight <= 0 || user.height <= 0) {
+      return res.status(400).json({ message: 'Invalid weight or height data' });
+    }
+
+    // Convert weight and height
+    const weightInKg = user.weight / 1000; // Assuming weight is in grams
     const heightInMeters = user.height / 100; // Assuming height is in cm
-    const bmi = (user.weight / (heightInMeters * heightInMeters)).toFixed(1);
 
+    // Calculate BMI
+    const bmi = (weightInKg / (heightInMeters * heightInMeters)).toFixed(1);
+
+    // Determine BMI status
     let status = '';
-    if (bmi < 18.5) status = 'underweight';
-    else if (bmi >= 18.5 && bmi < 24.9) status = 'normal weight';
-    else if (bmi >= 25 && bmi < 29.9) status = 'overweight';
-    else status = 'obesity';
+    if (bmi < 18.5) {
+      status = 'underweight';
+    } else if (bmi >= 18.5 && bmi < 24.9) {
+      status = 'normal weight';
+    } else if (bmi >= 25 && bmi < 29.9) {
+      status = 'overweight';
+    } else {
+      status = 'obesity';
+    }
 
-    res.status(200).json({ bmi, status });
+    // Respond with BMI and status
+    res.status(200).json({ bmi: parseFloat(bmi), status });
   } catch (error) {
-    next(error);
+    next(error); // Pass the error to error-handling middleware
   }
 };
 
 
+
 module.exports.updateWaterIntake = async (req, res, next) => {
   try {
-    console.log('Incoming request body:', req.body); // Debug log
+    // console.log('Incoming request body:', req.body); 
     const user = await userModel.findById(req.user._id);
     if (!user) {
-      console.log('User not found');
+      // console.log('User not found');
       return res.status(404).json({ message: 'User not found' });
     }
 
@@ -149,8 +164,6 @@ module.exports.updateWaterIntake = async (req, res, next) => {
   }
 };
 
-
-
 // Get Daily Water Intake
 module.exports.getWaterIntake = async (req, res, next) => {
   try {
@@ -169,6 +182,111 @@ module.exports.getWaterIntake = async (req, res, next) => {
     next(error);
   }
 };
+
+// Update Sleep Data
+module.exports.updateSleepData = async (req, res, next) => {
+  try {
+    const { sleepHours, date } = req.body;
+    const user = await userModel.findById(req.user._id);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const currentDate = date || new Date().toISOString().split('T')[0];
+    let sleepLog = user.sleepData.find(log => log.date === currentDate);
+
+    // Determine sleep quality
+    let quality = 'poor';
+    if (sleepHours >= 7 && sleepHours < 8) {
+      quality = 'fair';
+    } else if (sleepHours >= 8 && sleepHours < 9) {
+      quality = 'good';
+    } else if (sleepHours >= 9) {
+      quality = 'excellent';
+    }
+
+    if (!sleepLog) {
+      sleepLog = { date: currentDate, sleepHours, quality };
+      user.sleepData.push(sleepLog);
+    } else {
+      sleepLog.sleepHours = sleepHours;
+      sleepLog.quality = quality;
+    }
+
+    await user.save();
+    res.status(200).json({
+      message: 'Sleep data updated successfully',
+      sleepLog,
+      notification: `Your sleep quality for ${currentDate} is ${quality}.`,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Get Sleep Data
+module.exports.getSleepData = async (req, res, next) => {
+  try {
+    const user = await userModel.findById(req.user._id);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json(user.sleepData || []);
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+
+// Set Alarm and Bedtime
+module.exports.setAlarmAndBedtime = async (req, res, next) => {
+  try {
+    const { bedtime, alarmTime, repeatDays, vibrateOnAlarm } = req.body;
+    const user = await userModel.findById(req.user._id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Set or update alarm and bedtime
+    user.alarmSettings = {
+      bedtime,
+      alarmTime,
+      repeatDays: repeatDays || ["Mon", "Tue", "Wed", "Thu", "Fri"], // Default weekdays
+      vibrateOnAlarm: vibrateOnAlarm || false,
+    };
+
+    await user.save();
+
+    res.status(200).json({
+      message: "Alarm and bedtime settings updated successfully",
+      alarmSettings: user.alarmSettings,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Get Alarm and Bedtime
+module.exports.getAlarmAndBedtime = async (req, res, next) => {
+  try {
+    const user = await userModel.findById(req.user._id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(user.alarmSettings || {});
+  } catch (error) {
+    next(error);
+  }
+};
+
+
 
 
 //Heart Rate
