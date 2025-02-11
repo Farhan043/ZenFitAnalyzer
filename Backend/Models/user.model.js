@@ -20,6 +20,9 @@ const waterSchema = new mongoose.Schema({
   },
 });
 
+
+
+
 // Schema for Sleep Data
 const sleepSchema = new mongoose.Schema({
   date: { type: String, required: true }, // Date in YYYY-MM-DD format
@@ -29,15 +32,8 @@ const sleepSchema = new mongoose.Schema({
   quality: { type: String, enum: ['poor', 'fair', 'good', 'excellent'], default: 'good' }, // Quality rating
 });
 
-// Schema for Alarm Data
+// Alarm Schema
 const alarmSchema = new mongoose.Schema({
-  schedule: [
-    {
-      date: String,
-      bedtime: String,
-      alarm: String,
-    },
-  ],
   alarmSettings: {
     bedtime: String,
     alarmTime: String,
@@ -45,6 +41,23 @@ const alarmSchema = new mongoose.Schema({
     vibrateOnAlarm: { type: Boolean, default: false },
   },
 });
+
+//TargetSchema
+const TargetSchema = new mongoose.Schema({
+  date: { type: String, required: true },
+  waterIntake: { type: Number, required: true },
+  footSteps: { type: Number, required: true },
+});
+
+
+// Schema and Model
+const contactSchema = new mongoose.Schema({
+  email: { type: String, required: true },
+  message: { type: String, required: true },
+  date: { type: Date, default: Date.now },
+});
+
+
 
 // User Schema
 const userSchema = new mongoose.Schema({
@@ -91,6 +104,8 @@ userSchema.add({
   waterIntake: [waterSchema],
   sleepData: [sleepSchema],
   alarmData: [alarmSchema],
+  targetData: [TargetSchema],
+  contactData: [contactSchema],
 });
 
 userSchema.methods.generateAuthToken = function () {

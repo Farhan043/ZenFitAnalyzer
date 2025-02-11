@@ -8,6 +8,7 @@ var cors = require('cors');
 var connectDb = require('./db/db')
 var usersRouter = require('./routes/users');
 
+
 var app = express();
 app.use(cors());
 
@@ -46,3 +47,4 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
+

@@ -15,3 +15,148 @@
   background-color: #2563eb;
   /* Darker blue on hover */
 }
+
+/* body{
+  overflow:scroll;
+} */
+
+
+.light {
+  background-color: white;
+  color: black;
+}
+
+.dark {
+  background-color: #1a1a1a;
+  color: white;
+}
+
+.red {
+  background-color: #b71c1c;
+  color: white;
+}
+
+.green {
+  background-color: #1b5e20;
+  color: white;
+}
+
+.blue {
+  background-color: #0d47a1;
+  color: white;
+}
+
+.purple {
+  background-color: #6a1b9a;
+  color: white;
+}
+
+.orange {
+  background-color: #e65100;
+  color: white;
+}
+
+.yellow {
+  background-color: #f57f17;
+  color: white;
+}
+
+.pink {   
+  background-color: #880e4f;
+  color: white;
+} 
+
+.cyan {
+  background-color: #00838f;
+  color: white;
+}   
+
+.lime {
+  background-color: #689f38;
+  color: white;
+} 
+
+.teal {
+  background-color: #00796b;
+  color: white;
+} 
+
+.indigo {
+  background-color: #3f51b5;
+  color: white;
+} 
+
+.violet {
+  background-color: #7e57c2;
+  color: white;
+} 
+
+.fuchsia {
+  background-color: #c2185b;
+  color: white;
+} 
+
+.rose {   
+  background-color: #d81b60;
+  color: white;
+}
+
+.slate {
+  background-color: #607d8b;
+  color: white;
+}
+
+.zinc {
+  background-color: #263238;
+  color: white;
+} 
+
+.neutral {
+  background-color: #212121;
+  color: white;
+}   
+
+.stone {    
+  background-color: #424242;
+  color: white;
+} 
+
+.amber {
+  background-color: #f57f17;
+  color: white;
+}   
+
+.sky {
+  background-color: #03a9f4;
+  color: white;
+}   
+
+.emerald {
+  background-color: #2e7d32;
+  color: white;
+}   
+
+.grass {
+  background-color: #689f38;
+  color: white;
+}   
+
+.forest {
+  background-color: #388e3c;
+  color: white;
+}   
+
+.cobalt {
+  background-color: #1976d2;
+  color: white;
+}   
+
+.warm {
+  background-color: #f57f17;
+  color: white;
+}   
+
+.cool {
+  background-color: #03a9f4;
+  color: white;
+}

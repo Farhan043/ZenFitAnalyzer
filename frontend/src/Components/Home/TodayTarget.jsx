@@ -1,0 +1,37 @@
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next'; 
+import LanguageModal from '../../Pages/Translater/LanguageModal';
+import { translateText } from '../../Pages/Translater/118n';
+
+const TodayTarget = () => {
+    const { t, i18n } = useTranslation();
+  const [translatedTitles, setTranslatedTitles] = useState({});
+  
+    useEffect(() => {
+      const updateTranslations = async () => {
+        const translations = {
+          todayTarget: await translateText('Today Target', i18n.language),
+          check: await translateText('Check', i18n.language),
+        };
+        setTranslatedTitles(translations);
+      };
+  
+      updateTranslations();
+    }, [i18n.language]);
+
+  const navigate = useNavigate();
+
+
+  return (
+    <div className="flex items-center justify-between bg-black bg-opacity-40 p-4 rounded-full  ">
+      <span className="text-blue-400 text-2xl font-medium">{translatedTitles.todayTarget}</span>
+      <button className="bg-black bg-opacity-100 text-white px-6 py-2 rounded-full "
+        onClick={() =>  navigate('/activity-tracker')}>
+        {translatedTitles.check}
+      </button>
+    </div>
+  );
+};
+
+export default TodayTarget;

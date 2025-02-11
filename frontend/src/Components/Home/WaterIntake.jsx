@@ -1,12 +1,16 @@
 
-
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify'; // Import toast
-// import 'react-toastify/dist/ReactToastify.css'; // Import the styles
+import { toast, ToastContainer } from 'react-toastify'; 
+import { useTranslation } from 'react-i18next'; 
+import LanguageModal from '../../Pages/Translater/LanguageModal';
+import { translateText } from '../../Pages/Translater/118n';
+
 
 const WaterIntake = () => {
   const [waterData, setWaterData] = useState({ logs: [], total: 0 });
+   const { t, i18n } = useTranslation();
+    const [translatedTitles, setTranslatedTitles] = useState({});
 
   const fetchWaterData = async () => {
     try {
@@ -56,32 +60,49 @@ const WaterIntake = () => {
     }
   };
 
+
+   useEffect(() => {
+      const updateTranslations = async () => {
+        const translations = {
+          waterIntake: await translateText('Water Intake', i18n.language),
+          add250ml: await translateText('Add 250ml', i18n.language),
+        };
+        setTranslatedTitles(translations);
+      };
+  
+      updateTranslations();
+    }, [i18n.language]);
+
   useEffect(() => {
     fetchWaterData();
   }, []);
 
   return (
-    <div className="p-4  bg-gradient-to-t from-blue-200 to-pink-200 rounded-lg max-w-sm">
-      <h2 className=" text-2xl font-bold">Water Intake</h2>
-      <p className="text-3xl font-bold  text-blue-500">{waterData.total / 1000} Liters</p>
-      <p className="text-sm text-gray-500">Real-time updates</p>
-
-      <div className="mt-4 flex gap-4">
+    <>
+    <div className="p-4 bg-black bg-opacity-40 rounded-lg">
+        <h2 className=" text-2xl  text-blue-400 font-bold text-center">{translatedTitles.waterIntake}</h2>
+      <div className='flex items-center justify-between mt-4'>
+      <div  className="w-24 h-24 mr-2 rounded-full bg-black bg-opacity-100 mt-3 flex items-center justify-center">
+      <p className="text-2xl text-center  text-white">{waterData.total / 1000} L</p>
+      </div>
+      <div className="mt-4 ">
         <button
           onClick={() => addWaterIntake(250)}
-          className="px-4 py-2 bg-gradient-to-t from-blue-200 to-blue-600 text-white text-xl twxt-bold rounded-lg"
+          className=" bg-black bg-opacity-100 px-6 py-5 rounded-lg text-lg font-semibold text-blue-400 "
         >
-          Add 250ml
+          {translatedTitles.add250ml}
         </button>
       </div>
-      <div className="relative w-full bg-gray-200 rounded-full h-6 my-4">
+      </div>
+      <div className="relative w-full bg-black bg-opacity-100 rounded-full h-6 my-4">
         <div
-          className="absolute top-0 left-0 bg-gradient-to-r from-blue-200 to-blue-400 h-6 rounded-full"
+          className="absolute top-0 left-0 bg-gradient-to-r from-blue-400 to-purple-500 h-6 rounded-full"
           style={{ width: `${(waterData.total / 4000) * 100}%` }}
         ></div>
       </div>
-      <ToastContainer></ToastContainer>
     </div>
+      <ToastContainer></ToastContainer>
+      </>
   );
 };
 

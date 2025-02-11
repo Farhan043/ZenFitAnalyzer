@@ -7,9 +7,10 @@ const Home = () => {
     <div>
       <Navbar />
       <Footer />
-
     </div>
   )
 }
 
 export default Home
+
+
