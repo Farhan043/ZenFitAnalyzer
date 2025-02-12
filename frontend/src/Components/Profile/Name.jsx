@@ -214,9 +214,6 @@ const Name = () => {
 
   return (
     <>
-
-
-      
       {/* Header Section */}
       <div className="rounded flex items-center py-4 px-3">
         <i className="ri-arrow-left-s-line text-4xl" onClick={() => navigate('/home')}></i>

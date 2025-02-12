@@ -1,13 +1,3 @@
-// import React from 'react'
-
-// const WeeklyChart = () => {
-//   return (
-//     <div>WeeklyChart</div>
-//   )
-// }
-
-// export default WeeklyChart
-
 
 import { div } from "motion/react-client";
 import React from "react";

@@ -7,12 +7,13 @@ import WeeklyChart from '../../Components/SleepComponent/WeeklyChart'
 
 const SleepTracker = () => {
   return (
-   <>
-      <Navbar />
+    <>
+     
+       <Navbar />
       <WeeklyChart/>
       <LastNightSleep/>
       <SleepScheduleButton />
-      <TodaySchedule/>
+        <TodaySchedule />
    </>
   )
 }

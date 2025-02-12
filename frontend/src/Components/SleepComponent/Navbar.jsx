@@ -6,13 +6,15 @@ const Navbar = () => {
     <div className="flex items-center justify-between mt-5 px-3  ">
       {/* Back Button */}
       <button className="  rounded-full
-      " onClick={() => navigate('/alarm')}>
+      " onClick={() => navigate('/home')}>
         <i className="ri-arrow-left-s-line text-4xl  text-gray-300"></i>
       </button>
 
       {/* Title */}
-      <h1 className="text-xl text-center font-bold text-gray-300">Sleep Tracker</h1>
-      <Link to="/alarm"><i className="ri-arrow-right-s-line text-4xl  text-gray-200"></i> </Link> 
+      <div className="text-center w-full font-bold text-3xl">
+          <h1>Sleep Tracker</h1>
+          </div>
+      {/* <Link to="/alarm"><i className="ri-arrow-right-s-line text-4xl  text-gray-200"></i> </Link>  */}
     </div>
   );
 };

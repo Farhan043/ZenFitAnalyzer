@@ -114,48 +114,40 @@ import {
 const LastNightSleep = () => {
   const [lastNightSleep, setLastNightSleep] = useState(null);
   const [lastNightData, setLastNightData] = useState([]);
-  const [bedTime, setBedTime] = useState(localStorage.getItem("bedTime") || "");
-  const [alarmTimes, setAlarmTimes] = useState(
-    JSON.parse(localStorage.getItem("alarmTimes")) || []
-  );
+  const [bedTime, setBedTime] = useState("");
+  const [wakeTime, setWakeTime] = useState("");
+  const [sleepQuality, setSleepQuality] = useState("Not calculated");
 
-  // Fetch Sleep Data
-  const fetchLastNightSleep = async () => {
+  useEffect(() => {
+    fetchSleepData();
+  }, []);
+
+  const fetchSleepData = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/users/sleep-data`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/users/sleep-data`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
-      const sleepData = response.data;
-
-      if (sleepData.length > 0) {
+      if (response.data.length > 0) {
         const yesterday = new Date();
         yesterday.setDate(yesterday.getDate() - 1);
         const yesterdayDateString = yesterday.toISOString().split("T")[0];
 
-        const lastNight = sleepData.find(
-          (entry) => entry.date === yesterdayDateString
-        );
-
+        const lastNight = response.data.find(entry => entry.date === yesterdayDateString);
+        
         if (lastNight) {
           setLastNightSleep(lastNight);
           setLastNightData([lastNight]);
-        } else {
-          setLastNightSleep(null);
+          setBedTime(lastNight.bedtime || "Not set");
+          setWakeTime(lastNight.alarmTime || "Not set");
+          setSleepQuality(lastNight.quality || "Not calculated");
         }
       }
     } catch (error) {
       console.error("Error fetching sleep data:", error);
     }
   };
-
-  useEffect(() => {
-    fetchLastNightSleep();
-  }, []);
 
   return (
     <div className="flex flex-col items-center mt-7 mb-8 ml-3">
@@ -166,15 +158,9 @@ const LastNightSleep = () => {
             <p className="text-3xl font-semibold text-blue-900 mt-2">
               {lastNightSleep.sleepHours}h {Math.round((lastNightSleep.sleepHours % 1) * 60)}m
             </p>
-            <p className="text-lg text-blue-900 mt-2">Bedtime: {bedTime || "Not set"}</p>
-            <p className="text-lg text-blue-900 mt-1">Alarms:</p>
-            <ul className="text-blue-900">
-              {alarmTimes.length > 0 ? (
-                alarmTimes.map((time, index) => <li key={index}>{time}</li>)
-              ) : (
-                <li>No alarms set</li>
-              )}
-            </ul>
+            <p className="text-lg text-blue-900 mt-2">Bedtime: {bedTime}</p>
+            <p className="text-lg text-blue-900 mt-1">Wake Time: {wakeTime}</p>
+            <p className="text-lg text-blue-900 mt-1 font-semibold">Sleep Quality: {sleepQuality}</p>
           </div>
           <div className="absolute inset-0 z-0">
             <ResponsiveContainer className={`w-96 h-[20vh]`}>
@@ -211,3 +197,5 @@ const LastNightSleep = () => {
 };
 
 export default LastNightSleep;
+
+

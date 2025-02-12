@@ -1,10 +1,10 @@
 import React from 'react'
-import CameraProgress from '../../Components/Camera/CameraProgress'
+import ProgressPhotos from '../../Components/Camera/ProgressPhotos'
 
 const Camera = () => {
   return (
     <>
-      <CameraProgress/>
+      <ProgressPhotos/>
     </>
   )
 }

@@ -7,6 +7,7 @@ var logger = require('morgan');
 var cors = require('cors');
 var connectDb = require('./db/db')
 var usersRouter = require('./routes/users');
+var recipeRouter = require('./routes/recipeRoutes');
 
 
 var app = express();
@@ -23,6 +24,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', usersRouter);
+app.use('/api', recipeRouter);
 connectDb();
 
 const port = process.env.PORT;

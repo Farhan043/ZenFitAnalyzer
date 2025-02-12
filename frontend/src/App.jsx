@@ -17,12 +17,12 @@ import Notification from './Pages/Notification'
 import Profile from './Pages/HomeFooter/Profile'
 import Camera from './Pages/HomeFooter/Camera'
 import Meal from './Pages/HomeFooter/Meal'
-import Alarm from './Pages/Sleep/Alarm'
+// import Alarm from './Pages/Sleep/Alarm'
 import SleepTracker from './Pages/Sleep/SleepTracker'
 import Workout from './Pages/HomeFooter/Workout'
 import ActivityTracker from './Pages/ActivityTracker'
 import { ThemeProvider } from './Context/ThemeContext'
-import { div } from 'motion/react-client'
+// import { div } from 'motion/react-client'
 
 const App = () => {
   return (
@@ -51,9 +51,9 @@ const App = () => {
         <Route path="/camera" element={<Camera />} />
         <Route path="/meal" element={<Meal />} />
         <Route path="/workout" element={<Workout />} />
-        <Route path="/alarm" element={<Alarm />} />
-        <Route path="/sleepTracker" element={<SleepTracker />} />
-        <Route path="/activity-tracker" element={<ActivityTracker />} />
+        {/* <Route path="/alarm" element={<Alarm />} /> */}
+        <Route path="/sleeptracker" element={<SleepTracker />} />
+          <Route path="/activity-tracker" element={<ActivityTracker />} />
         {/* <Route path="logout" element={
           <UserProtectWrapper>
             <Logout />
