@@ -7,6 +7,7 @@ var blackListTokenModel = require('../models/blackListToken.model');
 
 
 
+
 //Register
 module.exports.registerUser = async (req, res, next) => {
   const errors = validationResult(req);
@@ -32,6 +33,7 @@ module.exports.registerUser = async (req, res, next) => {
     weight,
     height
   });
+
 
   const token = User.generateAuthToken();
   res.status(201).json({ token, User });
@@ -515,6 +517,3 @@ module.exports.getTarget = async (req, res) => {
 //     next(error);
 //   }
 // };
-
-
-

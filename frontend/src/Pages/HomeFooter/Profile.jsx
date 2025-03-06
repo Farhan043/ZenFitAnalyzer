@@ -1,13 +1,13 @@
 import Name from '../../Components/Profile/Name';
-import { ThemeProvider } from '../../Context/ThemeContext';
+// import { ThemeProvider } from '../../Context/ThemeContext';
 import UserContext from '../../Context/UserContext';
 
 const App = () => (
-  <ThemeProvider>
+  // <ThemeProvider>
   <UserContext>
     <Name />
     </UserContext>
-    </ThemeProvider>
+    // </ThemeProvider>
 );
 
 export default App;

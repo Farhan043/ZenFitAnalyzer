@@ -21,13 +21,14 @@ import Meal from './Pages/HomeFooter/Meal'
 import SleepTracker from './Pages/Sleep/SleepTracker'
 import Workout from './Pages/HomeFooter/Workout'
 import ActivityTracker from './Pages/ActivityTracker'
-import { ThemeProvider } from './Context/ThemeContext'
+// import { ThemeProvider } from './Context/ThemeContext'
+import MusicHome from './Pages/Musics/MusicHome'
 // import { div } from 'motion/react-client'
 
 const App = () => {
   return (
     <>
-      <ThemeProvider>
+      {/* <ThemeProvider> */}
         <Routes>
           <Route path="/" element={<Start />} />
           <Route path="/start2" element={<Start2 />} />
@@ -40,28 +41,34 @@ const App = () => {
         <Route path="/goal3" element={<Goal3 />} /> */}
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/register" element={<Register />} />
-      
-        <Route path="/home" element={
-          <UserProtectWrapper>
-            <Home />
-          </UserProtectWrapper>
-        } />
-        <Route path="/notification" element={<Notification />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/camera" element={<Camera />} />
-        <Route path="/meal" element={<Meal />} />
-        <Route path="/workout" element={<Workout />} />
-        {/* <Route path="/alarm" element={<Alarm />} /> */}
-        <Route path="/sleeptracker" element={<SleepTracker />} />
+
+          <Route path="/home" element={
+            <UserProtectWrapper>
+              <Home />
+            // </UserProtectWrapper>
+          } />
+          <Route path="/notification" element={<Notification />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/camera" element={<Camera />} />
+
+          <Route path="/meal" element={
+            <Meal />
+          } />
+
+          <Route path="/workout" element={<Workout />} />
+          {/* <Route path="/alarm" element={<Alarm />} /> */}
+          <Route path="/sleeptracker" element={<SleepTracker />} />
           <Route path="/activity-tracker" element={<ActivityTracker />} />
-        {/* <Route path="logout" element={
+          <Route path="/musichome" element={<MusicHome />} />
+
+          {/* <Route path="logout" element={
           <UserProtectWrapper>
             <Logout />
           </UserProtectWrapper>
         } /> */}
-      </Routes>
-      </ThemeProvider>
-      </>
+        </Routes>
+      {/* </ThemeProvider> */}
+    </>
   )
 }
 

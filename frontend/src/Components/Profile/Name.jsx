@@ -227,7 +227,7 @@ const Name = () => {
         <div className="flex items-center justify-around">
           <div className="avatar">
             <div className="ring-primary ring-offset-base-100 w-16 rounded-full ring ring-offset-2">
-              <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" alt="User Avatar" />
+              <img src="/public/welcome.png" alt="User Avatar" />
             </div>
           </div>
           <div className='bg-black bg-opacity-5 py-6 px-8 rounded-lg text-center'>

@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import TodaySchedule from "./Pages/TodaySchedule";
+import TodaySchedule from "../../../Components/SleepComponent/Alarm/TodaySchedule";
 import useAlarm from "../Alarm/useAlarm";
 
 const App = () => {

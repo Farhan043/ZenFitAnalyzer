@@ -1,29 +1,43 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 
 const Start4 = () => {
   return (
     <>
-      <div className="bg-cover bg-center bg-[url(https://www.manatsu-orion.com/wp-content/uploads/2022/07/images-14.jpeg)] h-[450px] flex flex-col justify-between items-center px-6 py-8">
-      </div>
-
-      <div className=" w-full h-[450px] flex glass flex-col items-start justify-center">
-        <h1 className="text-4xl ml-5 font-bold mb-4">Eat Well</h1>
-        <p className="text-lg text-start px-6">
+      {/* Background Section */}
+      <div className="relative w-full h-screen flex flex-col items-center justify-center bg-gradient-to-b from-green-400 to-zinc-700 text-white p-6 ">
+        
+        {/* AI-Generated Image */}
+        <div className="w-[300px] h-[300px] mb-6">
+          <img 
+            src="/public/eat.png" 
+            alt="Fitness AI Illustration" 
+            className="w-full h-full bg-cover bg-center" 
+          />
+        </div>
+        
+        {/* Main Content */}
+        <div className="text-center mt-4">
+          <h1 className="text-5xl font-bold mb-4">Eat Well</h1>
+          <p className="text-lg max-w-md mx-auto">
           Let's start a healthy lifestyle with us, we can determine your diet every day. healthy eating is fun
-        </p>
+          </p>
+        </div>
 
-      <div className="flex justify-end items-end w-full px-10 py-4 mt-20">
-        <Link to='/start5'><i className="glass text-white text-2xl py-4 px-4 rounded-full  ri-arrow-right-wide-line"></i>
-        </Link>
-      </div>
+        {/* Navigation Button */}
+        <div className="absolute bottom-10 right-10 ">
+          <Link to='/start5'>
+            <div className="w-14 h-14 flex items-center justify-center bg-green-500 text-white rounded-full shadow-lg text-2xl">
+              →
+            </div>
+          </Link>
+        </div>
       </div>
     </>
-
   );
 };
 
 export default Start4;
-
 
 

@@ -14,10 +14,10 @@ const Start = () => {
           <div className="bg-base-200 grid place-content-center text-9xl font-black">ZenFit</div>
         </div>
         <div className="diff-resizer"></div>
-        <div className="absolute bottom-60 left-1/2 transform -translate-x-1/2">
+        <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2">
           <Link 
             to='/start2' 
-            className="btn glass btn-lg text-white "
+            className="btn glass btn-lg  text-white "
           >
             Get Started
           </Link>

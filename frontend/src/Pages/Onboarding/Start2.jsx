@@ -1,30 +1,68 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 
 const Start2 = () => {
   return (
     <>
-      <div className="bg-cover bg-center bg-[url(https://img.lovepik.com/png/20231005/Mens-Fitness-Exercise-Dumbbell-motion-physical-exercise-man_96025_wh300.png)] h-[450px] ">
-      </div>
+      {/* Background Section */}
+      <div className="relative w-full h-screen flex flex-col items-center justify-center bg-gradient-to-b from-pink-500 to-purple-600 text-white p-6">
+        
+        {/* AI-Generated Image */}
+        <div className="w-[300px] h-[300px] mb-6">
+          <img 
+            src="/public/track.png" 
+            alt="Fitness AI Illustration" 
+            className="w-full h-full bg-cover bg-center" 
+          />
+        </div>
+        
+        {/* Circular Progress Indicator */}
+        <div className="absolute top-10 right-10 flex flex-col items-center">
+          <div className="w-20 h-20 rounded-full border-4 border-white flex items-center justify-center text-xl font-bold">
+            63%
+          </div>
+        </div>
 
-      <div className=" w-full h-[450px] flex glass flex-col items-start justify-center ">
-        <h1 className="text-4xl ml-5 font-bold mb-4">Track Your Goal</h1>
-        <p className="text-lg text-start px-6">
-          Don't worry if you have trouble determining your goals, We can help you determine your goals and track your goals
-        </p>
+        {/* Main Content */}
+        <div className="text-center mt-4">
+          <h1 className="text-5xl font-bold mb-4">Track Your Goal</h1>
+          <p className="text-lg max-w-md mx-auto">
+            Don't worry if you have trouble determining your goals, we can help you identify and track them effectively.
+          </p>
+        </div>
 
-      <div className="flex justify-end items-end w-full px-10 py-4 mt-20">
-        <Link to='/start3'><i className="glass text-white text-2xl py-4 px-4 rounded-full  ri-arrow-right-wide-line"></i>
-        </Link>
-      </div>
-      </div>
+        {/* Goal Progress Section */}
+        <div className="mt-10 w-full max-w-md bg-black bg-opacity-50 p-4 rounded-lg backdrop-blur-md">
+          <p className="text-lg font-semibold text-center">TRACK YOUR GOAL</p>
+          <div className="w-full h-2 bg-gray-300 rounded-full mt-2">
+            <div className="h-2 bg-blue-500 rounded-full w-3/5"></div>
+          </div>
+        </div>
 
+        {/* Navigation Button */}
+        <div className="absolute bottom-10 right-10">
+          <Link to='/start3'>
+            <div className="w-14 h-14 flex items-center justify-center bg-blue-500 text-white rounded-full shadow-lg text-2xl">
+              →
+            </div>
+          </Link>
+        </div>
+      </div>
     </>
-
   );
 };
 
 export default Start2;
+
+
+
+
+
+
+
+
+
 
 
 

@@ -23,6 +23,9 @@ const waterSchema = new mongoose.Schema({
 
 
 
+
+
+
 // Schema for Sleep Data
 const sleepSchema = new mongoose.Schema({
   date: { type: String, required: true }, // Date in YYYY-MM-DD format
@@ -56,6 +59,10 @@ const contactSchema = new mongoose.Schema({
   message: { type: String, required: true },
   date: { type: Date, default: Date.now },
 });
+
+
+
+
 
 
 

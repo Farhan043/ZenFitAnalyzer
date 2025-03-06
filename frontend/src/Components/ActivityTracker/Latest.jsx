@@ -49,7 +49,7 @@ const Latest = () => {
 
   return (
     <>
-      <h2 className="text-2xl font-bold mt-7 ml-5 text-blue-600">{translatedTitles.latestActivity}</h2>
+      <h2 className="text-2xl font-bold mt-7 ml-5 text-blue-400">{translatedTitles.latestActivity}</h2>
       <div className="bg-black bg-opacity-50 rounded-xl  p-4 shadow-md mx-5 mt-3">
         {intake.length > 0 ? (
           <div className="flex items-center gap-3 mt-2">
@@ -71,4 +71,31 @@ const Latest = () => {
 };
 
 export default Latest;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

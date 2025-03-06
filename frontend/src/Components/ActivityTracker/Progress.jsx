@@ -142,7 +142,7 @@ const Progress = () => {
    useEffect(() => {
       const updateTranslations = async () => {
         const translations = {
-          ativityProgress: await translateText('Activity Progress', i18n.language),
+          activityProgress: await translateText('Activity Progress', i18n.language),
         };
         setTranslatedTitles(translations);
       };
@@ -174,13 +174,13 @@ const Progress = () => {
   }, []);
 
   return (
-    <div className="p-12 mt-8 mx-5 bg-black bg-opacity-50 rounded-lg ">
-      <h2 className="text-3xl font-semibold text-center text-blue-500 mb-6">{translatedTitles.ativityProgress}</h2>
+    <div className="p-8 mt-8 mx-5 mockup-phone border-primary bg-black bg-opacity-50 rounded-lg ">
+      <h2 className="text-3xl font-semibold text-center text-blue-500 mb-6">{translatedTitles.activityProgress}</h2>
 
       {loading ? (
         <div className="text-center">Loading...</div>
       ) : (
-          <div className="flex justify-center  items-end gap-4 w-full">           
+          <div className="flex justify-center   items-end gap-4 w-full">           
             {data.map((entry, index) => (
               <div key={index} className="flex flex-col items-center">
               <span className="text-lg text-blue-400">{entry.total}L</span>

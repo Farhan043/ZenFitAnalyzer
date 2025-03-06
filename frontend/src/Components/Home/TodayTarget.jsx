@@ -7,6 +7,7 @@ import { translateText } from '../../Pages/Translater/118n';
 const TodayTarget = () => {
     const { t, i18n } = useTranslation();
   const [translatedTitles, setTranslatedTitles] = useState({});
+  const [stats, setStats] = useState({ totalPageViews: 0, newUsers: 0, newRegisteredUsers: [] });
   
     useEffect(() => {
       const updateTranslations = async () => {
@@ -20,17 +21,22 @@ const TodayTarget = () => {
       updateTranslations();
     }, [i18n.language]);
 
+
+
   const navigate = useNavigate();
 
 
   return (
-    <div className="flex items-center justify-between bg-black bg-opacity-40 p-4 rounded-full  ">
+    <>
+    <div className="flex items-center justify-between bg-slate-900 mb-5 mt-10 p-4 rounded-full  ">
       <span className="text-blue-400 text-2xl font-medium">{translatedTitles.todayTarget}</span>
       <button className="bg-black bg-opacity-100 text-white px-6 py-2 rounded-full "
         onClick={() =>  navigate('/activity-tracker')}>
         {translatedTitles.check}
       </button>
     </div>
+
+    </>
   );
 };
 

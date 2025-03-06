@@ -7,13 +7,13 @@ var logger = require('morgan');
 var cors = require('cors');
 var connectDb = require('./db/db')
 var usersRouter = require('./routes/users');
-var recipeRouter = require('./routes/recipeRoutes');
+var mealRouter = require('./routes/meal');
 
 
+// view engine setup
 var app = express();
 app.use(cors());
 
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -24,7 +24,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', usersRouter);
-app.use('/api', recipeRouter);
+app.use('/api', mealRouter);
 connectDb();
 
 const port = process.env.PORT;
@@ -49,4 +49,3 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
-

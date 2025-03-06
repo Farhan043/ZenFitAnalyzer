@@ -43,10 +43,6 @@ router.put('/change-password', authMiddleware.authUser, userController.changeUse
 
 
 
-
-
-
-
 // router.get('/heart-rate', authMiddleware.authUser, userController.getHeartRateData);
 
 

@@ -102,9 +102,9 @@ const useAlarm = () => {
   const stopAlarm = () => {
     setBedTime("");
     setAlarmTime("");
-    localStorage.removeItem("alarmTime");
-    localStorage.removeItem("bedTime");
-    localStorage.removeItem("isAlarmSet");
+    // localStorage.removeItem("alarmTime");
+    // localStorage.removeItem("bedTime");
+    // localStorage.removeItem("isAlarmSet");
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
