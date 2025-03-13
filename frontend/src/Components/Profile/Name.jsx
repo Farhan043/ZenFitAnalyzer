@@ -10,8 +10,13 @@ import LanguageModal from '../../Pages/Translater/LanguageModal';
 import { translateText } from '../../Pages/Translater/118n';
 
 
+
 const Name = () => {
   const { user, updateUser } = useContext(UserDataContext);
+  const storedPhoto = localStorage.getItem("profilePhoto");
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [profilePhoto, setProfilePhoto] = useState(storedPhoto || user.profilePhoto || "/default-avatar.png");
+  const [uploadMessage, setUploadMessage] = useState('');
   const navigate = useNavigate();
   const [activeModal, setActiveModal] = useState(null); // Track which modal is open
   const { t, i18n } = useTranslation();
@@ -30,7 +35,51 @@ const Name = () => {
     weight: user.weight || ''
   });
 
-
+    // Load stored profile photo on mount
+    useEffect(() => {
+      if (storedPhoto) {
+        setProfilePhoto(storedPhoto);
+      }
+    }, []);
+  
+    // Handle file selection
+    const handleFileChange = (event) => {
+      setSelectedFile(event.target.files[0]);
+    };
+  
+    // Handle file upload
+    const handleUpload = async () => {
+      if (!selectedFile) {
+        toast.error("Please select a file.");
+        return;
+      }
+  
+      const formData = new FormData();
+      formData.append("profilePhoto", selectedFile);
+  
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_BASE_URL}/users/upload-photo`,
+          formData,
+          { headers: { "Content-Type": "multipart/form-data" } }
+        );
+  
+        if (response.status === 200) {
+          const imageUrl = response.data.filePath; // Get full image URL from backend
+          setProfilePhoto(imageUrl);
+          localStorage.setItem("profilePhoto", imageUrl); // Save to localStorage
+          updateUser({ ...user, profilePhoto: imageUrl }); // Update global state
+  
+          toast.success("Profile picture updated successfully! 🎉");
+        } else {
+          toast.error("Upload failed.");
+        }
+      } catch (error) {
+        console.error("Upload Error:", error);
+        toast.error("Error uploading file.");
+      }
+    };
+  
   useEffect(() => {
     const updateTranslations = async () => {
       const translations = {
@@ -110,7 +159,7 @@ const Name = () => {
       }
 
       const response = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/users/contact`,
+        `${import.meta.env.VITE_BASE_URL}/users/uploads`,
         { email, message },
         {
           headers: {
@@ -222,18 +271,32 @@ const Name = () => {
           </div>
       </div>
 
-      {/* User Info Section */}
-      <div className="p-4 glass flex flex-col rounded-lg mx-5 gap-4">
-        <div className="flex items-center justify-around">
-          <div className="avatar">
-            <div className="ring-primary ring-offset-base-100 w-16 rounded-full ring ring-offset-2">
-              <img src="/public/welcome.png" alt="User Avatar" />
+     {/* User Info Section */}
+<div className="p-4 bg-black bg-opacity-10 flex flex-col rounded-lg mx-5 gap-4">
+  <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+    {/* Profile Picture Upload */}
+    <div className="flex flex-col items-center">
+          <label htmlFor="profile-upload" className="cursor-pointer">
+            <div className="w-24 h-24 rounded-full border-4 border-blue-400 flex items-center justify-center overflow-hidden">
+              <img 
+                src={profilePhoto} 
+                alt="Profile" 
+                className="w-full h-full object-cover"
+                onError={(e) => (e.target.src = "/default-avatar.png")} // Fallback image
+              />
             </div>
-          </div>
-          <div className='bg-black bg-opacity-5 py-6 px-8 rounded-lg text-center'>
-            <h2 className="text-2xl text-blue-400 font-semibold"> {user.name || 'Guest'}</h2>
-          </div>
+          </label>
+          <input type="file" id="profile-upload" accept="image/*" className="hidden" onChange={handleFileChange} />
+          <button onClick={handleUpload} className="mt-3 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition">
+            Upload
+          </button>
         </div>
+
+    {/* User Information */}
+    <div className="text-center  bg-black bg-opacity-50 p-6 rounded-lg w-full max-w-md">
+      <h2 className="text-2xl text-blue-400 font-semibold">{user.name || 'Guest'}</h2>
+    </div>
+  </div>
 
         {/* User Info Cards */}
         <div className="flex items-center gap-4 justify-around w-full">
@@ -252,7 +315,9 @@ const Name = () => {
             <p className="text-base text-gray-200">{translatedTitles.age}</p>
           </div>
         </div>
-      </div>
+</div>
+
+      {/* </div> */}
 
       {/* Account Section */}
       <div className="p-4 bg-black bg-opacity-50 rounded-lg mx-5 mt-8">
@@ -413,9 +478,8 @@ const Name = () => {
       )}
 
       
-
- {/* Language Selection Modal */}
- {/* {activeModal === 'language' && (
+  {/* Language Selection Modal  */}
+  {/* {activeModal === 'language' && (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
           <div className="glass rounded-lg p-6 w-11/12 max-w-md">
             <h2 className="text-xl text-blue-400 font-bold mb-4 text-center">{t('Select Language')}</h2>
@@ -428,11 +492,17 @@ const Name = () => {
               <li className="cursor-pointer text-blue-400 text-xl" onClick={() => changeLanguage('ur')}>اردو</li>
               <li className="cursor-pointer text-blue-400 text-xl" onClick={() => changeLanguage('zh')}>中文</li>
               <li className="cursor-pointer text-blue-400 text-xl" onClick={() => changeLanguage('ar')}>العربية</li>
+              <li className="cursor-pointer text-blue-400 text-xl" onClick={() => changeLanguage('bn')}>বাংলা</li>
+              <li className="cursor-pointer text-blue-400 text-xl" onClick={() => changeLanguage('ru')}>Русский</li>
+              <li className="cursor-pointer text-blue-400 text-xl" onClick={() => changeLanguage('ta')}>தமிழ்</li>
+              <li className="cursor-pointer text-blue-400 text-xl" onClick={() => changeLanguage('te')}>తెలుగు</li>
+
+
             </ul>
             <button className="mt-4 bg-black bg-opacity-70 text-white px-4 py-2 rounded-lg w-full" onClick={closeModal}>{t('Close')}</button>
           </div>
         </div>
-      )} */}
+      )}  */}
 
 
       {/* {activeModal === 'language' && <LanguageModal closeModal={closeModal} />} */}
@@ -543,6 +613,15 @@ const Name = () => {
 };
 
 export default Name;
+
+
+
+
+
+
+
+
+
 
 
 

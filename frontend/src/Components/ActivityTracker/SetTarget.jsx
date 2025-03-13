@@ -245,10 +245,7 @@ export default function SetTarget() {
   const [footSteps, setFootSteps] = useState("");
   const navigate = useNavigate();
 
-  
-
-    
-
+ 
   useEffect(() => {
     const fetchTargetData = async () => {
       try {
@@ -356,7 +353,7 @@ export default function SetTarget() {
           <h1>ActivityTracker</h1>
           </div>
       </div>
-      <div className="flex mockup-phone border-primary justify-center p-4 mt-5 min-w-96 items-center">
+      <div className="flex mockup-phone border-secondry justify-center p-4 mt-5 min-w-96 items-center">
       <div className="mockup-phone-camera"></div>
         <div className="p-6 bg-black bg-opacity-50  w-full rounded-lg">
           <div className="flex justify-between items-center">

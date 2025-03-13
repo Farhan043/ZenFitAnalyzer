@@ -200,9 +200,16 @@ const ActivityTracker = () => {
   }
   return (
     <>
+    <div className='flex flex-col gap-4 mockup-phone border-primary'>
+    <div className="mockup-phone-camera"></div>
+    <div className="mockup-phone-display">
+
       <SetTarget />
       <Progress/>
       <Latest/>
+      </div>
+    </div>
+
     </>
   )
 }

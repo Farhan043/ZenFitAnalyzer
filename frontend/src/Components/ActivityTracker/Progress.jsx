@@ -174,9 +174,9 @@ const Progress = () => {
   }, []);
 
   return (
-    <div className="p-8 mt-8 mx-5 mockup-phone border-primary bg-black bg-opacity-50 rounded-lg ">
+    <div className="p-8 mt-8 mx-5   rounded-lg ">
+       
       <h2 className="text-3xl font-semibold text-center text-blue-500 mb-6">{translatedTitles.activityProgress}</h2>
-
       {loading ? (
         <div className="text-center">Loading...</div>
       ) : (
@@ -204,6 +204,7 @@ const Progress = () => {
         </div>
       )}
     </div>
+
   );
 };
 

@@ -23,9 +23,60 @@ import Workout from './Pages/HomeFooter/Workout'
 import ActivityTracker from './Pages/ActivityTracker'
 // import { ThemeProvider } from './Context/ThemeContext'
 import MusicHome from './Pages/Musics/MusicHome'
+import Fitness from './Pages/Advices/Fitness'
+import Nutrition from './Pages/Advices/Nutrition'
+import Selfcare from './Pages/Advices/Selfcare'
+import Wellness from './Pages/Advices/Wellness'
+import FitnessArticle from './Components/Advice/Fitness/FitnessArticle'
+import Fit2Article from './Components/Advice/Fitness/Fit2Article'
+import Fit3Article from './Components/Advice/Fitness/Fit3Article'
+import Fit4Article from './Components/Advice/Fitness/Fit4Article'
+import Fit5Article from './Components/Advice/Fitness/Fit5Article'
+import Fit6Article from './Components/Advice/Fitness/Fit6Article'
+import Fit7Article from './Components/Advice/Fitness/Fit7Article'
+import Fit8Article from './Components/Advice/Fitness/Fit8Article'
+import Fit9Article from './Components/Advice/Fitness/Fit9Article'
+import Fit10Article from './Components/Advice/Fitness/Fit10Article'
+import Nutrition1 from './Components/Advice/Nutrition/Nutrition1'
+import Nutrition2 from './Components/Advice/Nutrition/Nutrition2'
+import Nutrition3 from './Components/Advice/Nutrition/Nutrition3'
+import Nutrition4 from './Components/Advice/Nutrition/Nutrition4'
+import Nutrition5 from './Components/Advice/Nutrition/Nutrition5'
+import Nutrition6 from './Components/Advice/Nutrition/Nutrition6'
+import Nutrition7 from './Components/Advice/Nutrition/Nutrition7'
+import Nutrition8 from './Components/Advice/Nutrition/Nutrition8' 
+import Nutrition9 from './Components/Advice/Nutrition/Nutrition9'
+import Nutrition10 from './Components/Advice/Nutrition/Nutrition10'
+import Selfcare1 from './Components/Advice/Selfcare/Selfcare1'
+import Selfcare2 from './Components/Advice/Selfcare/Selfcare2'
+import Selfcare3 from './Components/Advice/Selfcare/Selfcare3'
+import Selfcare4 from './Components/Advice/Selfcare/Selfcare4'
+import Selfcare5 from './Components/Advice/Selfcare/Selfcare5'
+import Selfcare6 from './Components/Advice/Selfcare/Selfcare6'
+import Selfcare7 from './Components/Advice/Selfcare/Selfcare7'
+import Wellness1 from './Components/Advice/Wellness/Wellness1'
+import Wellness2 from './Components/Advice/Wellness/Wellness2'
+import Wellness3 from './Components/Advice/Wellness/Wellness3'
+import Wellness4 from './Components/Advice/Wellness/Wellness4'
+import Wellness5 from './Components/Advice/Wellness/Wellness5'
+import Wellness6 from './Components/Advice/Wellness/Wellness6'
+import Wellness7 from './Components/Advice/Wellness/Wellness7'
+import Wellness8 from './Components/Advice/Wellness/Wellness8'
+import Wellness9 from './Components/Advice/Wellness/Wellness9'
+import Wellness10 from './Components/Advice/Wellness/Wellness10'
+import Wellness11 from './Components/Advice/Wellness/Wellness11'
+import Chatbot from "./components/Chatbot";
+import { useLocation } from "react-router-dom";
+
+
 // import { div } from 'motion/react-client'
 
 const App = () => {
+  const location = useLocation();
+
+  // Hide Chatbot on these pages
+  const hiddenRoutes = ["/", "/start2", "/start3", "/start4", "/start5", "/login", "/register", "/welcome"];
+  const shouldShowChatbot = !hiddenRoutes.includes(location.pathname);
   return (
     <>
       {/* <ThemeProvider> */}
@@ -55,11 +106,67 @@ const App = () => {
             <Meal />
           } />
 
+
+
+
           <Route path="/workout" element={<Workout />} />
           {/* <Route path="/alarm" element={<Alarm />} /> */}
           <Route path="/sleeptracker" element={<SleepTracker />} />
           <Route path="/activity-tracker" element={<ActivityTracker />} />
           <Route path="/musichome" element={<MusicHome />} />
+
+
+          <Route path="/fitness" element={<Fitness />} />
+          <Route path="/article" element={<FitnessArticle />} />
+          <Route path="/article2" element={<Fit2Article />} />
+          <Route path="/article3" element={<Fit3Article />} />
+          <Route path="/article4" element={<Fit4Article />} />
+          <Route path="/article5" element={<Fit5Article />} />
+          <Route path="/article6" element={<Fit6Article />} />
+          <Route path="/article7" element={<Fit7Article />} />
+          <Route path="/article8" element={<Fit8Article />} />
+          <Route path="/article9" element={<Fit9Article />} />
+          <Route path="/article10" element={<Fit10Article />} />
+
+
+          <Route path="/nutrition" element={<Nutrition />} />
+          <Route path="/nut-article" element={<Nutrition1 />} />
+          <Route path="/nut-article2" element={<Nutrition2 />} />
+          <Route path="/nut-article3" element={<Nutrition3 />} />
+          <Route path="/nut-article4" element={<Nutrition4 />} />
+           <Route path="/nut-article5" element={<Nutrition5 />} />
+           <Route path="/nut-article6" element={<Nutrition6 />} />
+        <Route path="/nut-article7" element={<Nutrition7 />} />
+          <Route path="/nut-article8" element={<Nutrition8 />} />  
+          <Route path="/nut-article9" element={<Nutrition9 />} />  
+          <Route path="/nut-article10" element={<Nutrition10 />} />
+
+
+          <Route path="/selfcare" element={<Selfcare />} />
+          <Route path="/selfcare1" element={<Selfcare1 />} />
+          <Route path="/selfcare2" element={<Selfcare2 />} />
+          <Route path="/selfcare3" element={<Selfcare3 />} />
+          <Route path="/selfcare4" element={<Selfcare4 />} />
+          <Route path="/selfcare5" element={<Selfcare5 />} />
+          <Route path="/selfcare6" element={<Selfcare6 />} />
+          <Route path="/selfcare7" element={<Selfcare7 />} />
+
+
+
+
+          <Route path="/wellness" element={<Wellness />} />
+          <Route path="/wellness1" element={<Wellness1 />} />
+          <Route path="/wellness2" element={<Wellness2 />} />
+           <Route path="/wellness3" element={<Wellness3 />} />
+          <Route path="/wellness4" element={<Wellness4 />} />
+           <Route path="/wellness5" element={<Wellness5 />} />
+          <Route path="/wellness6" element={<Wellness6 />} /> 
+          <Route path='/wellness7' element={<Wellness7 />} />
+          <Route path='/wellness8' element={<Wellness8 />} />
+          <Route path='/wellness9' element={<Wellness9 />} />
+           <Route path='/wellness10' element={<Wellness10 />} />
+          <Route path='/wellness11' element={<Wellness11 />} />
+          {/* <Route path='/wellness12' element={<Wellness12 />} />   */}
 
           {/* <Route path="logout" element={
           <UserProtectWrapper>
@@ -67,6 +174,9 @@ const App = () => {
           </UserProtectWrapper>
         } /> */}
         </Routes>
+        {/* Show Chatbot only on allowed pages */}
+      {shouldShowChatbot && <Chatbot />}
+
       {/* </ThemeProvider> */}
     </>
   )

@@ -3,7 +3,7 @@ var router = express.Router();
 var { body } = require('express-validator');
 var userController = require('../controllers/user.controller');
 var authMiddleware = require('../middlewares/auth.middleware');
-
+const upload = require('../middlewares/multer.config'); // Import multer config
 
 
 router.post('/register', [
@@ -39,6 +39,23 @@ router.get('/contact', authMiddleware.authUser, userController.getAllContactMess
 router.put('/update-profile', authMiddleware.authUser, userController.updateUserProfile);
 router.put('/change-password', authMiddleware.authUser, userController.changeUserPassword);
 
+
+
+const BASE_URL = "http://localhost:4000"; // Change to your actual backend URL
+
+router.post("/upload-photo", upload.single("profilePhoto"), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: "No file uploaded" });
+  }
+
+  const imageUrl = `${BASE_URL}/uploads/${req.file.filename}`; // Full URL for frontend
+
+  res.status(200).json({
+    success: true,
+    message: "File uploaded successfully",
+    filePath: imageUrl, // Send full URL
+  });
+});
 
 
 

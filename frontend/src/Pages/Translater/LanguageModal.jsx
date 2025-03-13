@@ -75,8 +75,6 @@ const LanguageModal = ({ closeModal }) => {
         <ul className="space-y-2">
           {[
               { code: 'en', name: 'English' },
-              { code: 'es', name: 'Español' }, // Spanish
-              { code: 'fr', name: 'Français' }, // French
               { code: 'de', name: 'Deutsch' }, // German
               { code: 'hi', name: 'हिन्दी' }, // Hindi
               { code: 'ur', name: 'اردو' }, // Urdu
@@ -84,15 +82,11 @@ const LanguageModal = ({ closeModal }) => {
               { code: 'ar', name: 'العربية' }, // Arabic
               { code: 'bn', name: 'বাংলা' }, // Bengali
               { code: 'ru', name: 'Русский' }, // Russian
-              { code: 'ja', name: '日本語' }, // Japanese
-              { code: 'ko', name: '한국어' }, // Korean
-              { code: 'pt', name: 'Português' }, // Portuguese
               { code: 'it', name: 'Italiano' }, // Italian
               { code: 'ta', name: 'தமிழ்' }, // Tamil
               { code: 'te', name: 'తెలుగు' }, // Telugu
               { code: 'fa', name: 'فارسی' }, // Persian (Farsi)
-              { code: 'tr', name: 'Türkçe' }, // Turkish
-              { code: 'vi', name: 'Tiếng Việt' } // Vietnamese
+            
             
           ].map(({ code, name }) => (
             <li key={code} className="cursor-pointer text-blue-400 text-xl" onClick={() => changeLanguage(code)}>

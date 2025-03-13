@@ -129,6 +129,10 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+// import { io } from "socket.io-client";
+
+
+// const socket = io("http://localhost:4000");
 
 const WaterIntake = () => {
   const [waterData, setWaterData] = useState({ logs: [], total: 0 });
@@ -155,6 +159,7 @@ const WaterIntake = () => {
       );
       setWaterData(response.data.dailyLog);
       toast.success(`Added 250ml of water! Total intake is now ${response.data.dailyLog.total / 1000} liters`);
+      // socket.emit("addWater", { message: "Water intake updated!" }); // Emit event
     } catch (error) {
       console.error('Error updating water intake:', error);
       toast.error(error.response?.data?.message || "Something went wrong!");

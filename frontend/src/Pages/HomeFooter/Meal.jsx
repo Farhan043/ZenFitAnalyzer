@@ -48,6 +48,7 @@ const Meal = () => {
   const [currentDay, setCurrentDay] = useState("");
   const [mealHistory, setMealHistory] = useState({});
   const [selectedDate, setSelectedDate] = useState("");
+  const [meals, setMeals] = useState([]);
   const navigate = useNavigate();
 
 
@@ -67,20 +68,20 @@ const Meal = () => {
   }, []);
 
 
-  useEffect(() => {
-    const fetchMeals = async () => {
-      try {
-        const token = localStorage.getItem('token'); // Retrieve token from storage
-        const response = await axios.post('http://localhost:4000/api/meals', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        setMeals(response.data);
-      } catch (err) {
-        console.error('Failed to fetch meals', err);
-      }
-    };
-    fetchMeals();
-  }, []);
+  // useEffect(() => {
+  //   const fetchMeals = async () => {
+  //     try {
+  //       const token = localStorage.getItem('token'); // Retrieve token from storage
+  //       const response = await axios.get('http://localhost:4000/api', {
+  //         headers: { Authorization: `Bearer ${token}` }
+  //       });
+  //       setMeals(response.data);
+  //     } catch (err) {
+  //       console.error('Failed to fetch meals', err);
+  //     }
+  //   };
+  //   fetchMeals();
+  // }, []);
   
 
   useEffect(() => {

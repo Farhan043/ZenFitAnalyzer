@@ -25,7 +25,7 @@ const dailyStats = [
   { calories: 500, duration: 75, workouts: 3 },
   { calories: 350, duration: 50, workouts: 2 }
 ];
-
+    
 // Create audio context for beep sound
 const createBeepSound = () => {
   const audioContext = new (window.AudioContext || window.webkitAudioContext)();
