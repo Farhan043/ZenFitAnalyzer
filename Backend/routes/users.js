@@ -28,10 +28,9 @@ router.get('/bmi', authMiddleware.authUser, userController.getBMI);
 router.post('/water-intake', authMiddleware.authUser, userController.updateWaterIntake);
 router.get('/water-intake', authMiddleware.authUser, userController.getWaterIntake);
 router.get('/water-intake-weekly', authMiddleware.authUser, userController.getWeeklyWaterIntake);
-router.post('/sleep-data', authMiddleware.authUser, userController.updateSleepData);
-router.get('/sleep-data', authMiddleware.authUser, userController.getSleepData);
-router.post("/alarm", authMiddleware.authUser, userController.setAlarmAndBedtime);
-router.get("/alarm", authMiddleware.authUser, userController.getAlarmAndBedtime);
+
+
+
 router.post("/setTarget", authMiddleware.authUser, userController.setTarget);
 router.get("/getTarget", authMiddleware.authUser, userController.getTarget);
 router.post('/contact', authMiddleware.authUser, userController.createContactMessage);
@@ -56,6 +55,9 @@ router.post("/upload-photo", upload.single("profilePhoto"), (req, res) => {
     filePath: imageUrl, // Send full URL
   });
 });
+
+
+
 
 
 

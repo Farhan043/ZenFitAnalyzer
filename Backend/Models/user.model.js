@@ -25,26 +25,6 @@ const waterSchema = new mongoose.Schema({
 
 
 
-
-// Schema for Sleep Data
-const sleepSchema = new mongoose.Schema({
-  date: { type: String, required: true }, // Date in YYYY-MM-DD format
-  sleepHours: { type: Number, required: true }, // Total sleep hours
-  startTime: { type: String }, // Start time in HH:mm format
-  endTime: { type: String }, // End time in HH:mm format
-  quality: { type: String, enum: ['poor', 'fair', 'good', 'excellent'], default: 'good' }, // Quality rating
-});
-
-// Alarm Schema
-const alarmSchema = new mongoose.Schema({
-  alarmSettings: {
-    bedtime: String,
-    alarmTime: String,
-    repeatDays: [String],
-    vibrateOnAlarm: { type: Boolean, default: false },
-  },
-});
-
 //TargetSchema
 const TargetSchema = new mongoose.Schema({
   date: { type: String, required: true },
@@ -105,12 +85,12 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+
 });
 
 userSchema.add({
   waterIntake: [waterSchema],
-  sleepData: [sleepSchema],
-  alarmData: [alarmSchema],
+  // alarmData: [alarmSchema],
   targetData: [TargetSchema],
   contactData: [contactSchema],
 });
@@ -128,6 +108,7 @@ userSchema.statics.hashPassword = async function (password) {
   return await bcrypt.hash(password, 10);
 };
 
-const userModel = mongoose.model('user', userSchema);
+// const userModel = mongoose.model('user', userSchema);
+const userModel = mongoose.models.user || mongoose.model('user', userSchema);
 
 module.exports = userModel;

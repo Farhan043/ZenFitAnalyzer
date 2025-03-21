@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .camera-section {
   height: 70vh;
   display: flex;
@@ -19,7 +18,6 @@
 /* body{
   overflow:scroll;
 } */
-
 
 .light {
   background-color: white;
@@ -160,8 +158,6 @@
   background-color: #03a9f4;
   color: white;
 }
-
-
 
 
 

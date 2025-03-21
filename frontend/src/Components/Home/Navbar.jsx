@@ -233,7 +233,14 @@ import Bmi from "./Bmi";
 import WaterIntake from "./WaterIntake";
 import TodayTarget from "./TodayTarget";
 import Music from "../../Components/Home/Music";
-import Sleep from "../SleepComponent/Sleep";
+// import Sleep from "../SleepComponent/Sleep";
+import GPSTracker from "../../Pages/GpsTracker";
+import BodyProgress from "../../Pages/BodyProgress";
+import TodaySchedule from "../SleepComponent/TodaySchedule";
+import HabitTracker from "../../Pages/HabitTracker";
+import Layout from "../../Pages/Layout";
+import Footer from "../../Components/Footer"
+import FloatingButton from "../../Pages/FloatingButton";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -260,7 +267,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="p-3 bg-black min-h-screen">
+      <div className=" bg-slate-900 min-h-screen">
         <div className="bg-black text-white p-5 shadow-blue-500 shadow-md">
           <div className="container mx-auto flex justify-between items-center">
             <div className="text-2xl flex items-center gap-2 font-bold">
@@ -334,8 +341,11 @@ const Navbar = () => {
         </div>
 
         <Bmi />
+        <HabitTracker />
+
         <div className='flex flex-col md:flex-row mt-5 min-h-screen text-white px-4 gap-5'>
           <div className='w-full md:w-1/2 flex md:flex-row'>
+
             <WaterIntake />
           </div>
           <div className='w-full md:w-1/2 flex md:flex-row'>
@@ -343,8 +353,17 @@ const Navbar = () => {
           </div>
         </div>
         <TodayTarget />
+
+       
+        <BodyProgress/>
+        <div className="flex flex-col md:flex-row items-start justify-around mt-12 gap-7">
+          <GPSTracker />
+          <TodaySchedule />
+        </div>
+        <Layout/>
+        <Footer/>
+          <FloatingButton/>
       </div>
-      <Sleep />
     </>
   );
 };

@@ -10,6 +10,11 @@ var connectDb = require('./db/db')
 var usersRouter = require('./routes/users');
 var mealRouter = require('./routes/meal');
 var chatbotRouter = require("./routes/chatbot");
+const songsRouter = require("./routes/songs");
+const gpsRouter = require("./routes/gps");
+const bodyProgressRoutes = require("./routes/bodyProgress.routes");
+const sleepRoutes = require('./routes/sleep.routes');
+const habitRoutes = require('./routes/habitRoutes');
 // const { Server } = require("socket.io");
 
 
@@ -34,7 +39,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/uploads", express.static(path.join(__dirname, "uploads"))); // Serve static files from the "uploads" directory
 
-
+app.use("/uploads", express.static("uploads"));
 // Socket.io connection
 // io.on("connection", (socket) => {
 //   console.log("User connected", socket.id);
@@ -51,8 +56,12 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads"))); // Serve s
 app.use('/users', usersRouter);
 app.use('/api', mealRouter);
 app.use("/chatbot", chatbotRouter);
+app.use("/api/songs", songsRouter);
+app.use("/api/gps", gpsRouter);
+app.use("/body-progress", bodyProgressRoutes);
+app.use('/user', sleepRoutes);
+app.use('/habit', habitRoutes);
 connectDb();
-
 
 
 const PORT = process.env.PORT;
