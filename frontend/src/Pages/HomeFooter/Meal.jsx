@@ -15,6 +15,8 @@ import {
 import { mealsData, getUniqueValues } from "../../assets/meals";
 import { useNavigate, Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
+import Footer from "../../Components/Footer";
+import FloatingButton from "../FloatingButton";
 
 // Initialize chart data with zeros
 const initialChartData = [
@@ -769,6 +771,8 @@ const Meal = () => {
           </div>
         </div>
        </div>
+       <Footer/>
+       <FloatingButton/>
     </>
   );
 };
