@@ -1,8 +1,9 @@
-
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Start5 = () => {
+
+
   return (
     <>
       {/* Background Section */}
@@ -27,12 +28,14 @@ const Start5 = () => {
 
         {/* Navigation Button */}
         <div className="absolute bottom-10 right-10 ">
-          <Link to='/login'>
+          <Link to='/register'>
             <div className="w-14 h-14 flex items-center justify-center bg-green-500 text-white rounded-full shadow-lg text-2xl">
               →
             </div>
           </Link>
         </div>
+
+      
       </div>
     </>
   );

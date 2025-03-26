@@ -72,7 +72,7 @@ import FloatingButton from '../Pages/FloatingButton';
                   <Link to='/home' className="hover:text-blue-400 transition">Home</Link>
                   <Link to='/meal' className="hover:text-blue-400 transition">Meal</Link>
                   <Link to='/workout' className="hover:text-blue-400 transition">Workout</Link>
-                  <Link to='/profile' className="hover:text-blue-400 transition">Profile</Link>               
+                  <Link to='/social' className="hover:text-blue-400 transition">community</Link>               
                   <div 
                     className="relative"
                     onMouseEnter={() => setAdviceOpen(true)}
@@ -112,7 +112,7 @@ import FloatingButton from '../Pages/FloatingButton';
                   <Link to='/home' className="py-2 px-4 hover:bg-gray-700 rounded-md">Home</Link>
                   <Link to='/meal' className="py-2 px-4 hover:bg-gray-700 rounded-md">Meal</Link>
                   <Link to='/workout' className="py-2 px-4 hover:bg-gray-700 rounded-md">Workout</Link>
-                  <Link to='/profile' className="py-2 px-4 hover:bg-gray-700 rounded-md">Profile</Link>
+                  <Link to='/social' className="py-2 px-4 hover:bg-gray-700 rounded-md">community</Link>
                   <div className="flex flex-col">
                     <button className="py-2 px-4 hover:bg-gray-700  rounded-md">Advice</button>
                     <div className="ml-4 space-y-2">

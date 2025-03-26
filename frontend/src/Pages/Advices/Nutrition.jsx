@@ -48,8 +48,8 @@ const Navbar = () => {
               <Link to="/workout" className="hover:text-blue-400 transition">
                 Workout
               </Link>
-              <Link to="/profile" className="hover:text-blue-400 transition">
-                Profile
+              <Link to="/social" className="hover:text-blue-400 transition">
+                community
               </Link>
 
               <div
@@ -135,10 +135,10 @@ const Navbar = () => {
                 Workout
               </Link>
               <Link
-                to="/profile"
+                to="/social"
                 className="py-2 px-4 hover:bg-gray-700 rounded-md"
               >
-                Profile
+                community
               </Link>
               <div className="flex flex-col">
                 <button className="py-2 px-4 hover:bg-gray-700  rounded-md">

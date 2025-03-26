@@ -1,26 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useTranslation } from 'react-i18next'; 
-import LanguageModal from '../../Pages/Translater/LanguageModal';
-import { translateText } from '../../Pages/Translater/118n';
 
 const TodayTarget = () => {
-    // const { t, i18n } = useTranslation();
-  // const [translatedTitles, setTranslatedTitles] = useState({});
+ 
   const [stats, setStats] = useState({ totalPageViews: 0, newUsers: 0, newRegisteredUsers: [] });
   
-    // useEffect(() => {
-    //   const updateTranslations = async () => {
-    //     const translations = {
-    //       todayTarget: await translateText('Today Target', i18n.language),
-    //       check: await translateText('Check', i18n.language),
-    //     };
-    //     setTranslatedTitles(translations);
-    //   };
-  
-    //   updateTranslations();
-    // }, [i18n.language]);
-
+    
 
 
   const navigate = useNavigate();

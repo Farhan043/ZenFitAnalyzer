@@ -279,7 +279,7 @@ const Navbar = () => {
               <Link to='/home' className="hover:text-blue-400 transition">Home</Link>
               <Link to='/meal' className="hover:text-blue-400 transition">Meal</Link>
               <Link to='/workout' className="hover:text-blue-400 transition">Workout</Link>
-              <Link to='/profile' className="hover:text-blue-400 transition">Profile</Link>
+              <Link to='/social' className="hover:text-blue-400 transition">Community</Link>
               
               <div 
                 className="relative"
@@ -323,14 +323,14 @@ const Navbar = () => {
               <Link to='/home' className="py-2 px-4 hover:bg-gray-700 rounded-md">Home</Link>
               <Link to='/meal' className="py-2 px-4 hover:bg-gray-700 rounded-md">Meal</Link>
               <Link to='/workout' className="py-2 px-4 hover:bg-gray-700 rounded-md">Workout</Link>
-              <Link to='/profile' className="py-2 px-4 hover:bg-gray-700 rounded-md">Profile</Link>
+              <Link to='/social' className="py-2 px-4 hover:bg-gray-700 rounded-md">community</Link>
               <div className="flex flex-col">
                 <button className="py-2 px-4 hover:bg-gray-700  rounded-md">Advice</button>
                 <div className="ml-4 space-y-2">
-                  <Link to='/advice/fitness' className="block py-2 px-4 hover:bg-gray-600 rounded-md">Fitness</Link>
-                  <Link to='/advice/nutrition' className="block py-2 px-4 hover:bg-gray-600 rounded-md">Nutrition</Link>
-                  <Link to='/advice/selfcare' className="block py-2 px-4 hover:bg-gray-600 rounded-md">Self-Care</Link>
-                  <Link to='/advice/wellness' className="block py-2 px-4 hover:bg-gray-600 rounded-md">Wellness</Link>
+                  <Link to='/fitness' className="block py-2 px-4 hover:bg-gray-600 rounded-md">Fitness</Link>
+                  <Link to='/nutrition' className="block py-2 px-4 hover:bg-gray-600 rounded-md">Nutrition</Link>
+                  <Link to='/selfcare' className="block py-2 px-4 hover:bg-gray-600 rounded-md">Self-Care</Link>
+                  <Link to='/wellness' className="block py-2 px-4 hover:bg-gray-600 rounded-md">Wellness</Link>
                 </div>
               </div>
               <button onClick={handleLogout} className="p-2 mt-4 bg-gray-800 hover:bg-gray-700 rounded-md text-blue-400 text-lg w-full">

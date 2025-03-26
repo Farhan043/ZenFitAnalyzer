@@ -17,6 +17,8 @@ import Notification from "./Pages/Notification";
 import Profile from "./Pages/HomeFooter/Profile";
 import Meal from "./Pages/HomeFooter/Meal";
 
+
+
 // import Alarm from './Pages/Sleep/Alarm'
 // import SleepTracker from "./Pages/Sleep/SleepTracker";
 import Workout from "./Pages/HomeFooter/Workout";
@@ -74,6 +76,11 @@ import Contact from "./Components/Contact";
 import NotFound from "./Components/NotFound";
 import PrivacyPolicy from "./Components/PrivacyPolicy";
 import TermsOfUse from "./Components/TermsOfUse";
+import SocialFeed from "./Components/Community/SocialFeed";
+// import PostCard from "./Components/Social/PostCard";
+import SocialFeeds from "./Components/Community/SocialFeeds";
+import Challenges from "./Components/Community/Challenges";
+
 
 // import { div } from 'motion/react-client'
 
@@ -110,6 +117,7 @@ const App = () => {
         <Route path="/welcome" element={<Welcome />} />
         <Route path="/register" element={<Register />} />
 
+     
 
         <Route
           path="/home"
@@ -127,6 +135,13 @@ const App = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/policy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsOfUse/>} />
+        <Route path="/socialfeed" element={<SocialFeed/>} />
+        <Route path="/social" element={<SocialFeeds/>} />
+        {/* <Route path="/posts" element={<PostCard/>} /> */}
+        <Route path="/challenges" element={<Challenges/>} />
+
+
+
 
 
 

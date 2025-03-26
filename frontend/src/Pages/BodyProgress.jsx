@@ -1,10 +1,17 @@
-
-
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const BodyProgress = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if user is authenticated
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+  }, [navigate]);
 
   return (
     <div className="mockup-phone w-full border-primary flex flex-col md:flex-row items-center gap-6 bg-gray-900 text-white p-6 shadow-lg">

@@ -1,10 +1,8 @@
-
-
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Search,
   Camera,
@@ -26,6 +24,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import Footer from "../Footer";
 
 ChartJS.register(
   CategoryScale,
@@ -37,6 +36,21 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+
+const getUserId = () => {
+  const token = localStorage.getItem("token");
+  if (!token) return null;
+  
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const payload = JSON.parse(window.atob(base64));
+    return payload.userId || payload._id;
+  } catch (e) {
+    console.error("Error decoding token:", e);
+    return null;
+  }
+};
 
 export default function Body() {
   const [activeTab, setActiveTab] = useState("photos");
@@ -63,26 +77,53 @@ export default function Body() {
   const [weightChange, setWeightChange] = useState(0);
   const [bodyCompositionChanges, setBodyCompositionChanges] = useState([]);
   const [weightProgressData, setWeightProgressData] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    const userId = getUserId();
+    if (!userId) {
+      navigate("/login");
+      return;
+    }
     fetchProgressEntries();
+
+    // Load saved data from localStorage with user-specific keys
+    const savedProgressData = localStorage.getItem(`progressData_${userId}`);
+    const savedWeightChange = localStorage.getItem(`weightChange_${userId}`);
+    const savedBodyCompositionChanges = localStorage.getItem(`bodyCompositionChanges_${userId}`);
+    const savedWeightProgressData = localStorage.getItem(`weightProgressData_${userId}`);
+  
+    if (savedProgressData) setProgressData(JSON.parse(savedProgressData));
+    if (savedWeightChange) setWeightChange(JSON.parse(savedWeightChange));
+    if (savedBodyCompositionChanges) setBodyCompositionChanges(JSON.parse(savedBodyCompositionChanges));
+    if (savedWeightProgressData) setWeightProgressData(JSON.parse(savedWeightProgressData));
   }, []);
 
   const fetchProgressEntries = async () => {
     try {
       const token = localStorage.getItem("token");
+      const userId = getUserId();
+      if (!userId) {
+        throw new Error("User not authenticated");
+      }
+
       const response = await axios.get(
         "http://localhost:4000/body-progress/user",
         {
           headers: { Authorization: `Bearer ${token}` },
+          params: { userId } // Add userId to query params
         }
       );
       setProgressEntries(response.data);
       setAnalysisData(response.data);
     } catch (error) {
       console.error("Error fetching progress entries:", error);
+      if (error.message === "User not authenticated") {
+        navigate("/login");
+      }
     }
   };
+
   const fetchProgressByDateRange = async () => {
     if (!startDate || !endDate) {
       toast.error("Please select both start and end dates.");
@@ -91,11 +132,16 @@ export default function Body() {
   
     try {
       const token = localStorage.getItem("token");
+      const userId = getUserId();
+      if (!userId) {
+        throw new Error("User not authenticated");
+      }
+
       const response = await axios.get(
         "http://localhost:4000/body-progress/progress-by-date",
         {
           headers: { Authorization: `Bearer ${token}` },
-          params: { startDate, endDate },
+          params: { startDate, endDate, userId }
         }
       );
   
@@ -105,31 +151,19 @@ export default function Body() {
       setBodyCompositionChanges(response.data.bodyCompositionChanges);
       setWeightProgressData(response.data.weightProgressData);
   
-      // Save data in localStorage for persistence
-      localStorage.setItem("progressData", JSON.stringify(response.data.progressData));
-      localStorage.setItem("weightChange", JSON.stringify(response.data.weightChange));
-      localStorage.setItem("bodyCompositionChanges", JSON.stringify(response.data.bodyCompositionChanges));
-      localStorage.setItem("weightProgressData", JSON.stringify(response.data.weightProgressData));
+      // Save data in localStorage with user-specific keys
+      localStorage.setItem(`progressData_${userId}`, JSON.stringify(response.data.progressData));
+      localStorage.setItem(`weightChange_${userId}`, JSON.stringify(response.data.weightChange));
+      localStorage.setItem(`bodyCompositionChanges_${userId}`, JSON.stringify(response.data.bodyCompositionChanges));
+      localStorage.setItem(`weightProgressData_${userId}`, JSON.stringify(response.data.weightProgressData));
     } catch (error) {
       console.error("Error fetching progress data:", error);
       toast.error("Failed to fetch progress data.");
+      if (error.message === "User not authenticated") {
+        navigate("/login");
+      }
     }
   };
-  
-
-  useEffect(() => {
-    // Retrieve data from localStorage if available
-    const savedProgressData = localStorage.getItem("progressData");
-    const savedWeightChange = localStorage.getItem("weightChange");
-    const savedBodyCompositionChanges = localStorage.getItem("bodyCompositionChanges");
-    const savedWeightProgressData = localStorage.getItem("weightProgressData");
-  
-    if (savedProgressData) setProgressData(JSON.parse(savedProgressData));
-    if (savedWeightChange) setWeightChange(JSON.parse(savedWeightChange));
-    if (savedBodyCompositionChanges) setBodyCompositionChanges(JSON.parse(savedBodyCompositionChanges));
-    if (savedWeightProgressData) setWeightProgressData(JSON.parse(savedWeightProgressData));
-  }, []);
-  
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -138,7 +172,6 @@ export default function Body() {
       setPreview(URL.createObjectURL(file));
     }
   };
-
 
   const weightChartData = {
     labels: weightProgressData.map((entry) => entry.date), // Dates from backend
@@ -173,13 +206,16 @@ export default function Body() {
     setError("");
 
     const token = localStorage.getItem("token");
-    if (!token) {
+    const userId = getUserId();
+    if (!userId) {
       setError("User not authenticated. Please log in.");
+      navigate("/login");
       return;
     }
 
     const data = new FormData();
     data.append("photo", image);
+    data.append("userId", userId); // Add userId to form data
     Object.keys(formData).forEach((key) => data.append(key, formData[key]));
 
     try {
@@ -191,21 +227,13 @@ export default function Body() {
       });
       toast.success("Image uploaded successfully!");
       setIsModalOpen(false);
-      setFormData({
-        date: "",
-        weight: "",
-        chest: "",
-        waist: "",
-        hips: "",
-        thighs: "",
-        arms: "",
-        notes: "",
-      });
-      setImage(null);
-      setPreview(null);
-      fetchProgressEntries(); // Refresh progress entries
+      resetForm();
+      fetchProgressEntries();
     } catch (error) {
       setError(error.response?.data?.message || "Error uploading image");
+      if (error.response?.status === 401) {
+        navigate("/login");
+      }
     }
   };
 
@@ -249,6 +277,50 @@ export default function Body() {
       });
   };
 
+  const resetForm = () => {
+    setFormData({
+      date: "",
+      weight: "",
+      chest: "",
+      waist: "",
+      hips: "",
+      thighs: "",
+      arms: "",
+      notes: "",
+    });
+    setImage(null);
+    setPreview(null);
+  };
+
+  useEffect(() => {
+    return () => {
+      const userId = getUserId();
+      if (userId) {
+        localStorage.removeItem(`progressData_${userId}`);
+        localStorage.removeItem(`weightChange_${userId}`);
+        localStorage.removeItem(`bodyCompositionChanges_${userId}`);
+        localStorage.removeItem(`weightProgressData_${userId}`);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleStorageChange = (e) => {
+      if (e.key === 'token' && !e.newValue) {
+        setProgressEntries([]);
+        setAnalysisData(null);
+        setProgressData(null);
+        setWeightChange(0);
+        setBodyCompositionChanges([]);
+        setWeightProgressData([]);
+        navigate("/login");
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
+
   return (
     // <div className="p-6 bg-gray-50 min-h-screen flex flex-col items-center">
 
@@ -270,8 +342,8 @@ export default function Body() {
             <Link to="/workout" className="hover:text-blue-400 transition">
               Workout
             </Link>
-            <Link to="/profile" className="hover:text-blue-400 transition">
-              Profile
+            <Link to="/social" className="hover:text-blue-400 transition">
+              community
             </Link>
 
             <div
@@ -351,10 +423,10 @@ export default function Body() {
               Workout
             </Link>
             <Link
-              to="/profile"
+              to="/social"
               className="py-2 px-4 hover:bg-gray-700 rounded-md"
             >
-              Profile
+             community
             </Link>
             <div className="flex flex-col">
               <button className="py-2 px-4 hover:bg-gray-700  rounded-md">
@@ -731,6 +803,9 @@ export default function Body() {
             </div>
           </div>
         )}
+        <div className="mt-12">
+        <Footer/>
+        </div>
       </div>
     </>
   );

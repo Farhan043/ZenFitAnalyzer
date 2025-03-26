@@ -15,6 +15,8 @@ const gpsRouter = require("./routes/gps");
 const bodyProgressRoutes = require("./routes/bodyProgress.routes");
 const sleepRoutes = require('./routes/sleep.routes');
 const habitRoutes = require('./routes/habitRoutes');
+const challengeRoutes = require("./routes/challenge.routes");
+const socialRoutes = require('./routes/social.routes');
 // const { Server } = require("socket.io");
 
 
@@ -61,6 +63,8 @@ app.use("/api/gps", gpsRouter);
 app.use("/body-progress", bodyProgressRoutes);
 app.use('/user', sleepRoutes);
 app.use('/habit', habitRoutes);
+app.use("/challenge", challengeRoutes); // Ensure this line is present and correct
+app.use('/social', socialRoutes);
 connectDb();
 
 

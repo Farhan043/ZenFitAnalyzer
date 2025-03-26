@@ -1,154 +1,19 @@
-// import React, { useEffect, useState } from "react";
-// import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
-// import axios from "axios";
-// import { div } from "motion/react-client";
-
-// const Progress = () => {
-//   const [data, setData] = useState([]);
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const token = localStorage.getItem('token');
-//       const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/users/water-intake-weekly`, {
-//         headers: { Authorization: `Bearer ${token}` },
-//       });
-    
-//         const weeklyData = response.data.map((entry) => ({
-//           day: entry.day, // e.g., "Sun", "Mon", etc.
-//           total: entry.total, // Total water intake for the day
-//         }));
-//         setData(weeklyData);
-//       } catch (error) {
-//         console.error("Error fetching weekly water intake data:", error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchData();
-//   }, []);
-
-
-//   return (
-//     <div className="p-4 glass rounded-xl">
-//       <h2 className="text-xl font-semibold mb-4">Weekly Water Intake</h2>
-//              {loading ? (
-//        <p>Loading...</p>
-//       ) : (
-//       <ResponsiveContainer width="100%" height={300}>
-//         <BarChart data={data}>
-//           <CartesianGrid strokeDasharray="3 3" />
-//           <XAxis dataKey="day" />
-//           <YAxis />
-//           <Tooltip />
-//           <Bar dataKey="total" fill="#8884d8" barSize={30} radius={[10, 10, 0, 0]} />
-//         </BarChart>
-//             </ResponsiveContainer>
-//       )}
-//     </div>
-//   );
-
-// };
-
-// export default Progress;
-
-
-
-
-
-
-
-// import React, { useEffect, useState } from "react";
-// import axios from "axios";
-
-// const Progress = () => {
-//   const [data, setData] = useState([]);
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const token = localStorage.getItem('token');
-//         const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/users/water-intake-weekly`, {
-//           headers: { Authorization: `Bearer ${token}` },
-//         });
-
-//         const weeklyData = response.data.map((entry) => ({
-//           day: entry.day, // e.g., "Sun", "Mon", etc.
-//           total: parseFloat(entry.total ),
-//         }));
-//         setData(weeklyData);
-//       } catch (error) {
-//         console.error("Error fetching weekly water intake data:", error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchData();
-//   }, []);
-
-//   return (
-//     <div className="p-6 bg-gradient-to-r from-gray-800 via-gray-900 to-black rounded-xl text-white shadow-lg max-w-lg mx-auto">
-//       <h2 className="text-3xl font-semibold text-center mb-6">Weekly Water Intake</h2>
-
-//       {loading ? (
-//         <div className="text-center">Loading...</div>
-//       ) : (
-//         <div className="flex flex-col gap-4">
-//           {data.map((entry, index) => (
-//             <div key={index} className="flex  flex-col gap-2">
-//               <div className="flex justify-between items-center">
-//                 <span className="text-lg font-medium">{entry.day}</span>
-//                 <span className="text-sm">{entry.total}L / 4L</span>
-//               </div>
-//               <div className="relative w-full h-4 rounded-full glass">
-//                 <div
-//                   className="absolute top-0 left-0 h-full rounded-full"
-//                   style={{
-//                     width: `${Math.min((entry.total / 4) * 100, 100)}%`, // Ensure width does not exceed 100%
-//                     background: "linear-gradient(to right, #4f46e5, #8b5cf6)",
-//                   }}
-//                 ></div>
-//               </div>
-//             </div>
-//           ))}
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default Progress;
-
-
-
-
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useTranslation } from 'react-i18next'; 
-import LanguageModal from '../../Pages/Translater/LanguageModal';
-import { translateText } from '../../Pages/Translater/118n';
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer
+} from "recharts";
+import { motion } from "framer-motion";
 
 const Progress = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-    const { t, i18n } = useTranslation();
-  const [translatedTitles, setTranslatedTitles] = useState({});
-  
-   useEffect(() => {
-      const updateTranslations = async () => {
-        const translations = {
-          activityProgress: await translateText('Activity Progress', i18n.language),
-        };
-        setTranslatedTitles(translations);
-      };
-  
-      updateTranslations();
-    }, [i18n.language]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -159,8 +24,9 @@ const Progress = () => {
         });
 
         const weeklyData = response.data.map((entry) => ({
-          day: entry.day, // e.g., "Sun", "Mon", etc.
-          total: parseFloat(entry.total ), 
+          day: entry.day,
+          total: parseFloat(entry.total),
+          goal: 4 // Daily water intake goal in liters
         }));
         setData(weeklyData);
       } catch (error) {
@@ -173,38 +39,89 @@ const Progress = () => {
     fetchData();
   }, []);
 
-  return (
-    <div className="p-8 mt-8 mx-5   rounded-lg ">
-       
-      <h2 className="text-3xl font-semibold text-center text-blue-500 mb-6">{translatedTitles.activityProgress}</h2>
-      {loading ? (
-        <div className="text-center">Loading...</div>
-      ) : (
-          <div className="flex justify-center   items-end gap-4 w-full">           
-            {data.map((entry, index) => (
-              <div key={index} className="flex flex-col items-center">
-              <span className="text-lg text-blue-400">{entry.total}L</span>
-              <div               
-                className="w-7 glass rounded-full relative flex items-end"
-                style={{
-                  height: "150px",
-                }}
-              >
-                
-                <div
-                  className="w-full bg-gradient-to-t from-blue-500 to-purple-500 rounded-full"
-                  style={{
-                    height: `${Math.min((entry.total / 4) * 100, 100)}%`,
-                  }}
-                ></div>
-              </div>
-              <span className="text-lg mt-2 text-blue-400">{entry.day}</span>
-            </div>
-          ))}
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-gray-800 p-4 rounded-lg shadow-lg border border-blue-500/20">
+          <p className="text-blue-400 font-medium">{label}</p>
+          <p className="text-white">
+            Intake: {payload[0].value.toFixed(2)}L
+          </p>
+          <p className="text-gray-400">
+            Goal: {payload[1].value}L
+          </p>
         </div>
+      );
+    }
+    return null;
+  };
+
+  return (
+    <div className="p-6">
+      <h2 className="text-2xl font-bold text-blue-400 mb-8">Weekly Progress</h2>
+      {loading ? (
+        <div className="flex justify-center items-center h-[400px]">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-400"></div>
+        </div>
+      ) : (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="h-[400px]"
+        >
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart
+              data={data}
+              margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+            >
+              <defs>
+                <linearGradient id="colorTotal" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.8}/>
+                  <stop offset="95%" stopColor="#3B82F6" stopOpacity={0}/>
+                </linearGradient>
+                <linearGradient id="colorGoal" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#60A5FA" stopOpacity={0.3}/>
+                  <stop offset="95%" stopColor="#60A5FA" stopOpacity={0}/>
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+              <XAxis
+                dataKey="day"
+                stroke="#60A5FA"
+                tick={{ fill: '#60A5FA' }}
+              />
+              <YAxis
+                stroke="#60A5FA"
+                tick={{ fill: '#60A5FA' }}
+                label={{
+                  value: 'Liters',
+                  angle: -90,
+                  position: 'insideLeft',
+                  style: { fill: '#60A5FA' }
+                }}
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Area
+                type="monotone"
+                dataKey="total"
+                stroke="#3B82F6"
+                fillOpacity={1}
+                fill="url(#colorTotal)"
+              />
+              <Area
+                type="monotone"
+                dataKey="goal"
+                stroke="#60A5FA"
+                fillOpacity={1}
+                fill="url(#colorGoal)"
+                strokeDasharray="5 5"
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </motion.div>
       )}
     </div>
-
   );
 };
 

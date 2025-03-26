@@ -75,24 +75,54 @@ module.exports.loginUser = async (req, res, next) => {
 module.exports.updateUserProfile = async (req, res) => {
   try {
     const { name, email, gender, dob, height, weight } = req.body;
-    const user = await userModel.findById(req.user._id);
-
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+    
+    // Input validation
+    if (!name || !email) {
+      return res.status(400).json({
+        success: false,
+        message: 'Name and email are required'
+      });
     }
 
-    user.name = name || user.name;
-    user.email = email || user.email;
+    const user = await userModel.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    // Check if email is being changed and if it's already in use
+    if (email !== user.email) {
+      const existingUser = await userModel.findOne({ email });
+      if (existingUser) {
+        return res.status(400).json({
+          success: false,
+          message: 'Email already in use'
+        });
+      }
+    }
+
+    user.name = name;
+    user.email = email;
     user.gender = gender || user.gender;
     user.dob = dob || user.dob;
     user.height = height || user.height;
     user.weight = weight || user.weight;
 
     await user.save();
-    res.status(200).json({ message: 'Profile updated successfully', user });
+    
+    res.status(200).json({
+      success: true,
+      message: 'Profile updated successfully',
+      user
+    });
   } catch (error) {
     console.error('Error updating profile:', error);
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({
+      success: false,
+      message: 'Server error while updating profile'
+    });
   }
 };
 
@@ -100,18 +130,35 @@ module.exports.updateUserProfile = async (req, res) => {
 module.exports.changeUserPassword = async (req, res) => {
   try {
     const { password } = req.body;
-    const user = await userModel.findById(req.user._id);
+    
+    if (!password || password.length < 6) {
+      return res.status(400).json({
+        success: false,
+        message: 'Password must be at least 6 characters long'
+      });
+    }
 
+    const user = await userModel.findById(req.user._id);
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
     }
 
     user.password = await userModel.hashPassword(password);
     await user.save();
-    res.status(200).json({ message: 'Password changed successfully' });
+    
+    res.status(200).json({
+      success: true,
+      message: 'Password changed successfully'
+    });
   } catch (error) {
     console.error('Error changing password:', error);
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({
+      success: false,
+      message: 'Server error while changing password'
+    });
   }
 };
 
@@ -169,9 +216,19 @@ module.exports.getAllContactMessages = async (req, res) => {
 
 
 //Profile
-module.exports.getUserProfile = async (req, res, next) => {
-  res.status(200).json({ user: req.user });
-}
+// module.exports.getUserProfile = async (req, res, next) => {
+//   res.status(200).json({ user: req.user });
+// }
+
+module.exports.getUserProfile = async (req, res) => {
+  try {
+    const user = req.user; // `req.user` is set by the `authUser` middleware
+    res.status(200).json({ user });
+  } catch (error) {
+    console.error("Error fetching user profile:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
 
 //Logout
 module.exports.logoutUser = async (req, res, next) => {
@@ -416,3 +473,39 @@ module.exports.getTarget = async (req, res) => {
 //     next(error);
 //   }
 // };
+
+// Add this new controller method
+module.exports.uploadProfilePhoto = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ 
+        success: false,
+        message: 'No file uploaded' 
+      });
+    }
+
+    const user = await userModel.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ 
+        success: false,
+        message: 'User not found' 
+      });
+    }
+
+    // Update only the current user's profile picture
+    user.profilePicture = req.file.path;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Profile picture uploaded successfully',
+      profilePicture: req.file.path
+    });
+  } catch (error) {
+    console.error('Error uploading profile picture:', error);
+    res.status(500).json({ 
+      success: false,
+      message: error.message || 'Error uploading profile picture'
+    });
+  }
+};

@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -85,7 +84,22 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-
+  followers: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user'
+  }],
+  following: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user'
+  }],
+  posts: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Post'
+  }],
+  profilePicture: {
+    type: String,
+    default: ''
+  },
 });
 
 userSchema.add({

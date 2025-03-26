@@ -1,10 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaBed, FaClock, FaBell, FaMobileAlt } from "react-icons/fa";
 import useAlarm from "../SleepComponent/Sleep";
+import axios from "axios";
+
+const getUserId = () => {
+  const token = localStorage.getItem("token");
+  if (!token) return null;
+  
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const payload = JSON.parse(window.atob(base64));
+    return payload.userId || payload._id;
+  } catch (e) {
+    console.error("Error decoding token:", e);
+    return null;
+  }
+};
 
 const TodaySchedule = () => {
   const {
@@ -29,6 +45,8 @@ const TodaySchedule = () => {
   } = useAlarm();
   const [bedDate, setBedDate] = useState(new Date());
   const [alarmDate, setAlarmDate] = useState(new Date());
+  const [schedule, setSchedule] = useState(null);
+  const navigate = useNavigate();
 
   // Format date and time for display
   const formatDate = (date) => {
@@ -46,6 +64,101 @@ const TodaySchedule = () => {
     const formattedHour = hour % 12 || 12;
     return `${formattedHour}:${minute.toString().padStart(2, "0")} ${period}`;
   };
+
+  // Update useEffect for initial data loading
+  useEffect(() => {
+    const userId = getUserId();
+    if (!userId) {
+      navigate("/login");
+      return;
+    }
+    fetchTodaySchedule();
+
+    // Load saved schedule from localStorage
+    const savedSchedule = localStorage.getItem(`todaySchedule_${userId}`);
+    if (savedSchedule) {
+      setSchedule(JSON.parse(savedSchedule));
+    }
+  }, []);
+
+  // Update fetchTodaySchedule function
+  const fetchTodaySchedule = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const userId = getUserId();
+      if (!userId) {
+        throw new Error("User not authenticated");
+      }
+
+      const response = await axios.get(
+        "http://localhost:4000/sleep/today-schedule",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          params: { userId }
+        }
+      );
+      setSchedule(response.data);
+      
+      // Save to localStorage
+      localStorage.setItem(`todaySchedule_${userId}`, JSON.stringify(response.data));
+    } catch (error) {
+      console.error("Error fetching today's schedule:", error);
+      if (error.message === "User not authenticated") {
+        navigate("/login");
+      }
+    }
+  };
+
+  // Update updateSchedule function
+  const updateSchedule = async (updatedSchedule) => {
+    try {
+      const token = localStorage.getItem("token");
+      const userId = getUserId();
+      if (!userId) {
+        throw new Error("User not authenticated");
+      }
+
+      const response = await axios.put(
+        "http://localhost:4000/sleep/update-schedule",
+        { ...updatedSchedule, userId },
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+
+      setSchedule(response.data);
+      
+      // Update localStorage
+      localStorage.setItem(`todaySchedule_${userId}`, JSON.stringify(response.data));
+      toast.success("Schedule updated successfully!");
+    } catch (error) {
+      console.error("Error updating schedule:", error);
+      toast.error("Failed to update schedule");
+    }
+  };
+
+  // Add cleanup function
+  useEffect(() => {
+    return () => {
+      const userId = getUserId();
+      if (userId) {
+        localStorage.removeItem(`todaySchedule_${userId}`);
+      }
+    };
+  }, []);
+
+  // Add token removal listener
+  useEffect(() => {
+    const handleStorageChange = (e) => {
+      if (e.key === 'token' && !e.newValue) {
+        setSchedule(null);
+        navigate("/login");
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
 
   return (
     <div className="min-h-screen  mockup-phone border-primary flex items-center justify-center bg-gray-900 text-white p-4">

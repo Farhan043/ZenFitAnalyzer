@@ -1,27 +1,21 @@
-
 import React, { act, useContext, useEffect, useState } from 'react';
 import { UserDataContext } from '../../Context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'; 
-import { useTranslation } from 'react-i18next'; 
-import LanguageModal from '../../Pages/Translater/LanguageModal';
-import { translateText } from '../../Pages/Translater/118n';
-
-
+import { Camera, ArrowLeft, Users, Award, History, BarChart2, Mail, Shield, Settings, X } from 'lucide-react';
+import ProfileImage from '../Common/ProfileImage';
 
 const Name = () => {
   const { user, updateUser } = useContext(UserDataContext);
-  const storedPhoto = localStorage.getItem("profilePhoto");
   const [selectedFile, setSelectedFile] = useState(null);
-  const [profilePhoto, setProfilePhoto] = useState(storedPhoto || user.profilePhoto || "/default-avatar.png");
-  const [uploadMessage, setUploadMessage] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
   const navigate = useNavigate();
-  const [activeModal, setActiveModal] = useState(null); // Track which modal is open
-  const { t, i18n } = useTranslation();
-  const [translatedTitles, setTranslatedTitles] = useState({});
- 
+  const [activeModal, setActiveModal] = useState(null);
+  const [followers, setFollowers] = useState([]);
+  const [following, setFollowing] = useState([]);
+  const [showModal, setShowModal] = useState(null);
 
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
@@ -35,87 +29,136 @@ const Name = () => {
     weight: user.weight || ''
   });
 
-    // Load stored profile photo on mount
-    useEffect(() => {
-      if (storedPhoto) {
-        setProfilePhoto(storedPhoto);
-      }
-    }, []);
-  
-    // Handle file selection
-    const handleFileChange = (event) => {
-      setSelectedFile(event.target.files[0]);
-    };
-  
-    // Handle file upload
-    const handleUpload = async () => {
-      if (!selectedFile) {
-        toast.error("Please select a file.");
+  const [postsCount, setPostsCount] = useState(0);
+
+  const titles = {
+    contactUs: 'Contact Us',
+    privacyPolicy: 'Privacy Policy',
+    settings: 'Settings',
+    other: 'Other',
+    account: 'Account',
+    personalData: 'Personal Data',
+    achievement: 'Achievement',
+    activityHistory: 'Activity History',
+    workoutProgress: 'Workout Progress',
+    profile: 'Profile',
+    height: 'Height',
+    weight: 'Weight',
+    age: 'Age',
+    gender: 'Gender',
+    name: 'Name',
+    email: 'Email',
+    userDetails: 'User Details',
+    changePassword: 'Change Password',
+    dob: 'Date of Birth',
+    updateProfile: 'Update Profile Information',
+    send: 'Send',
+    close: 'Close',
+    message: 'Message',
+    updateProfileInfo: 'Update Profile Information',
+  };
+
+  useEffect(() => {
+    fetchSocialData();
+    fetchPostsCount();
+  }, []);
+
+  const fetchSocialData = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const [followersRes, followingRes] = await Promise.all([
+        axios.get(`${import.meta.env.VITE_BASE_URL}/social/followers`, {
+          headers: { Authorization: `Bearer ${token}` }
+        }),
+        axios.get(`${import.meta.env.VITE_BASE_URL}/social/following`, {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+      ]);
+
+      setFollowers(followersRes.data);
+      setFollowing(followingRes.data);
+    } catch (error) {
+      console.error('Error fetching social data:', error);
+      toast.error('Failed to load social data');
+    }
+  };
+
+  const fetchPostsCount = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.error('No token found');
         return;
       }
-  
-      const formData = new FormData();
-      formData.append("profilePhoto", selectedFile);
-  
-      try {
-        const response = await axios.post(
-          `${import.meta.env.VITE_BASE_URL}/users/upload-photo`,
-          formData,
-          { headers: { "Content-Type": "multipart/form-data" } }
-        );
-  
-        if (response.status === 200) {
-          const imageUrl = response.data.filePath; // Get full image URL from backend
-          setProfilePhoto(imageUrl);
-          localStorage.setItem("profilePhoto", imageUrl); // Save to localStorage
-          updateUser({ ...user, profilePhoto: imageUrl }); // Update global state
-  
-          toast.success("Profile picture updated successfully! 🎉");
-        } else {
-          toast.error("Upload failed.");
+
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/social/posts/count`, {
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
         }
-      } catch (error) {
-        console.error("Upload Error:", error);
-        toast.error("Error uploading file.");
+      });
+
+      if (response.data && typeof response.data.count === 'number') {
+        setPostsCount(response.data.count);
+      } else {
+        console.error('Invalid response format:', response.data);
+        setPostsCount(0);
       }
-    };
-  
-  useEffect(() => {
-    const updateTranslations = async () => {
-      const translations = {
-        contactUs: await translateText('Contact Us', i18n.language),
-        privacyPolicy: await translateText('Privacy Policy', i18n.language),
-        settings: await translateText('Settings', i18n.language),
-        language: await translateText('Language', i18n.language),
-        other: await translateText('Other', i18n.language),
-        account: await translateText('Account', i18n.language),
-        personalData: await translateText('Personal Data', i18n.language),
-        achievement: await translateText('Achievement', i18n.language),
-        activityHistory: await translateText('Activity History', i18n.language),
-        workoutProgress: await translateText('Workout Progress', i18n.language),
-        profile: await translateText('Profile', i18n.language),
-        height: await translateText('Height', i18n.language),
-        weight: await translateText('Weight', i18n.language),
-        age: await translateText('Age', i18n.language),
-        gender: await translateText('Gender', i18n.language),
-        name: await translateText('Name', i18n.language),
-        email: await translateText('Email', i18n.language),
-        userDetails: await translateText('User Details', i18n.language),
-        changePassword: await translateText('Change Password', i18n.language),
-        dob: await translateText('Date of Birth', i18n.language),
-        updateProfile: await translateText('Update Profile Information', i18n.language),
-        send: await translateText('Send', i18n.language),
-        close: await translateText('Close', i18n.language),
-        message: await translateText('Message', i18n.language),
-        updateProfileInfo: await translateText('Update Profile Information', i18n.language),
-      };
-      setTranslatedTitles(translations);
-    };
+    } catch (error) {
+      console.error('Error fetching posts count:', error);
+      setPostsCount(0);
+      if (error.response?.status === 404) {
+        toast.error('Could not fetch posts count - endpoint not found');
+      } else {
+        toast.error('Failed to load posts count');
+      }
+    }
+  };
 
-    updateTranslations();
-  }, [i18n.language]);
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
 
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('Image size should be less than 5MB');
+      return;
+    }
 
+    setSelectedFile(file);
+    handleUpload(file);
+  };
+
+  const handleUpload = async (file) => {
+    setIsUploading(true);
+    const formData = new FormData();
+    formData.append("profilePhoto", file);
+
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/users/upload-photo`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+
+      if (response.data.success) {
+        const profileUrl = response.data.profilePicture;
+        updateUser({ ...user, profilePicture: profileUrl });
+        localStorage.setItem('profilePicture', profileUrl);
+        toast.success('Profile picture updated successfully!');
+      }
+    } catch (error) {
+      console.error('Upload error:', error);
+      toast.error('Failed to update profile picture');
+    } finally {
+      setIsUploading(false);
+    }
+  };
 
   useEffect(() => {
     setProfileInfo({
@@ -141,9 +184,6 @@ const Name = () => {
     }
     setActiveModal(null);
   };
-
-
-
 
   const handleSend = async () => {
     if (!email || !message) {
@@ -187,15 +227,21 @@ const Name = () => {
   };
 
   const handleChangePassword = async () => {
-    if (!newPassword) {
-      toast.error('Please enter a new password.');
-      return;
-    }
-
     try {
+      if (!newPassword) {
+        toast.error('Please enter a new password');
+        return;
+      }
+
+      // Password validation
+      if (newPassword.length < 6) {
+        toast.error('Password must be at least 6 characters long');
+        return;
+      }
+
       const token = localStorage.getItem('token');
       if (!token) {
-        toast.error('You are not logged in. Please log in and try again.');
+        toast.error('Authentication required. Please log in again.');
         return;
       }
 
@@ -210,19 +256,15 @@ const Name = () => {
         }
       );
 
-      if (response.status === 200) {
-        toast.success('Password changed successfully!', {
-          position: 'top-right',
-          theme: 'dark',
-        });
+      if (response.data.success) {
+        toast.success('Password changed successfully!');
         setNewPassword('');
         closeModal();
-      } else {
-        toast.error('Failed to change password.');
       }
     } catch (error) {
-      console.error('Change Password API Error:', error.response);
-      toast.error(error.response?.data?.error || 'An error occurred. Please try again later.');
+      console.error('Change Password Error:', error);
+      const errorMessage = error.response?.data?.message || 'Failed to change password';
+      toast.error(errorMessage);
     }
   };
 
@@ -230,7 +272,31 @@ const Name = () => {
     try {
       const token = localStorage.getItem('token');
       if (!token) {
-        toast.error('You are not logged in. Please log in and try again.');
+        toast.error('Authentication required. Please log in again.');
+        return;
+      }
+
+      // Validate inputs
+      if (!profileInfo.name || !profileInfo.email) {
+        toast.error('Name and email are required fields');
+        return;
+      }
+
+      // Email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(profileInfo.email)) {
+        toast.error('Please enter a valid email address');
+        return;
+      }
+
+      // Height and weight validation
+      if (profileInfo.height && (profileInfo.height < 0 || profileInfo.height > 10)) {
+        toast.error('Please enter a valid height (0-10 ft)');
+        return;
+      }
+
+      if (profileInfo.weight && (profileInfo.weight < 0 || profileInfo.weight > 500)) {
+        toast.error('Please enter a valid weight (0-500 kg)');
         return;
       }
 
@@ -245,88 +311,140 @@ const Name = () => {
         }
       );
 
-      if (response.status === 200) {
-        toast.success('Profile updated successfully!', {
-          position: 'top-right',
-          theme: 'dark',
-        });
-        updateUser({ ...user, ...profileInfo }); // Merge the updated profile info with the existing user data
+      if (response.data.success) {
+        updateUser({ ...user, ...response.data.user });
+        toast.success('Profile updated successfully!');
         closeModal();
-      } else {
-        toast.error('Failed to update profile.');
       }
     } catch (error) {
-      console.error('Update Profile API Error:', error.response);
-      toast.error(error.response?.data?.error || 'An error occurred. Please try again later.');
+      console.error('Update Profile Error:', error);
+      const errorMessage = error.response?.data?.message || 'Failed to update profile';
+      toast.error(errorMessage);
     }
   };
 
   return (
-    <>
-      {/* Header Section */}
-      <div className="rounded flex items-center py-4 px-3">
-        <i className="ri-arrow-left-s-line text-4xl" onClick={() => navigate('/home')}></i>
-        <div className="text-center w-full font-bold text-3xl">
-          <h1>{translatedTitles.profile}</h1>
+    <div className="min-h-screen bg-gradient-to-b from-gray-800 to-gray-900">
+      {/* Header */}
+      <div className="sticky top-0 bg-gray-900/80 backdrop-blur-md z-10 border-b border-gray-700">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center">
+            <button 
+              onClick={() => navigate('/social')} 
+              className="p-2 hover:bg-gray-700 rounded-full transition-colors"
+            >
+              <ArrowLeft size={24} className="text-gray-300" />
+            </button>
+            {/* <h1 className="text-xl font-semibold text-gray-100 ml-4">
+              {titles.profile}
+            </h1> */}
           </div>
-      </div>
-
-     {/* User Info Section */}
-<div className="p-4 bg-black bg-opacity-10 flex flex-col rounded-lg mx-5 gap-4">
-  <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
-    {/* Profile Picture Upload */}
-    <div className="flex flex-col items-center">
-          <label htmlFor="profile-upload" className="cursor-pointer">
-            <div className="w-24 h-24 rounded-full border-4 border-blue-400 flex items-center justify-center overflow-hidden">
-              <img 
-                src={profilePhoto} 
-                alt="Profile" 
-                className="w-full h-full object-cover"
-                onError={(e) => (e.target.src = "/default-avatar.png")} // Fallback image
-              />
-            </div>
-          </label>
-          <input type="file" id="profile-upload" accept="image/*" className="hidden" onChange={handleFileChange} />
-          <button onClick={handleUpload} className="mt-3 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition">
-            Upload
+          <button 
+            onClick={() => openModal('setting')}
+            className="p-2 hover:bg-gray-700 rounded-full transition-colors"
+          >
+            <Settings size={20} className="text-gray-300" />
           </button>
         </div>
+      </div>
 
-    {/* User Information */}
-    <div className="text-center  bg-black bg-opacity-50 p-6 rounded-lg w-full max-w-md">
-      <h2 className="text-2xl text-blue-400 font-semibold">{user.name || 'Guest'}</h2>
-    </div>
-  </div>
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        {/* Profile Card */}
+        <div className="bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
+          {/* Cover Image */}
+          <div className="h-32 bg-gradient-to-r from-blue-600 to-purple-600"></div>
+          
+          {/* Profile Info */}
+          <div className="px-6 pb-6">
+            <div className="flex flex-col items-center -mt-16">
+              {/* Profile Picture */}
+              <div className="relative">
+                <div className="w-full h-full rounded-full border-4 border-gray-800 overflow-hidden bg-gray-700">
+                  <ProfileImage user={user} size="xl" />
+                </div>
+                <label className="absolute bottom-0 right-0 bg-blue-500 p-2 rounded-full cursor-pointer shadow-lg hover:bg-blue-600 transition-colors">
+                  <input
+                    type="file"
+                    className="hidden"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    disabled={isUploading}
+                  />
+                  <Camera size={18} className="text-white" />
+                </label>
+              </div>
 
-        {/* User Info Cards */}
-        <div className="flex items-center gap-4 justify-around w-full">
-          <div className="p-2 bg-black bg-opacity-50 w-1/3 rounded-lg text-center">
-            <p className="text-xl text-blue-400 font-semibold">{user.height || 'N/A'} ft</p>
-            <p className="text-base text-gray-200">{ translatedTitles.height }</p>
-          </div>
-          <div className="p-2 bg-black bg-opacity-50 w-1/3 rounded-lg text-center">
-            <p className="text-xl text-blue-400 font-semibold">{user.weight || 'N/A'} kg</p>
-            <p className="text-base text-gray-200">{translatedTitles.weight}</p>
-          </div>
-          <div className="p-2 bg-black bg-opacity-50 w-1/3 rounded-lg text-center">
-            <p className="text-xl text-blue-400 font-semibold">
-              {user.dob ? new Date().getFullYear() - new Date(user.dob).getFullYear() : 'N/A'} yo
-            </p>
-            <p className="text-base text-gray-200">{translatedTitles.age}</p>
+              {/* User Details */}
+              <h2 className="mt-4 text-2xl font-bold text-gray-100">{user?.name}</h2>
+              <p className="text-gray-400">{user?.email}</p>
+
+              {/* Stats */}
+              <div className="flex gap-8 mt-6">
+                <div onClick={() => openModal('followers')} className="text-center cursor-pointer">
+                  <div className="text-xl font-semibold text-gray-100">{followers.length}</div>
+                  <div className="text-sm text-gray-400">Followers</div>
+                </div>
+                <div onClick={() => openModal('following')} className="text-center cursor-pointer">
+                  <div className="text-xl font-semibold text-gray-100">{following.length}</div>
+                  <div className="text-sm text-gray-400">Following</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-xl font-semibold text-gray-100">{postsCount}</div>
+                  <div className="text-sm text-gray-400">Posts</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-</div>
 
-      {/* </div> */}
+        {/* Quick Stats Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+          {[
+            { icon: <i className="ri-ruler-line"/>, label: titles.height, value: `${user?.height || 'N/A'} ft` },
+            { icon: <i className="ri-scales-3-line"/>, label: titles.weight, value: `${user?.weight || 'N/A'} kg` },
+            { icon: <i className="ri-user-line"/>, label: titles.gender, value: user?.gender || 'N/A' },
+            { icon: <i className="ri-calendar-line"/>, label: titles.age, 
+              value: user?.dob ? `${new Date().getFullYear() - new Date(user.dob).getFullYear()}` : 'N/A' }
+          ].map((stat, index) => (
+            <div key={index} className="bg-gray-800 rounded-xl p-4 flex flex-col items-center">
+              <div className="text-blue-400 mb-2">{stat.icon}</div>
+              <div className="text-sm text-gray-400">{stat.label}</div>
+              <div className="text-lg font-semibold text-gray-100 mt-1">{stat.value}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Navigation Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+          {[
+            { icon: <Users size={24} />, label: 'Social Feed', path: '/socialfeed', color: 'from-blue-500 to-blue-600' },
+            { icon: <Award size={24} />, label: titles.achievement, path: '/achievement', color: 'from-purple-500 to-purple-600' },
+            { icon: <History size={24} />, label: titles.activityHistory, path: '/activity-history', color: 'from-green-500 to-green-600' },
+            { icon: <BarChart2 size={24} />, label: titles.workoutProgress, path: '/workout-progress', color: 'from-yellow-500 to-yellow-600' },
+            { icon: <Mail size={24} />, label: titles.contactUs, action: () => openModal('contact'), color: 'from-red-500 to-red-600' }
+          ].map((item, index) => (
+            <div
+              key={index}
+              onClick={() => item.path ? navigate(item.path) : item.action()}
+              className={`bg-gradient-to-r ${item.color} p-4 rounded-xl cursor-pointer transform hover:scale-105 transition-all duration-200`}
+            >
+              <div className="flex items-center gap-3">
+                <div className="text-white">{item.icon}</div>
+                <span className="text-white font-medium">{item.label}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* Account Section */}
-      <div className="p-4 bg-black bg-opacity-50 rounded-lg mx-5 mt-8">
-        <h2 className="font-bold text-2xl mb-4">{translatedTitles.account}</h2>
+      {/* <div className="p-4 bg-black bg-opacity-50 rounded-lg mx-5 mt-8">
+        <h2 className="font-bold text-2xl mb-4">{titles.account}</h2>
         <div className="flex flex-col gap-4">
           <div className="flex justify-between items-center cursor-pointer" onClick={() => openModal('personalData')}>
             <div className="flex items-center gap-2">
               <i className="ri-user-line text-blue-400 text-2xl"></i>
-              <span className="text-2xl text-blue-400 mb-2">{translatedTitles.personalData}</span>
+              <span className="text-2xl text-blue-400 mb-2">{titles.personalData}</span>
             </div>
             <i className="ri-arrow-right-s-line text-3xl text-blue-400"></i>
           </div>
@@ -335,7 +453,7 @@ const Name = () => {
         <div className="flex justify-between items-center cursor-pointer" onClick={() => navigate('/achievement')}>
           <div className="flex items-center gap-2">
             <i className="ri-award-line text-blue-400 text-2xl"></i>
-            <span className="text-2xl text-blue-400 mb-2">{translatedTitles.achievement }</span>
+            <span className="text-2xl text-blue-400 mb-2">{titles.achievement }</span>
           </div>
           <i className="ri-arrow-right-s-line text-3xl text-blue-400"></i>
         </div>
@@ -343,7 +461,7 @@ const Name = () => {
         <div className="flex justify-between items-center cursor-pointer" onClick={() => navigate('/activity-history')}>
           <div className="flex items-center gap-2">
             <i className="ri-history-line text-blue-400 text-2xl"></i>
-            <span className="text-2xl text-blue-400 mb-2">{translatedTitles.activityHistory}</span>
+            <span className="text-2xl text-blue-400 mb-2">{titles.activityHistory}</span>
           </div>
           <i className="ri-arrow-right-s-line text-3xl text-blue-400"></i>
         </div>
@@ -351,24 +469,24 @@ const Name = () => {
         <div className="flex justify-between items-center cursor-pointer" onClick={() => navigate('/workout-progress')}>
           <div className="flex items-center gap-2">
             <i className="ri-bar-chart-line text-blue-400 text-2xl"></i>
-            <span className="text-2xl text-blue-400 mb-2">{translatedTitles.workoutProgress}</span>
+            <span className="text-2xl text-blue-400 mb-2">{titles.workoutProgress}</span>
           </div>
           <i className="ri-arrow-right-s-line text-3xl text-blue-400"></i>
         </div>
-      </div>
+      </div> */}
 
       {/* Modal for Personal Data */}
       {activeModal === 'personalData' && (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
           <div className="glass rounded-lg p-6 w-11/12 max-w-md">
-            <h2 className="text-xl text-blue-400 font-bold mb-4 text-center">{translatedTitles.personalData}</h2>
+            <h2 className="text-xl text-blue-400 font-bold mb-4 text-center">{titles.personalData}</h2>
             <ul className="space-y-2">
-              <li className='text-blue-400 text-xl'><strong className='text-blue-400 text-xl'>{translatedTitles.name}:</strong> {user.name || 'N/A'}</li>
-              <li className='text-blue-400 text-xl'><strong className='text-blue-400 text-xl'>{translatedTitles.email}:</strong> {user.email || 'N/A'}</li>
-              <li className='text-blue-400 text-xl'><strong className='text-blue-400 text-xl'>{translatedTitles.gender}:</strong> {user.gender || 'N/A'}</li>
-              <li className='text-blue-400 text-xl'><strong className='text-blue-400 text-xl'>{translatedTitles.dob}:</strong> {user.dob ? new Date(user.dob).toLocaleDateString('en-GB') : 'N/A'}</li>
-              <li className='text-blue-400 text-xl'><strong className='text-blue-400 text-xl'>{translatedTitles.height}:</strong> {user.height || 'N/A'} ft</li>
-              <li className='text-blue-400 text-xl'><strong className='text-blue-400 text-xl'>{translatedTitles.weight}:</strong> {user.weight || 'N/A'} kg</li>
+              <li className='text-blue-400 text-xl'><strong className='text-blue-400 text-xl'>{titles.name}:</strong> {user.name || 'N/A'}</li>
+              <li className='text-blue-400 text-xl'><strong className='text-blue-400 text-xl'>{titles.email}:</strong> {user.email || 'N/A'}</li>
+              <li className='text-blue-400 text-xl'><strong className='text-blue-400 text-xl'>{titles.gender}:</strong> {user.gender || 'N/A'}</li>
+              <li className='text-blue-400 text-xl'><strong className='text-blue-400 text-xl'>{titles.dob}:</strong> {user.dob ? new Date(user.dob).toLocaleDateString('en-GB') : 'N/A'}</li>
+              <li className='text-blue-400 text-xl'><strong className='text-blue-400 text-xl'>{titles.height}:</strong> {user.height || 'N/A'} ft</li>
+              <li className='text-blue-400 text-xl'><strong className='text-blue-400 text-xl'>{titles.weight}:</strong> {user.weight || 'N/A'} kg</li>
               {user.logs && Array.isArray(user.logs) ? (
                 <li>
                   <strong>Logs:</strong>
@@ -386,63 +504,19 @@ const Name = () => {
               className="mt-4 bg-black bg-opacity-70 text-white px-4 py-2 rounded-lg w-full"
               onClick={closeModal}
             >
-              {translatedTitles.close}
+              {titles.close}
             </button>
           </div>
         </div>
       )}
 
-
-
-
-          {/* Contact Us Modal */}
-        
-                 <div className="p-4 bg-black bg-opacity-50 rounded-lg mx-5 mt-8">
-                 <h2 className="font-bold text-2xl mb-4">{translatedTitles.other}</h2>
-            
-                 <div className="flex justify-between items-center cursor-pointer" onClick={() => openModal('contact')}>
-                     <div className="flex items-center gap-2">
-                    <i className="ri-mail-line text-2xl text-blue-400"></i>
-                       <span className="text-2xl text-blue-400 mb-2">{translatedTitles.contactUs}</span>
-                     </div>
-                    <i className="ri-arrow-right-s-line text-3xl text-blue-400"></i>
-                 </div>
-                
-                
-                 <div className="flex justify-between items-center cursor-pointer" onClick={() => openModal('policy')}>
-                     <div className="flex items-center gap-2">
-                       <i className="ri-award-line text-blue-400 text-2xl"></i>
-                       <h2 className="text-2xl text-blue-400 mb-2">{translatedTitles.privacyPolicy}</h2>
-                     </div>
-                     <i className="ri-arrow-right-s-line text-3xl text-blue-400"></i>
-                 </div>
-                
-        
-                 <div className="flex justify-between items-center cursor-pointer" onClick={() => openModal('setting')}>
-                     <div className="flex items-center gap-2">
-                     <i className="ri-settings-2-line text-2xl text-blue-400"></i>
-                      <span className="text-2xl text-blue-400 mb-2">{translatedTitles.settings}</span>
-                     </div>
-                     <i className="ri-arrow-right-s-line text-3xl text-blue-400"></i>
-                 </div>
-
-                 <div className="flex justify-between items-center cursor-pointer" onClick={() => openModal('language')}>
-          <div className="flex items-center gap-2">
-            <i className="ri-global-line text-2xl text-blue-400"></i>
-            <span className="text-2xl text-blue-400 mb-2">{translatedTitles.language}</span>
-          </div>
-          <i className="ri-arrow-right-s-line text-3xl text-blue-400"></i>
-        </div>
-        </div>
-
-
       {/* Contact Us Modal */}
       {activeModal === 'contact' && (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
           <div className="glass rounded-lg p-6 w-11/12 max-w-md">
-            <h2 className="text-xl text-blue-400 font-bold mb-4 text-center">{translatedTitles.contactUs}</h2>
+            <h2 className="text-xl text-blue-400 font-bold mb-4 text-center">{titles.contactUs}</h2>
             <div className="mb-4">
-              <label className="block text-blue-400 text-sm font-bold mb-2">{translatedTitles.email}:</label>
+              <label className="block text-blue-400 text-sm font-bold mb-2">{titles.email}:</label>
               <input
                 type="email"
                 className="w-full px-3 py-2 rounded-lg bg-black bg-opacity-50 text-white"
@@ -452,7 +526,7 @@ const Name = () => {
               />
             </div>
             <div className="mb-4">
-              <label className="block text-blue-400 text-sm font-bold mb-2">{translatedTitles.message}:</label>
+              <label className="block text-blue-400 text-sm font-bold mb-2">{titles.message}:</label>
               <textarea
                 className="w-full px-3 py-2 rounded-lg bg-black bg-opacity-50 text-white"
                 rows="4"
@@ -465,54 +539,23 @@ const Name = () => {
               className="w-full bg-blue-400 text-white py-2 rounded-lg"
               onClick={handleSend}
             >
-             {translatedTitles.send}
+             {titles.send}
             </button>
             <button
               className="mt-4 bg-black bg-opacity-70 text-white px-4 py-2 rounded-lg w-full"
               onClick={closeModal}
             >
-              {translatedTitles.close}
+              {titles.close}
             </button>
           </div>
         </div>
       )}
 
-      
-  {/* Language Selection Modal  */}
-  {/* {activeModal === 'language' && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
-          <div className="glass rounded-lg p-6 w-11/12 max-w-md">
-            <h2 className="text-xl text-blue-400 font-bold mb-4 text-center">{t('Select Language')}</h2>
-            <ul className="space-y-2">
-              <li className="cursor-pointer text-blue-400 text-xl" onClick={() => changeLanguage('en')}>English</li>
-              <li className="cursor-pointer text-blue-400 text-xl" onClick={() => changeLanguage('es')}>Español</li>
-              <li className="cursor-pointer text-blue-400 text-xl" onClick={() => changeLanguage('fr')}>Français</li>
-              <li className="cursor-pointer text-blue-400 text-xl" onClick={() => changeLanguage('de')}>Deutsch</li>
-              <li className="cursor-pointer text-blue-400 text-xl" onClick={() => changeLanguage('hi')}>हिन्दी</li>
-              <li className="cursor-pointer text-blue-400 text-xl" onClick={() => changeLanguage('ur')}>اردو</li>
-              <li className="cursor-pointer text-blue-400 text-xl" onClick={() => changeLanguage('zh')}>中文</li>
-              <li className="cursor-pointer text-blue-400 text-xl" onClick={() => changeLanguage('ar')}>العربية</li>
-              <li className="cursor-pointer text-blue-400 text-xl" onClick={() => changeLanguage('bn')}>বাংলা</li>
-              <li className="cursor-pointer text-blue-400 text-xl" onClick={() => changeLanguage('ru')}>Русский</li>
-              <li className="cursor-pointer text-blue-400 text-xl" onClick={() => changeLanguage('ta')}>தமிழ்</li>
-              <li className="cursor-pointer text-blue-400 text-xl" onClick={() => changeLanguage('te')}>తెలుగు</li>
-
-
-            </ul>
-            <button className="mt-4 bg-black bg-opacity-70 text-white px-4 py-2 rounded-lg w-full" onClick={closeModal}>{t('Close')}</button>
-          </div>
-        </div>
-      )}  */}
-
-
-      {/* {activeModal === 'language' && <LanguageModal closeModal={closeModal} />} */}
-      {activeModal === 'language' && <LanguageModal closeModal={() => setActiveModal(null)} />}
-
       {/* Modal for Privacy Policy */}
       {activeModal === 'policy' && (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
           <div className="glass rounded-lg p-6 w-11/12 max-w-md">
-            <h2 className="text-xl text-blue-400 font-bold mb-4 text-center">{ translatedTitles.privacyPolicy}</h2>
+            <h2 className="text-xl text-blue-400 font-bold mb-4 text-center">{ titles.privacyPolicy}</h2>
             <p>
               {/* Add your privacy policy content here */}
             </p>
@@ -520,7 +563,7 @@ const Name = () => {
               className="mt-4 bg-black bg-opacity-70 text-white px-4 py-2 rounded-lg w-full"
               onClick={closeModal}
             >
-             {translatedTitles.close}
+             {titles.close}
             </button>
           </div>
         </div>
@@ -528,87 +571,245 @@ const Name = () => {
 
       {/* Modal for Settings */}
       {activeModal === 'setting' && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
-          <div className="glass rounded-lg p-6 w-11/12 max-w-md">
-            <h2 className="text-xl text-blue-400 font-bold mb-4 text-center">{translatedTitles.settings}</h2>
-            <div className="mb-4">
-              <label className="block text-blue-400 text-sm font-bold mb-2">{translatedTitles.changePassword}:</label>
-              <input
-                type="password"
-                className="w-full px-3 py-2 rounded-lg bg-black bg-opacity-50 text-white"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                placeholder="Enter new password"
-              />
-              <button
-                className="w-full bg-blue-400 text-white py-2 rounded-lg mt-2"
-                onClick={handleChangePassword}
+        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4">
+          <div className="bg-gray-900 rounded-2xl w-full max-w-md max-h-[90vh] flex flex-col">
+            {/* Header - Keep fixed */}
+            <div className="bg-gray-800 px-6 py-4 flex items-center justify-between rounded-t-2xl">
+              <h2 className="text-xl text-gray-100 font-semibold">
+                {titles.settings}
+              </h2>
+              <button 
+                onClick={closeModal}
+                className="p-2 hover:bg-gray-700 rounded-full transition-colors"
               >
-                {translatedTitles.changePassword}
+                <X size={20} className="text-gray-400" />
               </button>
             </div>
-            <div className="mb-4">
-              <label className="block text-blue-400 text-sm font-bold mb-2">{translatedTitles.updateProfileInfo}:</label>
-              <input
-                type="text"
-                className="w-full px-3 py-2 rounded-lg bg-black bg-opacity-50 text-white mb-2"
-                value={profileInfo.name}
-                onChange={(e) => setProfileInfo({ ...profileInfo, name: e.target.value })}
-                placeholder="Enter new name"
-              />
-              <input
-                type="email"
-                className="w-full px-3 py-2 rounded-lg bg-black bg-opacity-50 text-white mb-2"
-                value={profileInfo.email}
-                onChange={(e) => setProfileInfo({ ...profileInfo, email: e.target.value })}
-                placeholder="Enter new email"
-              />
-              <input
-                type="text"
-                className="w-full px-3 py-2 rounded-lg bg-black bg-opacity-50 text-white mb-2"
-                value={profileInfo.gender}
-                onChange={(e) => setProfileInfo({ ...profileInfo, gender: e.target.value })}
-                placeholder="Enter new gender"
-              />
-              <input
-                type="date"
-                className="w-full px-3 py-2 rounded-lg bg-black bg-opacity-50 text-white mb-2"
-                value={profileInfo.dob}
-                onChange={(e) => setProfileInfo({ ...profileInfo, dob: e.target.value })}
-                placeholder="Enter new date of birth"
-              />
-              <input
-                type="text"
-                className="w-full px-3 py-2 rounded-lg bg-black bg-opacity-50 text-white mb-2"
-                value={profileInfo.height}
-                onChange={(e) => setProfileInfo({ ...profileInfo, height: e.target.value })}
-                placeholder="Enter new height"
-              />
-              <input
-                type="text"
-                className="w-full px-3 py-2 rounded-lg bg-black bg-opacity-50 text-white mb-2"
-                value={profileInfo.weight}
-                onChange={(e) => setProfileInfo({ ...profileInfo, weight: e.target.value })}
-                placeholder="Enter new weight"
-              />
-              <button
-                className="w-full bg-blue-400 text-white py-2 rounded-lg"
-                onClick={handleUpdateProfile}
+
+            {/* Scrollable Content */}
+            <div className="p-6 overflow-y-auto custom-scrollbar">
+              <div className="space-y-6">
+                {/* Password Change Section */}
+                <div className="space-y-4 bg-gray-800/50 p-4 rounded-lg">
+                  <h3 className="text-lg text-gray-200 font-medium">
+                    {titles.changePassword}
+                  </h3>
+                  <div className="space-y-2">
+                    <input
+                      type="password"
+                      className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-gray-100 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      placeholder="Enter new password"
+                    />
+                    <button
+                      className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg transition-colors"
+                      onClick={handleChangePassword}
+                    >
+                      {titles.changePassword}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Profile Update Section */}
+                <div className="space-y-4 bg-gray-800/50 p-4 rounded-lg">
+                  <h3 className="text-lg text-gray-200 font-medium">
+                    {titles.updateProfileInfo}
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="sm:col-span-2">
+                      <label className="block text-sm text-gray-400 mb-1">Name</label>
+                      <input
+                        type="text"
+                        className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-gray-100 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                        value={profileInfo.name}
+                        onChange={(e) => setProfileInfo({ ...profileInfo, name: e.target.value })}
+                      />
+                    </div>
+                    <div className="sm:col-span-2">
+                      <label className="block text-sm text-gray-400 mb-1">Email</label>
+                      <input
+                        type="email"
+                        className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-gray-100 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                        value={profileInfo.email}
+                        onChange={(e) => setProfileInfo({ ...profileInfo, email: e.target.value })}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm text-gray-400 mb-1">Gender</label>
+                      <select
+                        className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-gray-100 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                        value={profileInfo.gender}
+                        onChange={(e) => setProfileInfo({ ...profileInfo, gender: e.target.value })}
+                      >
+                        <option value="">Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm text-gray-400 mb-1">Date of Birth</label>
+                      <input
+                        type="date"
+                        className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-gray-100 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                        value={profileInfo.dob}
+                        onChange={(e) => setProfileInfo({ ...profileInfo, dob: e.target.value })}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm text-gray-400 mb-1">Height (ft)</label>
+                      <input
+                        type="number"
+                        step="0.1"
+                        className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-gray-100 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                        value={profileInfo.height}
+                        onChange={(e) => setProfileInfo({ ...profileInfo, height: e.target.value })}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm text-gray-400 mb-1">Weight (kg)</label>
+                      <input
+                        type="number"
+                        step="0.1"
+                        className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-gray-100 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                        value={profileInfo.weight}
+                        onChange={(e) => setProfileInfo({ ...profileInfo, weight: e.target.value })}
+                      />
+                    </div>
+                  </div>
+                  <button
+                    className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg transition-colors mt-4"
+                    onClick={handleUpdateProfile}
+                  >
+                    {titles.updateProfile}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Followers Modal */}
+      {activeModal === 'followers' && (
+        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4">
+          <div className="bg-gray-900 rounded-2xl w-full max-w-md max-h-[90vh] flex flex-col">
+            <div className="bg-gray-800 px-6 py-4 flex items-center justify-between rounded-t-2xl">
+              <h2 className="text-xl text-gray-100 font-semibold">Followers</h2>
+              <button 
+                onClick={closeModal}
+                className="p-2 hover:bg-gray-700 rounded-full transition-colors"
               >
-                {translatedTitles.updateProfile}
+                <X size={20} className="text-gray-400" />
               </button>
             </div>
-            <button
-              className="mt-4 bg-black bg-opacity-70 text-white px-4 py-2 rounded-lg w-full"
-              onClick={closeModal}
-            >
-             {translatedTitles.close}
-            </button>
+            
+            <div className="p-6 overflow-y-auto custom-scrollbar">
+              <div className="space-y-2">
+                {followers.length > 0 ? (
+                  followers.map(follower => (
+                    <div 
+                      key={follower._id} 
+                      className="flex items-center gap-3 p-3 hover:bg-gray-800 rounded-lg transition-colors"
+                    >
+                      <div className="w-12 h-12 rounded-full overflow-hidden">
+                        <ProfileImage 
+                          user={follower}
+                          size="md"
+                        />
+                      </div>
+                      <div>
+                        <span className="text-gray-200 font-medium">{follower.name}</span>
+                        <p className="text-sm text-gray-400">{follower.email}</p>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-center text-gray-400">No followers yet</p>
+                )}
+              </div>
+            </div>
           </div>
+        </div>
+      )}
+
+      {/* Following Modal */}
+      {activeModal === 'following' && (
+        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4">
+          <div className="bg-gray-900 rounded-2xl w-full max-w-md max-h-[90vh] flex flex-col">
+            <div className="bg-gray-800 px-6 py-4 flex items-center justify-between rounded-t-2xl">
+              <h2 className="text-xl text-gray-100 font-semibold">Following</h2>
+              <button 
+                onClick={closeModal}
+                className="p-2 hover:bg-gray-700 rounded-full transition-colors"
+              >
+                <X size={20} className="text-gray-400" />
+              </button>
+            </div>
+            
+            <div className="p-6 overflow-y-auto custom-scrollbar">
+              <div className="space-y-2">
+                {following.length > 0 ? (
+                  following.map(followed => (
+                    <div 
+                      key={followed._id} 
+                      className="flex items-center gap-3 p-3 hover:bg-gray-800 rounded-lg transition-colors"
+                    >
+                      <div className="w-12 h-12 rounded-full overflow-hidden">
+                        <ProfileImage 
+                          user={followed}
+                          size="md"
+                        />
+                      </div>
+                      <div>
+                        <span className="text-gray-200 font-medium">{followed.name}</span>
+                        <p className="text-sm text-gray-400">{followed.email}</p>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-center text-gray-400">Not following anyone yet</p>
+                )}
+              </div>
+            </div>
           </div>
-        )}
-        <ToastContainer />
-    </>
+        </div>
+      )}
+
+      <ToastContainer 
+        position="bottom-center"
+        theme="dark"
+        toastClassName="bg-gray-800 text-gray-100"
+      />
+
+      {/* Add this CSS to your component or global styles */}
+      <style jsx>{`
+        .custom-scrollbar {
+          scrollbar-width: thin;
+          scrollbar-color: rgba(59, 130, 246, 0.5) rgba(17, 24, 39, 0.7);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: rgba(17, 24, 39, 0.7);
+          border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background-color: rgba(59, 130, 246, 0.5);
+          border-radius: 10px;
+          border: 2px solid rgba(17, 24, 39, 0.7);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background-color: rgba(59, 130, 246, 0.7);
+        }
+      `}</style>
+    </div>
   );
 };
 

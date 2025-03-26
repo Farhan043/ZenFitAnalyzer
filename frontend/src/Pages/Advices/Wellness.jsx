@@ -64,8 +64,8 @@ const Wellness = () => {
               <Link to="/workout" className="hover:text-blue-400 transition">
                 Workout
               </Link>
-              <Link to="/profile" className="hover:text-blue-400 transition">
-                Profile
+              <Link to="/social" className="hover:text-blue-400 transition">
+                community
               </Link>
 
               <div

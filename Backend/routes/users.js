@@ -42,19 +42,12 @@ router.put('/change-password', authMiddleware.authUser, userController.changeUse
 
 const BASE_URL = "http://localhost:4000"; // Change to your actual backend URL
 
-router.post("/upload-photo", upload.single("profilePhoto"), (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ error: "No file uploaded" });
-  }
-
-  const imageUrl = `${BASE_URL}/uploads/${req.file.filename}`; // Full URL for frontend
-
-  res.status(200).json({
-    success: true,
-    message: "File uploaded successfully",
-    filePath: imageUrl, // Send full URL
-  });
-});
+router.post(
+  "/upload-photo", 
+  authMiddleware.authUser,
+  upload.single("profilePhoto"), 
+  userController.uploadProfilePhoto
+);
 
 
 
