@@ -1,5 +1,4 @@
 require('dotenv').config();
-// const http = require("http"); 
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -17,11 +16,20 @@ const sleepRoutes = require('./routes/sleep.routes');
 const habitRoutes = require('./routes/habitRoutes');
 const challengeRoutes = require("./routes/challenge.routes");
 const socialRoutes = require('./routes/social.routes');
-// const { Server } = require("socket.io");
+
+
+var app = express();
+
+
+// const http = require("http");
+// const socketio  = require("socket.io");
+
+// const server = http.createServer(app);
+// const io = socketio(server);
+
 
 
 // view engine setup
-var app = express();
 // const server = http.createServer(app);
 // const io = new Server(server, {
 //   cors: {
@@ -42,9 +50,30 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use("/uploads", express.static(path.join(__dirname, "uploads"))); // Serve static files from the "uploads" directory
 
 app.use("/uploads", express.static("uploads"));
+
 // Socket.io connection
-// io.on("connection", (socket) => {
-//   console.log("User connected", socket.id);
+// io.on("connection", function (socket) {
+//     console.log("User connected");
+
+//     // Handle location updates from client
+//     socket.on("send-location", (data) => {
+//         // Broadcast the location to all other connected clients
+//         io.emit("receive-location", {id: socket.id, ...data});
+//     });
+
+//     socket.on("disconnect", () => {
+//       io.emit("user-disconnected", socket.id);
+//     });
+// });
+
+// Remove these browser-specific code blocks
+// DELETE the following sections:
+// - if (navigator.geolocation) { ... }
+// - L.map("map");
+
+//  io.on("connection", function (socket) {
+//   console.log("User connected");
+// });
 
 //   socket.on("addWater", (data) => {
 //     io.emit("waterUpdate", data); // Send notification to all clients
@@ -61,10 +90,12 @@ app.use("/chatbot", chatbotRouter);
 app.use("/api/songs", songsRouter);
 app.use("/api/gps", gpsRouter);
 app.use("/body-progress", bodyProgressRoutes);
-app.use('/user', sleepRoutes);
+app.use('/sleep', sleepRoutes);
 app.use('/habit', habitRoutes);
 app.use("/challenge", challengeRoutes); // Ensure this line is present and correct
 app.use('/social', socialRoutes);
+
+
 connectDb();
 
 

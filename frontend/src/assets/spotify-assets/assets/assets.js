@@ -59,6 +59,7 @@ import img31 from './images/img31.jpeg'
 import img32 from './images/img32.jpeg'
 import img33 from './images/img33.jpeg'
 import img34 from './images/img34.jpg'
+import img35 from './images/img35.jpeg'
 import song1 from  './songs/song1.mp3'
 import song2 from  './songs/song2.mp3'
 import song3 from  './songs/song3.mp3'
@@ -469,8 +470,8 @@ export const songsData = [
         id: 34,
         name: "Flowers",
         artist: "Miley Cyrus",
-        image: img1,
-        file: song1,
+        image: img35,
+        file: song3,
         duration: "3:20",
         genre: "Pop"
     },

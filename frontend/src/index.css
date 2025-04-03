@@ -2,6 +2,122 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Reset scrolling behavior */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  height: 100%;
+}
+
+body {
+  position: relative;
+  overflow-y: auto !important; /* Force vertical scrolling */
+  overflow-x: hidden;
+  height: 100%;
+}
+
+/* Enhanced thin and short scrollbar styling */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 10px 0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(129, 129, 129, 0.35);
+  border-radius: 12px;
+  max-height: 50px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(129, 129, 129, 0.6);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(129, 129, 129, 0.35) transparent;
+}
+
+/* Make the scrollbar appear only when scrolling */
+.scrollbar-auto {
+  scrollbar-width: auto;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 3px;
+}
+
+.scrollbar-rounded::-webkit-scrollbar-thumb {
+  border-radius: 12px;
+}
+
+#root {
+  width: 100%;
+  height: auto;
+  min-height: 100%;
+  position: relative;
+  overflow: visible !important; /* Ensure content is not clipped */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Enable scrolling on all major containers */
+.min-h-screen {
+  min-height: 100vh;
+  overflow-y: auto !important;
+}
+
+/* Extra scrolling helpers */
+.scrollable {
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Fix for mobile viewport scrolling issues */
+@media (max-width: 768px) {
+  body, html, #root {
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto !important;
+    height: auto;
+    min-height: 100%;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 2px;
+    height: 2px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    max-height: 40px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    margin: 5px 0;
+  }
+}
+
 .camera-section {
   height: 70vh;
   display: flex;

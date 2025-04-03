@@ -483,7 +483,7 @@ const Meal = () => {
             </div>
 
             {isOpen && (
-              <div className="bg-gray-900 md:hidden flex flex-col border border-blue-500 text-gray-200 mt-7 p-4 absolute top-16 left-0 w-96 mx-4 my-4 rounded-lg shadow-lg z-50">
+              <div className="bg-slate-900 md:hidden flex flex-col border border-blue-400 text-white mt-7 p-4 absolute top-16 left-0 right-0 mx-4 shadow-md rounded-md z-50">
                 <Link
                   to="/home"
                   className="py-2 px-4 mt-2 bg-gray-800 hover:bg-gray-700 rounded-md transition duration-200"

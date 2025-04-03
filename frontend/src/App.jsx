@@ -70,7 +70,7 @@ import Chatbot from "./components/Chatbot";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import MusicHome from "./Pages/Musics/MusicHome";
-import GPSTracker from "./Pages/GpsTracker";
+import GPSTracker from "./Pages/MarketPlace";
 import Body from "./Components/Progress/Body";
 import Contact from "./Components/Contact";
 import NotFound from "./Components/NotFound";
@@ -80,6 +80,14 @@ import SocialFeed from "./Components/Community/SocialFeed";
 // import PostCard from "./Components/Social/PostCard";
 import SocialFeeds from "./Components/Community/SocialFeeds";
 import Challenges from "./Components/Community/Challenges";
+import ZenFitMarketplace from "./Pages/ZenFitMarketplace";
+import Cart from "./Pages/Cart";
+import CartProvider from "./Context/CartContext";
+
+
+
+
+
 
 
 // import { div } from 'motion/react-client'
@@ -89,6 +97,7 @@ const App = () => {
   const [accessToken, setAccessToken] = useState(
     localStorage.getItem("spotifyToken") || ""
   );
+
   // Hide Chatbot on these pages
   const hiddenRoutes = [
     "/",
@@ -99,118 +108,121 @@ const App = () => {
     "/login",
     "/register",
     "/welcome",
+    "/musichome",
   ];
   const shouldShowChatbot = !hiddenRoutes.includes(location.pathname);
   return (
     <>
       {/* <ThemeProvider> */}
-      <Routes>
-        <Route path="/" element={<Start />} />
-        <Route path="/start2" element={<Start2 />} />
-        <Route path="/start3" element={<Start3 />} />
-        <Route path="/start4" element={<Start4 />} />
-        <Route path="/start5" element={<Start5 />} />
-        <Route path="/login" element={<Login />} />
-        {/* <Route path="/goal" element={<Goal />} />
-        <Route path="/goal2" element={<Goal2 />} />
-        <Route path="/goal3" element={<Goal3 />} /> */}
-        <Route path="/welcome" element={<Welcome />} />
-        <Route path="/register" element={<Register />} />
+      <CartProvider>
+        <Routes>
+          <Route path="/" element={<Start />} />
+          <Route path="/start2" element={<Start2 />} />
+          <Route path="/start3" element={<Start3 />} />
+          <Route path="/start4" element={<Start4 />} />
+          <Route path="/start5" element={<Start5 />} />
+          <Route path="/login" element={<Login />} />
+          {/* <Route path="/goal" element={<Goal />} />
+          <Route path="/goal2" element={<Goal2 />} />
+          <Route path="/goal3" element={<Goal3 />} /> */}
+          <Route path="/welcome" element={<Welcome />} />
+          <Route path="/register" element={<Register />} />
 
-     
-
-        <Route
-          path="/home"
-          element={
-            <UserProtectWrapper>
-              <Home />
-            </UserProtectWrapper>
-          }
-        />
-        <Route path="/notification" element={<Notification />} />
-        <Route path="/profile" element={<Profile />} />
-
-        <Route path="/meal" element={<Meal />} />
-        <Route path="/musichome" element={<MusicHome />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/policy" element={<PrivacyPolicy />} />
-        <Route path="/terms" element={<TermsOfUse/>} />
-        <Route path="/socialfeed" element={<SocialFeed/>} />
-        <Route path="/social" element={<SocialFeeds/>} />
-        {/* <Route path="/posts" element={<PostCard/>} /> */}
-        <Route path="/challenges" element={<Challenges/>} />
-
-
-
-
-
-
-     
-
-        <Route path="/workout" element={<Workout />} />
-        {/* <Route path="/alarm" element={<Alarm />} /> */}
-        {/* <Route path="/sleeptracker" element={<SleepTracker />} /> */}
-        <Route path="/activity-tracker" element={<ActivityTracker />} />
-
-        <Route path="/gpstracker" element={<GPSTracker />} />
-        <Route path="/progress" element={<Body />} />
-        <Route path="/404" element={<NotFound />} />
-        
       
 
-        <Route path="/fitness" element={<Fitness />} />
-        <Route path="/article" element={<FitnessArticle />} />
-        <Route path="/article2" element={<Fit2Article />} />
-        <Route path="/article3" element={<Fit3Article />} />
-        <Route path="/article4" element={<Fit4Article />} />
-        <Route path="/article5" element={<Fit5Article />} />
-        <Route path="/article6" element={<Fit6Article />} />
-        <Route path="/article7" element={<Fit7Article />} />
-        <Route path="/article8" element={<Fit8Article />} />
-        <Route path="/article9" element={<Fit9Article />} />
-        <Route path="/article10" element={<Fit10Article />} />
+          <Route
+            path="/home"
+            element={
+              <UserProtectWrapper>
+                <Home />
+               </UserProtectWrapper>
+            }
+          />
+          <Route path="/notification" element={<Notification />} />
+          <Route path="/profile" element={<Profile />} />
 
-        <Route path="/nutrition" element={<Nutrition />} />
-        <Route path="/nut-article" element={<Nutrition1 />} />
-        <Route path="/nut-article2" element={<Nutrition2 />} />
-        <Route path="/nut-article3" element={<Nutrition3 />} />
-        <Route path="/nut-article4" element={<Nutrition4 />} />
-        <Route path="/nut-article5" element={<Nutrition5 />} />
-        <Route path="/nut-article6" element={<Nutrition6 />} />
-        <Route path="/nut-article7" element={<Nutrition7 />} />
-        <Route path="/nut-article8" element={<Nutrition8 />} />
-        <Route path="/nut-article9" element={<Nutrition9 />} />
-        <Route path="/nut-article10" element={<Nutrition10 />} />
+          <Route path="/meal" element={<Meal />} />
+          <Route path="/musichome" element={<MusicHome />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/policy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<TermsOfUse/>} />
+          <Route path="/socialfeed" element={<SocialFeed/>} />
+          <Route path="/social" element={<SocialFeeds/>} />
+          {/* <Route path="/posts" element={<PostCard/>} /> */}
+          <Route path="/challenges" element={<Challenges/>} />
 
-        <Route path="/selfcare" element={<Selfcare />} />
-        <Route path="/selfcare1" element={<Selfcare1 />} />
-        <Route path="/selfcare2" element={<Selfcare2 />} />
-        <Route path="/selfcare3" element={<Selfcare3 />} />
-        <Route path="/selfcare4" element={<Selfcare4 />} />
-        <Route path="/selfcare5" element={<Selfcare5 />} />
-        <Route path="/selfcare6" element={<Selfcare6 />} />
-        <Route path="/selfcare7" element={<Selfcare7 />} />
+          <Route path="/zenfitmarketplace" element={<ZenFitMarketplace/>} />
+          <Route path="/cart" element={<Cart />} />
 
-        <Route path="/wellness" element={<Wellness />} />
-        <Route path="/wellness1" element={<Wellness1 />} />
-        <Route path="/wellness2" element={<Wellness2 />} />
-        <Route path="/wellness3" element={<Wellness3 />} />
-        <Route path="/wellness4" element={<Wellness4 />} />
-        <Route path="/wellness5" element={<Wellness5 />} />
-        <Route path="/wellness6" element={<Wellness6 />} />
-        <Route path="/wellness7" element={<Wellness7 />} />
-        <Route path="/wellness8" element={<Wellness8 />} />
-        <Route path="/wellness9" element={<Wellness9 />} />
-        <Route path="/wellness10" element={<Wellness10 />} />
-        <Route path="/wellness11" element={<Wellness11 />} />
-        {/* <Route path='/wellness12' element={<Wellness12 />} />   */}
 
-        {/* <Route path="logout" element={
-          <UserProtectWrapper>
-            <Logout />
-          </UserProtectWrapper>
-        } /> */}
-      </Routes>
+
+      
+
+          <Route path="/workout" element={<Workout />} />
+          {/* <Route path="/alarm" element={<Alarm />} /> */}
+          {/* <Route path="/sleeptracker" element={<SleepTracker />} /> */}
+          <Route path="/activity-tracker" element={<ActivityTracker />} />
+
+          <Route path="/gpstracker" element={<GPSTracker />} />
+          <Route path="/progress" element={<Body />} />
+          <Route path="/404" element={<NotFound />} />
+          
+        
+
+          <Route path="/fitness" element={<Fitness />} />
+          <Route path="/article" element={<FitnessArticle />} />
+          <Route path="/article2" element={<Fit2Article />} />
+          <Route path="/article3" element={<Fit3Article />} />
+          <Route path="/article4" element={<Fit4Article />} />
+          <Route path="/article5" element={<Fit5Article />} />
+          <Route path="/article6" element={<Fit6Article />} />
+          <Route path="/article7" element={<Fit7Article />} />
+          <Route path="/article8" element={<Fit8Article />} />
+          <Route path="/article9" element={<Fit9Article />} />
+          <Route path="/article10" element={<Fit10Article />} />
+
+          <Route path="/nutrition" element={<Nutrition />} />
+          <Route path="/nut-article" element={<Nutrition1 />} />
+          <Route path="/nut-article2" element={<Nutrition2 />} />
+          <Route path="/nut-article3" element={<Nutrition3 />} />
+          <Route path="/nut-article4" element={<Nutrition4 />} />
+          <Route path="/nut-article5" element={<Nutrition5 />} />
+          <Route path="/nut-article6" element={<Nutrition6 />} />
+          <Route path="/nut-article7" element={<Nutrition7 />} />
+          <Route path="/nut-article8" element={<Nutrition8 />} />
+          <Route path="/nut-article9" element={<Nutrition9 />} />
+          <Route path="/nut-article10" element={<Nutrition10 />} />
+
+          <Route path="/selfcare" element={<Selfcare />} />
+          <Route path="/selfcare1" element={<Selfcare1 />} />
+          <Route path="/selfcare2" element={<Selfcare2 />} />
+          <Route path="/selfcare3" element={<Selfcare3 />} />
+          <Route path="/selfcare4" element={<Selfcare4 />} />
+          <Route path="/selfcare5" element={<Selfcare5 />} />
+          <Route path="/selfcare6" element={<Selfcare6 />} />
+          <Route path="/selfcare7" element={<Selfcare7 />} />
+
+          <Route path="/wellness" element={<Wellness />} />
+          <Route path="/wellness1" element={<Wellness1 />} />
+          <Route path="/wellness2" element={<Wellness2 />} />
+          <Route path="/wellness3" element={<Wellness3 />} />
+          <Route path="/wellness4" element={<Wellness4 />} />
+          <Route path="/wellness5" element={<Wellness5 />} />
+          <Route path="/wellness6" element={<Wellness6 />} />
+          <Route path="/wellness7" element={<Wellness7 />} />
+          <Route path="/wellness8" element={<Wellness8 />} />
+          <Route path="/wellness9" element={<Wellness9 />} />
+          <Route path="/wellness10" element={<Wellness10 />} />
+          <Route path="/wellness11" element={<Wellness11 />} />
+          {/* <Route path='/wellness12' element={<Wellness12 />} />   */}
+
+          {/* <Route path="logout" element={
+            <UserProtectWrapper>
+              <Logout />
+            </UserProtectWrapper>
+          } /> */}
+        </Routes>
+      </CartProvider>
 
      
 

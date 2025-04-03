@@ -43,28 +43,23 @@ const completeHabit = async (req, res) => {
     const today = new Date().setHours(0, 0, 0, 0);
     const lastCompleted = habit.lastCompleted ? new Date(habit.lastCompleted).setHours(0, 0, 0, 0) : null;
 
-    // if (lastCompleted === today) {
-    //   return res.status(400).json({ message: "Habit already completed today" });
-    // }
-
-    // if (lastCompleted && today - lastCompleted > 86400000) {
-    //   habit.streak = 1;
-    // } else {
-    //   habit.streak += 1;
-    // }
-
     if (lastCompleted === today) {
-        return res.status(400).json({ message: "Habit already completed today" });
-      }
-  
-      if (habit.frequency === "weekly") {
-        habit.lastCompleted = today;
-        habit.streak += 1;
-      } else if (lastCompleted && today - lastCompleted > 86400000) {
-        habit.streak = 1; // Reset streak if a daily habit is missed
+      return res.status(400).json({ message: "Habit already completed today" });
+    }
+
+    if (habit.frequency === "weekly") {
+      if (lastCompleted && today - lastCompleted > 7 * 86400000) { // More than 7 days
+        habit.streak = 1; // Reset streak to 1 for new completion if week was missed
       } else {
         habit.streak += 1;
       }
+    } else { // daily habit
+      if (lastCompleted && today - lastCompleted > 86400000) { // More than 24 hours
+        habit.streak = 1; // Reset streak to 1 for new completion if day was missed
+      } else {
+        habit.streak += 1;
+      }
+    }
 
     habit.lastCompleted = new Date();
     await habit.save();
@@ -77,6 +72,30 @@ const completeHabit = async (req, res) => {
 const getHabits = async (req, res) => {
   try {
     const habits = await Habit.find({ userId: req.user.id });
+    
+    // Check and update streaks before returning
+    const today = new Date().setHours(0, 0, 0, 0);
+    
+    for (let habit of habits) {
+      const lastCompleted = habit.lastCompleted ? new Date(habit.lastCompleted).setHours(0, 0, 0, 0) : null;
+      
+      if (!lastCompleted) continue;
+
+      if (habit.frequency === 'daily') {
+        // Check if a day was missed
+        if (today - lastCompleted > 86400000) { // More than 24 hours
+          habit.streak = 0;
+          await habit.save();
+        }
+      } else if (habit.frequency === 'weekly') {
+        // Check if a week was missed
+        if (today - lastCompleted > 7 * 86400000) { // More than 7 days
+          habit.streak = 0;
+          await habit.save();
+        }
+      }
+    }
+
     res.json(habits);
   } catch (error) {
     res.status(500).json({ error: error.message });

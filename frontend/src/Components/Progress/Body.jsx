@@ -77,6 +77,13 @@ export default function Body() {
   const [weightChange, setWeightChange] = useState(0);
   const [bodyCompositionChanges, setBodyCompositionChanges] = useState([]);
   const [weightProgressData, setWeightProgressData] = useState([]);
+  const [startEntry, setStartEntry] = useState(null);
+  const [endEntry, setEndEntry] = useState(null);
+  const [weightPercentageChange, setWeightPercentageChange] = useState(0);
+  const [imageAnalysisData, setImageAnalysisData] = useState([]);
+  const [imageStats, setImageStats] = useState(null);
+  const [imageProgressAnalysis, setImageProgressAnalysis] = useState([]);
+  const [cumulativeWeightChanges, setCumulativeWeightChanges] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -92,11 +99,25 @@ export default function Body() {
     const savedWeightChange = localStorage.getItem(`weightChange_${userId}`);
     const savedBodyCompositionChanges = localStorage.getItem(`bodyCompositionChanges_${userId}`);
     const savedWeightProgressData = localStorage.getItem(`weightProgressData_${userId}`);
+    const savedStartEntry = localStorage.getItem(`startEntry_${userId}`);
+    const savedEndEntry = localStorage.getItem(`endEntry_${userId}`);
+    const savedWeightPercentageChange = localStorage.getItem(`weightPercentageChange_${userId}`);
+    const savedImageAnalysisData = localStorage.getItem(`imageAnalysisData_${userId}`);
+    const savedImageStats = localStorage.getItem(`imageStats_${userId}`);
+    const savedImageProgressAnalysis = localStorage.getItem(`imageProgressAnalysis_${userId}`);
+    const savedCumulativeWeightChanges = localStorage.getItem(`cumulativeWeightChanges_${userId}`);
   
     if (savedProgressData) setProgressData(JSON.parse(savedProgressData));
     if (savedWeightChange) setWeightChange(JSON.parse(savedWeightChange));
     if (savedBodyCompositionChanges) setBodyCompositionChanges(JSON.parse(savedBodyCompositionChanges));
     if (savedWeightProgressData) setWeightProgressData(JSON.parse(savedWeightProgressData));
+    if (savedStartEntry) setStartEntry(JSON.parse(savedStartEntry));
+    if (savedEndEntry) setEndEntry(JSON.parse(savedEndEntry));
+    if (savedWeightPercentageChange) setWeightPercentageChange(JSON.parse(savedWeightPercentageChange));
+    if (savedImageAnalysisData) setImageAnalysisData(JSON.parse(savedImageAnalysisData));
+    if (savedImageStats) setImageStats(JSON.parse(savedImageStats));
+    if (savedImageProgressAnalysis) setImageProgressAnalysis(JSON.parse(savedImageProgressAnalysis));
+    if (savedCumulativeWeightChanges) setCumulativeWeightChanges(JSON.parse(savedCumulativeWeightChanges));
   }, []);
 
   const fetchProgressEntries = async () => {
@@ -145,17 +166,68 @@ export default function Body() {
         }
       );
   
+      // Get all entries within the date range
+      const entriesInRange = response.data.progressData.filter(entry => {
+        const entryDate = new Date(entry.date);
+        return entryDate >= new Date(startDate) && entryDate <= new Date(endDate);
+      });
+
+      if (entriesInRange.length < 2) {
+        toast.error("Not enough entries in the selected date range");
+        return;
+      }
+
+      // Sort entries by date and get the first and last entries
+      const sortedEntries = entriesInRange.sort((a, b) => new Date(a.date) - new Date(b.date));
+      const startEntry = sortedEntries[0];
+      const endEntry = sortedEntries[sortedEntries.length - 1];
+
+      // Calculate weight change between the selected dates
+      const weightChange = endEntry.weight - startEntry.weight;
+      const weightPercentageChange = ((weightChange / startEntry.weight) * 100).toFixed(1);
+
+      // Calculate body composition changes between the selected dates
+      const bodyCompositionChanges = [
+        { part: 'chest', initial: startEntry.chest, final: endEntry.chest },
+        { part: 'waist', initial: startEntry.waist, final: endEntry.waist },
+        { part: 'hips', initial: startEntry.hips, final: endEntry.hips },
+        { part: 'thighs', initial: startEntry.thighs, final: endEntry.thighs },
+        { part: 'arms', initial: startEntry.arms, final: endEntry.arms }
+      ].map(item => ({
+        ...item,
+        change: item.final - item.initial,
+        percentageChange: ((item.final - item.initial) / item.initial * 100).toFixed(1)
+      }));
+
       // Save data in state
       setProgressData(response.data.progressData);
-      setWeightChange(response.data.weightChange);
-      setBodyCompositionChanges(response.data.bodyCompositionChanges);
+      setWeightChange(weightChange);
+      setBodyCompositionChanges(bodyCompositionChanges);
       setWeightProgressData(response.data.weightProgressData);
-  
+      
+      // Store start and end entries for display
+      setStartEntry(startEntry);
+      setEndEntry(endEntry);
+      setWeightPercentageChange(weightPercentageChange);
+      
+      // Store image analysis data
+      setImageAnalysisData(response.data.imageAnalysisData || []);
+      setImageStats(response.data.imageStats || null);
+      setImageProgressAnalysis(response.data.imageProgressAnalysis || []);
+      setCumulativeWeightChanges(response.data.cumulativeWeightChanges || []);
+
       // Save data in localStorage with user-specific keys
       localStorage.setItem(`progressData_${userId}`, JSON.stringify(response.data.progressData));
-      localStorage.setItem(`weightChange_${userId}`, JSON.stringify(response.data.weightChange));
-      localStorage.setItem(`bodyCompositionChanges_${userId}`, JSON.stringify(response.data.bodyCompositionChanges));
+      localStorage.setItem(`weightChange_${userId}`, JSON.stringify(weightChange));
+      localStorage.setItem(`bodyCompositionChanges_${userId}`, JSON.stringify(bodyCompositionChanges));
       localStorage.setItem(`weightProgressData_${userId}`, JSON.stringify(response.data.weightProgressData));
+      localStorage.setItem(`startEntry_${userId}`, JSON.stringify(startEntry));
+      localStorage.setItem(`endEntry_${userId}`, JSON.stringify(endEntry));
+      localStorage.setItem(`weightPercentageChange_${userId}`, JSON.stringify(weightPercentageChange));
+      localStorage.setItem(`imageAnalysisData_${userId}`, JSON.stringify(response.data.imageAnalysisData || []));
+      localStorage.setItem(`imageStats_${userId}`, JSON.stringify(response.data.imageStats || null));
+      localStorage.setItem(`imageProgressAnalysis_${userId}`, JSON.stringify(response.data.imageProgressAnalysis || []));
+      localStorage.setItem(`cumulativeWeightChanges_${userId}`, JSON.stringify(response.data.cumulativeWeightChanges || []));
     } catch (error) {
       console.error("Error fetching progress data:", error);
       toast.error("Failed to fetch progress data.");
@@ -174,19 +246,55 @@ export default function Body() {
   };
 
   const weightChartData = {
-    labels: weightProgressData.map((entry) => entry.date), // Dates from backend
+    labels: weightProgressData.map((entry) => {
+      const date = new Date(entry.date);
+      return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+    }),
     datasets: [
       {
-        label: "Weight Progress",
-        data: weightProgressData.map((entry) => entry.weight), // Weight values
-        borderColor: "blue",
-        backgroundColor: "rgba(59, 130, 246, 0.2)", // Light blue fill
-        pointBorderColor: "blue",
+        label: "Weight (kg)",
+        data: weightProgressData.map((entry) => entry.weight),
+        borderColor: "rgb(59, 130, 246)",
+        backgroundColor: "rgba(59, 130, 246, 0.2)",
+        pointBorderColor: "rgb(59, 130, 246)",
         pointBackgroundColor: "white",
         pointBorderWidth: 2,
         pointRadius: 4,
+        tension: 0.3,
       },
     ],
+  };
+
+  const weightChartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      tooltip: {
+        callbacks: {
+          label: function(context) {
+            return `Weight: ${context.parsed.y} kg`;
+          }
+        }
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: false,
+        title: {
+          display: true,
+          text: 'Weight (kg)'
+        }
+      },
+      x: {
+        title: {
+          display: true,
+          text: 'Date'
+        }
+      }
+    }
   };
 
   const handleDeleteImage = () => {
@@ -300,6 +408,13 @@ export default function Body() {
         localStorage.removeItem(`weightChange_${userId}`);
         localStorage.removeItem(`bodyCompositionChanges_${userId}`);
         localStorage.removeItem(`weightProgressData_${userId}`);
+        localStorage.removeItem(`startEntry_${userId}`);
+        localStorage.removeItem(`endEntry_${userId}`);
+        localStorage.removeItem(`weightPercentageChange_${userId}`);
+        localStorage.removeItem(`imageAnalysisData_${userId}`);
+        localStorage.removeItem(`imageStats_${userId}`);
+        localStorage.removeItem(`imageProgressAnalysis_${userId}`);
+        localStorage.removeItem(`cumulativeWeightChanges_${userId}`);
       }
     };
   }, []);
@@ -313,6 +428,13 @@ export default function Body() {
         setWeightChange(0);
         setBodyCompositionChanges([]);
         setWeightProgressData([]);
+        setStartEntry(null);
+        setEndEntry(null);
+        setWeightPercentageChange(0);
+        setImageAnalysisData([]);
+        setImageStats(null);
+        setImageProgressAnalysis([]);
+        setCumulativeWeightChanges([]);
         navigate("/login");
       }
     };
@@ -505,93 +627,130 @@ export default function Body() {
         </div>
 
         {isModalOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4 overflow-auto">
-            <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full max-h-[90vh] overflow-y-auto">
-              <div className="grid grid-cols-2 gap-4">
-                <input
-                  type="date"
-                  name="date"
-                  className="border p-2 rounded-lg w-full"
-                  value={formData.date}
-                  onChange={handleInputChange}
-                />
-                <input
-                  type="text"
-                  name="weight"
-                  placeholder="Weight (kg)"
-                  className="border p-2 rounded-lg w-full"
-                  value={formData.weight}
-                  onChange={handleInputChange}
-                />
-                <input
-                  type="text"
-                  name="chest"
-                  placeholder="Chest (cm)"
-                  className="border p-2 rounded-lg w-full"
-                  value={formData.chest}
-                  onChange={handleInputChange}
-                />
-                <input
-                  type="text"
-                  name="waist"
-                  placeholder="Waist (cm)"
-                  className="border p-2 rounded-lg w-full"
-                  value={formData.waist}
-                  onChange={handleInputChange}
-                />
-                <input
-                  type="text"
-                  name="hips"
-                  placeholder="Hips (cm)"
-                  className="border p-2 rounded-lg w-full"
-                  value={formData.hips}
-                  onChange={handleInputChange}
-                />
-                <input
-                  type="text"
-                  name="thighs"
-                  placeholder="Thighs (cm)"
-                  className="border p-2 rounded-lg w-full"
-                  value={formData.thighs}
-                  onChange={handleInputChange}
-                />
-                <input
-                  type="text"
-                  name="arms"
-                  placeholder="Arms (cm)"
-                  className="border p-2 rounded-lg w-full"
-                  value={formData.arms}
-                  onChange={handleInputChange}
-                />
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4 overflow-auto z-50">
+            <div className="bg-gray-800 p-6 rounded-lg shadow-lg max-w-lg w-full max-h-[90vh] overflow-y-auto">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-bold text-white">Upload Progress Photo</h2>
+                <button
+                  onClick={() => setIsModalOpen(false)}
+                  className="text-gray-400 hover:text-white"
+                >
+                  <XCircle size={24} />
+                </button>
               </div>
-              <textarea
-                name="notes"
-                className="border p-2 rounded-lg w-full mt-4"
-                placeholder="Add notes..."
-                value={formData.notes}
-                onChange={handleInputChange}
-              ></textarea>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="col-span-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-1">Date</label>
+                  <input
+                    type="date"
+                    name="date"
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg p-2 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    value={formData.date}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-1">Weight (kg)</label>
+                  <input
+                    type="text"
+                    name="weight"
+                    placeholder="Enter weight"
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg p-2 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    value={formData.weight}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-1">Chest (cm)</label>
+                  <input
+                    type="text"
+                    name="chest"
+                    placeholder="Enter chest measurement"
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg p-2 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    value={formData.chest}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-1">Waist (cm)</label>
+                  <input
+                    type="text"
+                    name="waist"
+                    placeholder="Enter waist measurement"
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg p-2 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    value={formData.waist}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-1">Hips (cm)</label>
+                  <input
+                    type="text"
+                    name="hips"
+                    placeholder="Enter hips measurement"
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg p-2 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    value={formData.hips}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-1">Thighs (cm)</label>
+                  <input
+                    type="text"
+                    name="thighs"
+                    placeholder="Enter thighs measurement"
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg p-2 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    value={formData.thighs}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-1">Arms (cm)</label>
+                  <input
+                    type="text"
+                    name="arms"
+                    placeholder="Enter arms measurement"
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg p-2 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    value={formData.arms}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              </div>
+              <div className="mt-4">
+                <label className="block text-sm font-medium text-gray-300 mb-1">Notes</label>
+                <textarea
+                  name="notes"
+                  className="w-full bg-gray-700 border border-gray-600 rounded-lg p-2 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Add any notes about your progress..."
+                  value={formData.notes}
+                  onChange={handleInputChange}
+                  rows="3"
+                ></textarea>
+              </div>
               {preview ? (
                 <div className="relative mt-4">
-                  <img
-                    src={preview}
-                    alt="Preview"
-                    className="mt-4 rounded-lg w-full max-h-64 object-cover"
-                  />
+                  <div className="relative w-full h-[400px] overflow-hidden rounded-lg bg-gray-900">
+                    <img
+                      src={preview}
+                      alt="Preview"
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
                   <button
-                    className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1"
+                    className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors"
                     onClick={handleDeleteImage}
                   >
-                    <XCircle size={24} />
+                    <XCircle size={20} />
                   </button>
                 </div>
               ) : (
                 <div
-                  className="border-dashed border-2 border-gray-300 p-6 flex flex-col items-center text-gray-500 w-full mt-4 cursor-pointer"
+                  className="mt-4 border-2 border-dashed border-gray-600 rounded-lg p-6 text-center cursor-pointer hover:border-blue-500 transition-colors"
                   onClick={() => document.getElementById("fileInput").click()}
                 >
-                  <Camera size={40} />
-                  <p>Drag and drop or click to browse</p>
+                  <Camera size={40} className="mx-auto text-gray-400 mb-2" />
+                  <p className="text-gray-400">Click to upload or drag and drop</p>
+                  <p className="text-sm text-gray-500">PNG, JPG or JPEG (max. 5MB)</p>
                   <input
                     id="fileInput"
                     type="file"
@@ -602,45 +761,52 @@ export default function Body() {
                 </div>
               )}
               {error && (
-                <p className="text-red-500 mt-2 text-center">{error}</p>
+                <p className="mt-2 text-red-500 text-sm text-center">{error}</p>
               )}
-              <button
-                className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg w-full"
-                onClick={handleUpload}
-              >
-                Upload
-              </button>
-              <button
-                className="mt-2 bg-red-500 text-white px-4 py-2 rounded-lg w-full"
-                onClick={() => setIsModalOpen(false)}
-              >
-                Close
-              </button>
+              <div className="mt-6 flex gap-4">
+                <button
+                  className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+                  onClick={handleUpload}
+                >
+                  <Upload size={20} />
+                  Upload
+                </button>
+                <button
+                  className="flex-1 bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           </div>
         )}
 
         <div className="mt-6 w-full max-w-8xl">
           {activeTab === "photos" && progressEntries.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {progressEntries.map((entry) => (
                 <div
                   onClick={() => setSelectedEntry(entry)}
                   key={entry._id}
-                  className="bg-gray-600 p-4 shadow-lg rounded-lg cursor-pointer"
+                  className="bg-gray-800 p-4 shadow-lg rounded-lg cursor-pointer hover:bg-gray-700 transition-all duration-300 transform hover:scale-[1.02]"
                 >
-                  <img
-                    src={entry.photo}
-                    alt="Progress"
-                    className="w-full h-40 object-contain mx-auto rounded-md"
-                  />
-                  <p className="text-gray-50 mt-2">
-                    <strong>Date:</strong>{" "}
-                    {new Date(entry.date).toLocaleDateString()}
-                  </p>
-                  <p className="text-gray-50">
-                    <strong>Weight:</strong> {entry.weight} kg
-                  </p>
+                  <div className="relative w-full h-[300px] overflow-hidden rounded-lg bg-gray-900">
+                    <img
+                      src={entry.photo}
+                      alt="Progress"
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                  <div className="mt-4 space-y-2">
+                    <p className="text-gray-300">
+                      <span className="text-blue-400 font-medium">Date:</span>{" "}
+                      {new Date(entry.date).toLocaleDateString()}
+                    </p>
+                    <p className="text-gray-300">
+                      <span className="text-blue-400 font-medium">Weight:</span> {entry.weight} kg
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -675,34 +841,65 @@ export default function Body() {
               <div className="p-4 border rounded">
                 <h2 className="font-semibold">Weight Change</h2>
                 <p>Overall progress</p>
-                <p>
-                  Total{" "}
-                  <span
-                    className={`text-${weightChange < 0 ? "green" : "red"}-500`}
-                  >
-                    {weightChange.toFixed(1)} kg
-                  </span>
-                </p>
+                {startEntry && endEntry ? (
+                  <>
+                    <div className="mt-2">
+                      <p className="text-sm text-gray-500">
+                        From: {new Date(startEntry.date).toLocaleDateString()} ({startEntry.weight} kg)
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        To: {new Date(endEntry.date).toLocaleDateString()} ({endEntry.weight} kg)
+                      </p>
+                    </div>
+                    <p className="mt-2">
+                      Total{" "}
+                      <span
+                        className={`text-${weightChange < 0 ? "green" : "red"}-500`}
+                      >
+                        {weightChange.toFixed(1)} kg
+                      </span>
+                      {" "}
+                      <span
+                        className={`text-${weightChange < 0 ? "green" : "red"}-500`}
+                      >
+                        ({weightPercentageChange > 0 ? "+" : ""}{weightPercentageChange}%)
+                      </span>
+                    </p>
+                  </>
+                ) : (
+                  <p className="text-gray-500">No data available</p>
+                )}
               </div>
 
               {/* Body Composition */}
               <div className="p-4 border rounded">
                 <h2 className="font-semibold">Body Composition</h2>
                 <p>Measurement changes</p>
-                <ul>
-                  {bodyCompositionChanges.map((item) => (
-                    <li key={item.part}>
-                      {item.part.charAt(0).toUpperCase() + item.part.slice(1)}{" "}
-                      <span
-                        className={`text-${
-                          item.change < 0 ? "green" : "red"
-                        }-500`}
-                      >
-                        {item.change.toFixed(1)} cm
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+                {bodyCompositionChanges.length > 0 ? (
+                  <ul className="mt-2">
+                    {bodyCompositionChanges.map((item) => (
+                      <li key={item.part} className="mb-1">
+                        <div className="flex justify-between">
+                          <span>{item.part.charAt(0).toUpperCase() + item.part.slice(1)}</span>
+                          <span
+                            className={`text-${item.change < 0 ? "green" : "red"}-500`}
+                          >
+                            {item.change > 0 ? "+" : ""}{item.change.toFixed(1)} cm
+                            {" "}
+                            <span className="text-xs">
+                              ({item.percentageChange > 0 ? "+" : ""}{item.percentageChange}%)
+                            </span>
+                          </span>
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          {item.initial.toFixed(1)} cm → {item.final.toFixed(1)} cm
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-gray-500">No data available</p>
+                )}
               </div>
               </div>
           )}
@@ -715,10 +912,10 @@ export default function Body() {
                   Track your weight changes over time
                 </p>
                 {weightProgressData.length > 0 ? (
-                  <div className="w-full">
+                  <div className="w-full h-80">
                     <Line
                       data={weightChartData}
-                      options={{ responsive: true, maintainAspectRatio: false }}
+                      options={weightChartOptions}
                     />
                   </div>
                 ) : (
@@ -727,77 +924,349 @@ export default function Body() {
                   </p>
                 )}
               </div>
+
+              {/* Cumulative Weight Changes */}
+              {cumulativeWeightChanges.length > 0 && (
+                <div className="p-4 mt-5 border rounded w-full">
+                  <h2 className="text-xl font-bold">Cumulative Weight Changes</h2>
+                  <p className="text-gray-600">
+                    Track your weight changes from the start date
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+                    {cumulativeWeightChanges.map((change, index) => (
+                      <div key={index} className="bg-gray-800 p-4 rounded-lg">
+                        <div className="flex justify-between items-center mb-2">
+                          <h3 className="text-lg font-semibold">Progress</h3>
+                          <span className="text-sm text-gray-400">{change.daysBetween} days</span>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <div className="relative w-full h-[200px] overflow-hidden rounded-lg bg-gray-900">
+                              <img 
+                                src={change.fromImage} 
+                                alt={`Start - ${change.fromDate}`} 
+                                className="w-full h-full object-contain"
+                              />
+                            </div>
+                            <p className="text-center text-sm mt-1">Start</p>
+                          </div>
+                          <div>
+                            <div className="relative w-full h-[200px] overflow-hidden rounded-lg bg-gray-900">
+                              <img 
+                                src={change.toImage} 
+                                alt={`Current - ${change.toDate}`} 
+                                className="w-full h-full object-contain"
+                              />
+                            </div>
+                            <p className="text-center text-sm mt-1">Current</p>
+                          </div>
+                        </div>
+                        <div className="mt-4">
+                          <div className="flex justify-between">
+                            <span>Weight Change:</span>
+                            <span className={change.weightChange.value > 0 ? "text-green-500" : "text-red-500"}>
+                              {change.weightChange.value > 0 ? "+" : ""}{change.weightChange.value} kg
+                              ({change.weightChange.percentage > 0 ? "+" : ""}{change.weightChange.percentage}%)
+                            </span>
+                          </div>
+                          <div className="text-sm text-gray-400 mt-2">
+                            {new Date(change.fromDate).toLocaleDateString()} - {new Date(change.toDate).toLocaleDateString()}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Image Analysis Section */}
+              {imageAnalysisData.length > 0 && (
+                <div className="p-4 mt-5 border rounded w-full">
+                  <h2 className="text-xl font-bold">Image Analysis</h2>
+                  <p className="text-gray-600">
+                    Visual progress tracking
+                  </p>
+                  
+                  {/* Image Statistics */}
+                  {imageStats && (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                      <div className="bg-gray-800 p-4 rounded-lg text-center">
+                        <h3 className="text-lg font-semibold text-blue-400">Total Images</h3>
+                        <p className="text-2xl font-bold">{imageStats.totalImages}</p>
+                      </div>
+                      <div className="bg-gray-800 p-4 rounded-lg text-center">
+                        <h3 className="text-lg font-semibold text-blue-400">Date Range</h3>
+                        <p className="text-sm">
+                          {new Date(imageStats.dateRange.start).toLocaleDateString()} - {new Date(imageStats.dateRange.end).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <div className="bg-gray-800 p-4 rounded-lg text-center">
+                        <h3 className="text-lg font-semibold text-blue-400">Images Per Week</h3>
+                        <p className="text-2xl font-bold">{imageStats.imagesPerWeek}</p>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Image Gallery */}
+                  <div className="mt-6">
+                    <h3 className="text-lg font-semibold mb-4 text-white">Progress Images</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                      {imageAnalysisData.map((image) => (
+                        <div 
+                          key={image.id} 
+                          className="bg-gray-800 p-4 rounded-lg cursor-pointer hover:bg-gray-700 transition-all duration-300 transform hover:scale-[1.02]"
+                          onClick={() => setSelectedEntry(image)}
+                        >
+                          <div className="relative w-full h-[250px] overflow-hidden rounded-lg bg-gray-900">
+                            <img 
+                              src={image.photo} 
+                              alt={`Progress on ${image.date}`} 
+                              className="w-full h-full object-contain"
+                            />
+                          </div>
+                          <div className="mt-4 space-y-2">
+                            <p className="text-gray-300 font-semibold">
+                              {new Date(image.date).toLocaleDateString()}
+                            </p>
+                            <p className="text-gray-300">
+                              <span className="text-blue-400">Weight:</span> {image.weight} kg
+                            </p>
+                            {image.notes && (
+                              <p className="text-gray-400 text-sm truncate">
+                                {image.notes}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {/* Detailed Progress Analysis Between Images */}
+                  {imageProgressAnalysis.length > 0 && (
+                    <div className="mt-8">
+                      <h3 className="text-lg font-semibold mb-4 text-white">Detailed Progress Analysis</h3>
+                      <div className="space-y-6">
+                        {imageProgressAnalysis.map((analysis, index) => (
+                          <div key={index} className="bg-gray-800 p-6 rounded-lg">
+                            <div className="flex justify-between items-center mb-6">
+                              <h4 className="text-md font-semibold text-white">
+                                {new Date(analysis.fromDate).toLocaleDateString()} - {new Date(analysis.toDate).toLocaleDateString()}
+                              </h4>
+                              <span className="text-sm text-gray-400">{analysis.daysBetween} days</span>
+                            </div>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                              <div className="space-y-2">
+                                <div className="relative w-full h-[300px] overflow-hidden rounded-lg bg-gray-900">
+                                  <img 
+                                    src={analysis.fromImage} 
+                                    alt={`Before - ${analysis.fromDate}`} 
+                                    className="w-full h-full object-contain"
+                                  />
+                                </div>
+                                <p className="text-center text-sm text-gray-300">Before</p>
+                              </div>
+                              <div className="space-y-2">
+                                <div className="relative w-full h-[300px] overflow-hidden rounded-lg bg-gray-900">
+                                  <img 
+                                    src={analysis.toImage} 
+                                    alt={`After - ${analysis.toDate}`} 
+                                    className="w-full h-full object-contain"
+                                  />
+                                </div>
+                                <p className="text-center text-sm text-gray-300">After</p>
+                              </div>
+                            </div>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                              <div className="bg-gray-700 p-4 rounded-lg">
+                                <h5 className="font-semibold text-white mb-3">Weight Change</h5>
+                                <div className="space-y-2">
+                                  <div className="flex justify-between items-center">
+                                    <span className="text-gray-300">Value:</span>
+                                    <span className={analysis.weightChange.value > 0 ? "text-green-500" : "text-red-500"}>
+                                      {analysis.weightChange.value > 0 ? "+" : ""}{analysis.weightChange.value} kg
+                                    </span>
+                                  </div>
+                                  <div className="flex justify-between items-center">
+                                    <span className="text-gray-300">Percentage:</span>
+                                    <span className={analysis.weightChange.percentage > 0 ? "text-green-500" : "text-red-500"}>
+                                      {analysis.weightChange.percentage > 0 ? "+" : ""}{analysis.weightChange.percentage}%
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              <div className="bg-gray-700 p-4 rounded-lg">
+                                <h5 className="font-semibold text-white mb-3">Measurement Changes</h5>
+                                <div className="space-y-2">
+                                  {Object.entries(analysis.measurementChanges).map(([part, data]) => (
+                                    <div key={part} className="flex justify-between items-center">
+                                      <span className="text-gray-300 capitalize">{part}:</span>
+                                      <span className={data.change > 0 ? "text-green-500" : "text-red-500"}>
+                                        {data.change > 0 ? "+" : ""}{data.change} cm ({data.percentageChange}%)
+                                      </span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Comparison View */}
+              {startEntry && endEntry && startEntry._id !== endEntry._id && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                  <div className="bg-gray-800 p-6 rounded-lg">
+                    <h3 className="text-xl font-semibold text-white mb-4">Start Date</h3>
+                    <p className="text-gray-400 mb-6">{new Date(startEntry.date).toLocaleDateString()}</p>
+                    <div className="grid grid-cols-2 gap-4 mb-6">
+                      <div className="bg-gray-700 p-3 rounded">
+                        <p className="text-gray-400">Weight</p>
+                        <p className="text-white font-semibold">{startEntry.weight} kg</p>
+                      </div>
+                      <div className="bg-gray-700 p-3 rounded">
+                        <p className="text-gray-400">Chest</p>
+                        <p className="text-white font-semibold">{startEntry.chest} cm</p>
+                      </div>
+                      <div className="bg-gray-700 p-3 rounded">
+                        <p className="text-gray-400">Waist</p>
+                        <p className="text-white font-semibold">{startEntry.waist} cm</p>
+                      </div>
+                      <div className="bg-gray-700 p-3 rounded">
+                        <p className="text-gray-400">Hips</p>
+                        <p className="text-white font-semibold">{startEntry.hips} cm</p>
+                      </div>
+                      <div className="bg-gray-700 p-3 rounded">
+                        <p className="text-gray-400">Thighs</p>
+                        <p className="text-white font-semibold">{startEntry.thighs} cm</p>
+                      </div>
+                      <div className="bg-gray-700 p-3 rounded">
+                        <p className="text-gray-400">Arms</p>
+                        <p className="text-white font-semibold">{startEntry.arms} cm</p>
+                      </div>
+                    </div>
+                    {startEntry.photo && (
+                      <div className="relative w-full h-[400px] overflow-hidden rounded-lg bg-gray-900">
+                        <img 
+                          src={startEntry.photo} 
+                          alt="Start Progress" 
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="bg-gray-800 p-6 rounded-lg">
+                    <h3 className="text-xl font-semibold text-white mb-4">End Date</h3>
+                    <p className="text-gray-400 mb-6">{new Date(endEntry.date).toLocaleDateString()}</p>
+                    <div className="grid grid-cols-2 gap-4 mb-6">
+                      <div className="bg-gray-700 p-3 rounded">
+                        <p className="text-gray-400">Weight</p>
+                        <p className="text-white font-semibold">{endEntry.weight} kg</p>
+                      </div>
+                      <div className="bg-gray-700 p-3 rounded">
+                        <p className="text-gray-400">Chest</p>
+                        <p className="text-white font-semibold">{endEntry.chest} cm</p>
+                      </div>
+                      <div className="bg-gray-700 p-3 rounded">
+                        <p className="text-gray-400">Waist</p>
+                        <p className="text-white font-semibold">{endEntry.waist} cm</p>
+                      </div>
+                      <div className="bg-gray-700 p-3 rounded">
+                        <p className="text-gray-400">Hips</p>
+                        <p className="text-white font-semibold">{endEntry.hips} cm</p>
+                      </div>
+                      <div className="bg-gray-700 p-3 rounded">
+                        <p className="text-gray-400">Thighs</p>
+                        <p className="text-white font-semibold">{endEntry.thighs} cm</p>
+                      </div>
+                      <div className="bg-gray-700 p-3 rounded">
+                        <p className="text-gray-400">Arms</p>
+                        <p className="text-white font-semibold">{endEntry.arms} cm</p>
+                      </div>
+                    </div>
+                    {endEntry.photo && (
+                      <div className="relative w-full h-[400px] overflow-hidden rounded-lg bg-gray-900">
+                        <img 
+                          src={endEntry.photo} 
+                          alt="End Progress" 
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
               </>
             )}
         </div>
 
         {selectedEntry && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
-            <div className="bg-gray-600 p-6 rounded-lg shadow-lg max-w-xl w-full max-h-[90vh] overflow-y-auto relative">
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4 z-50">
+            <div className="bg-gray-800 p-6 rounded-lg shadow-lg max-w-xl w-full max-h-[90vh] overflow-y-auto relative">
               <button
-                className="absolute top-2 right-2"
+                className="absolute top-2 right-2 text-gray-400 hover:text-white transition-colors"
                 onClick={() => setSelectedEntry(null)}
               >
-                <XCircle
-                  size={24}
-                  className="text-gray-50 hover:text-gray-50"
-                />
+                <XCircle size={24} />
               </button>
-              <h2 className="text-xl text-blue-400 font-bold">
-                Progress Photo - {selectedEntry.date}
+              <h2 className="text-xl font-bold text-white mb-2">
+                Progress Photo - {new Date(selectedEntry.date).toLocaleDateString()}
               </h2>
-              <p className="text-sm text-gray-50">
+              <p className="text-sm text-gray-400 mb-4">
                 View and analyze your progress photo
               </p>
-              <div className="relative mt-4">
+              <div className="relative mb-6">
                 <img
                   src={selectedEntry.photo}
                   alt="Progress"
-                  className="rounded-lg w-full max-h-64 object-contain"
+                  className="rounded-lg w-full h-[500px] object-contain bg-gray-900"
                 />
               </div>
-              <div className="mt-4">
-                <p className="text-blue-400">
-                  <strong>Date:</strong> {selectedEntry.date}
-                </p>
-
-                <div className="grid grid-cols-2 gap-4 mt-4">
-                  <div className="bg-black bg-opacity-100 border-2 border-blue-400 p-2 rounded text-center">
-                    <p className="text-xs text-blue-400">Weight</p>
-                    <p className="font-semibold">{selectedEntry.weight} kg</p>
-                  </div>
-                  <div className="bg-black bg-opacity-100 p-2 border-2 border-blue-400 rounded text-center">
-                    <p className="text-xs text-blue-400">Chest</p>
-                    <p className="font-semibold">{selectedEntry.chest} cm</p>
-                  </div>
-
-                  <div className="bg-black bg-opacity-100 border-2 border-blue-400 p-2 rounded text-center">
-                    <p className="text-xs text-blue-400">Waist</p>
-                    <p className="font-semibold">{selectedEntry.waist} cm</p>
-                  </div>
-                  <div className="bg-black bg-opacity-100 border-2 border-blue-400 p-2 rounded text-center">
-                    <p className="text-xs text-blue-400">Hips</p>
-                    <p className="font-semibold">{selectedEntry.hips} cm</p>
-                  </div>
-                  <div className="bg-black bg-opacity-100 border-2 border-blue-400 p-2 rounded text-center">
-                    <p className="text-xs text-blue-400">Thighs</p>
-                    <p className="font-semibold">{selectedEntry.thighs} cm</p>
-                  </div>
-                  <div className="bg-black bg-opacity-100 border-2 border-blue-400 p-2 rounded text-center">
-                    <p className="text-xs text-blue-400">Arms</p>
-                    <p className="font-semibold">{selectedEntry.arms} cm</p>
-                  </div>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div className="bg-gray-700 p-3 rounded-lg">
+                  <p className="text-sm text-gray-400">Weight</p>
+                  <p className="text-lg font-semibold text-white">{selectedEntry.weight} kg</p>
                 </div>
-                {/* <p className="mt-4"><strong>Notes:</strong> {selectedEntry.notes}</p> */}
-                <div className="bg-black mt-2 bg-opacity-100 border-2 border-blue-400 p-2 rounded flex items-center gap-1">
-                  <p className="text-xl text-blue-400">Notes:</p>
-                  <p className="font-semibold">{selectedEntry.notes}</p>
+                <div className="bg-gray-700 p-3 rounded-lg">
+                  <p className="text-sm text-gray-400">Chest</p>
+                  <p className="text-lg font-semibold text-white">{selectedEntry.chest} cm</p>
+                </div>
+                <div className="bg-gray-700 p-3 rounded-lg">
+                  <p className="text-sm text-gray-400">Waist</p>
+                  <p className="text-lg font-semibold text-white">{selectedEntry.waist} cm</p>
+                </div>
+                <div className="bg-gray-700 p-3 rounded-lg">
+                  <p className="text-sm text-gray-400">Hips</p>
+                  <p className="text-lg font-semibold text-white">{selectedEntry.hips} cm</p>
+                </div>
+                <div className="bg-gray-700 p-3 rounded-lg">
+                  <p className="text-sm text-gray-400">Thighs</p>
+                  <p className="text-lg font-semibold text-white">{selectedEntry.thighs} cm</p>
+                </div>
+                <div className="bg-gray-700 p-3 rounded-lg">
+                  <p className="text-sm text-gray-400">Arms</p>
+                  <p className="text-lg font-semibold text-white">{selectedEntry.arms} cm</p>
                 </div>
               </div>
+              {selectedEntry.notes && (
+                <div className="mt-4 bg-gray-700 p-3 rounded-lg">
+                  <p className="text-sm text-gray-400">Notes</p>
+                  <p className="text-white">{selectedEntry.notes}</p>
+                </div>
+              )}
               <button
                 onClick={() => handleDeletePhoto(selectedEntry._id)}
-                className="mt-4 bg-red-500 text-white px-4 py-2 rounded-lg w-full"
+                className="mt-6 w-full bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors flex items-center justify-center gap-2"
               >
+                <XCircle size={20} />
                 Delete Photo
               </button>
             </div>

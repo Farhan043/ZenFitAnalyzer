@@ -7,12 +7,17 @@ const UserContext = ({ children }) => {
   const [user, setUser] = useState(() => {
     const savedUser = localStorage.getItem('user');
     if (savedUser) {
-      const parsedUser = JSON.parse(savedUser);
-      // Ensure profile picture is loaded from localStorage
-      if (!parsedUser.profilePicture) {
-        parsedUser.profilePicture = localStorage.getItem('profilePicture');
+      try {
+        const parsedUser = JSON.parse(savedUser);
+        // Ensure profile picture is loaded from localStorage
+        if (!parsedUser.profilePicture) {
+          parsedUser.profilePicture = localStorage.getItem('profilePicture');
+        }
+        return parsedUser;
+      } catch (error) {
+        console.error('Error parsing user data from localStorage:', error);
+        return null;
       }
-      return parsedUser;
     }
     return null;
   });
@@ -24,18 +29,30 @@ const UserContext = ({ children }) => {
   const fetchData = async () => {
     try {
       const token = localStorage.getItem('token');
+      if (!token) return;
+      
       const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/users/profile`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setUser(response.data.user);
+      
+      // Handle both possible response structures
+      const userData = response.data.user || response.data;
+      if (userData) {
+        setUser(userData);
+      }
     } catch (error) {
       console.error('Error fetching user data:', error);
+      // Don't clear user data on network errors to prevent data loss
+      if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+        localStorage.removeItem('token');
+        setUser(null);
+      }
     }
   };
  
-    useEffect(() => {
-      fetchData();
-    }, []);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   // Update localStorage when user changes
   useEffect(() => {
@@ -44,15 +61,16 @@ const UserContext = ({ children }) => {
       if (user.profilePicture) {
         localStorage.setItem('profilePicture', user.profilePicture);
       }
+    } else {
+      localStorage.removeItem('user');
+      localStorage.removeItem('profilePicture');
     }
   }, [user]);
   
   return (
-    <div>
-      <UserDataContext.Provider value={{ user, setUser , updateUser }}>
-        {children}
-      </UserDataContext.Provider>
-    </div>
+    <UserDataContext.Provider value={{ user, setUser, updateUser }}>
+      {children}
+    </UserDataContext.Provider>
   )
 }
 
