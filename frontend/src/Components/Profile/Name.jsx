@@ -418,15 +418,12 @@ const Name = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
           {[
             { icon: <Users size={24} />, label: 'Social Feed', path: '/socialfeed', color: 'from-blue-500 to-blue-600' },
-            { icon: <Award size={24} />, label: titles.achievement, path: '/achievement', color: 'from-purple-500 to-purple-600' },
-            { icon: <History size={24} />, label: titles.activityHistory, path: '/activity-history', color: 'from-green-500 to-green-600' },
-            { icon: <BarChart2 size={24} />, label: titles.workoutProgress, path: '/workout-progress', color: 'from-yellow-500 to-yellow-600' },
             { icon: <Mail size={24} />, label: titles.contactUs, action: () => openModal('contact'), color: 'from-red-500 to-red-600' }
           ].map((item, index) => (
             <div
               key={index}
               onClick={() => item.path ? navigate(item.path) : item.action()}
-              className={`bg-gradient-to-r ${item.color} p-4 rounded-xl cursor-pointer transform hover:scale-105 transition-all duration-200`}
+              className={`bg-gradient-to-r ${item.color} p-4 rounded-xl cursor-pointer `}
             >
               <div className="flex items-center gap-3">
                 <div className="text-white">{item.icon}</div>
@@ -437,43 +434,7 @@ const Name = () => {
         </div>
       </div>
 
-      {/* Account Section */}
-      {/* <div className="p-4 bg-black bg-opacity-50 rounded-lg mx-5 mt-8">
-        <h2 className="font-bold text-2xl mb-4">{titles.account}</h2>
-        <div className="flex flex-col gap-4">
-          <div className="flex justify-between items-center cursor-pointer" onClick={() => openModal('personalData')}>
-            <div className="flex items-center gap-2">
-              <i className="ri-user-line text-blue-400 text-2xl"></i>
-              <span className="text-2xl text-blue-400 mb-2">{titles.personalData}</span>
-            </div>
-            <i className="ri-arrow-right-s-line text-3xl text-blue-400"></i>
-          </div>
-        </div>
-
-        <div className="flex justify-between items-center cursor-pointer" onClick={() => navigate('/achievement')}>
-          <div className="flex items-center gap-2">
-            <i className="ri-award-line text-blue-400 text-2xl"></i>
-            <span className="text-2xl text-blue-400 mb-2">{titles.achievement }</span>
-          </div>
-          <i className="ri-arrow-right-s-line text-3xl text-blue-400"></i>
-        </div>
-
-        <div className="flex justify-between items-center cursor-pointer" onClick={() => navigate('/activity-history')}>
-          <div className="flex items-center gap-2">
-            <i className="ri-history-line text-blue-400 text-2xl"></i>
-            <span className="text-2xl text-blue-400 mb-2">{titles.activityHistory}</span>
-          </div>
-          <i className="ri-arrow-right-s-line text-3xl text-blue-400"></i>
-        </div>
-
-        <div className="flex justify-between items-center cursor-pointer" onClick={() => navigate('/workout-progress')}>
-          <div className="flex items-center gap-2">
-            <i className="ri-bar-chart-line text-blue-400 text-2xl"></i>
-            <span className="text-2xl text-blue-400 mb-2">{titles.workoutProgress}</span>
-          </div>
-          <i className="ri-arrow-right-s-line text-3xl text-blue-400"></i>
-        </div>
-      </div> */}
+     
 
       {/* Modal for Personal Data */}
       {activeModal === 'personalData' && (
