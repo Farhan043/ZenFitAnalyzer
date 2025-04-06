@@ -2,14 +2,9 @@ node_modules
 .env
 
 # Media and public files
-uploads/
-public/
-*/public/songs/
-*/public/images/
-*/public/uploads/
 */src/assets/songs/
 */src/assets/images/
-*/src/assets/uploads/
+*/Backend/uploads/ 
 *.mp3
 *.wav
 *.ogg

@@ -24,9 +24,8 @@ dist-ssr
 *.sw?
 
 # Media and public files
-public/songs/
-public/images/
-public/uploads/
+public/
+
 src/assets/songs/
 src/assets/images/
 src/assets/uploads/
