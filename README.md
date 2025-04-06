@@ -57,6 +57,10 @@ ZenFitAnalyzer is a comprehensive health and fitness tracking application built 
    - Sleep quality analysis
    - Sleep schedule optimization
 
+6. **Activity Tracking**
+   - GPS-based tracking for running, cycling, walking
+   - Real-time location updates
+   - Activity history and statistics
 
 7. **Water Intake Monitoring**
    - Hydration tracking
@@ -287,7 +291,7 @@ nodemon
 
 ### Frontend Deployment
 1. **Build for Production**
-```bash
+   ```bash
    cd frontend
    npm run build
    ```
@@ -597,6 +601,5 @@ VITE_OPENAI_API_KEY=your_openai_api_key
 Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
-This project is licensed under the MIT License.#   Z e n F i t A n a l y z e r  
- #   Z e n F i t A n a l y z e r  
- 
+This project is licensed under the MIT License.
+

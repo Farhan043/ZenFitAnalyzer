@@ -22,3 +22,22 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Media and public files
+public/songs/
+public/images/
+public/uploads/
+src/assets/songs/
+src/assets/images/
+src/assets/uploads/
+*.mp3
+*.wav
+*.ogg
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.svg
+*.webp
+*.mp4
+*.webm
