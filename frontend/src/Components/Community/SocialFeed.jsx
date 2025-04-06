@@ -370,12 +370,15 @@ const PostCard = ({ post, onLike, currentUser, onRefresh }) => {
             post.likes.includes(currentUser._id) ? 'text-blue-400' : ''
           }`}
         >
-          <Heart size={20} />
-          <span>{post.likes.length}</span>
+          <Heart 
+            size={20} 
+            className={`cursor-pointer ${post.likes.includes(currentUser._id) ? 'text-red-500' : 'text-white'}`} 
+          />
+          <span className='text-white '>{post.likes.length}</span>
         </button>
         <button
           onClick={() => setShowComments(!showComments)}
-          className="flex items-center gap-2 text-white hover:text-blue-400 transition"
+          className="flex items-center gap-2 text-white "
         >
           <MessageCircle size={20} />
           <span>{post.comments.length}</span>

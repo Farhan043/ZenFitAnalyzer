@@ -1,15 +1,5 @@
 const Habit = require("../Models/habit");
 
-// const createHabit = async (req, res) => {
-//   try {
-//     const { name, frequency } = req.body;
-//     const habit = new Habit({ userId: req.user.id, name, frequency });
-//     await habit.save();
-//     res.status(201).json(habit);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
 
 
 const createHabit = async (req, res) => {
@@ -48,10 +38,18 @@ const completeHabit = async (req, res) => {
     }
 
     if (habit.frequency === "weekly") {
-      if (lastCompleted && today - lastCompleted > 7 * 86400000) { // More than 7 days
-        habit.streak = 1; // Reset streak to 1 for new completion if week was missed
+      if (lastCompleted) {
+        const daysSinceCompletion = Math.floor((today - lastCompleted) / 86400000);
+        if (daysSinceCompletion > 1) {
+          // If more than a day was missed, reset streak to 1 for new completion
+          habit.streak = 1;
+        } else {
+          // Within allowed window, increment streak
+          habit.streak += 1;
+        }
       } else {
-        habit.streak += 1;
+        // First completion ever
+        habit.streak = 1;
       }
     } else { // daily habit
       if (lastCompleted && today - lastCompleted > 86400000) { // More than 24 hours
@@ -88,8 +86,12 @@ const getHabits = async (req, res) => {
           await habit.save();
         }
       } else if (habit.frequency === 'weekly') {
-        // Check if a week was missed
-        if (today - lastCompleted > 7 * 86400000) { // More than 7 days
+        // Check how many days passed since last completion
+        const daysSinceCompletion = Math.floor((today - lastCompleted) / 86400000);
+        
+        // For weekly habits, we need to track if the user misses a day within their weekly window
+        // If more than 1 day passed since last completion, reset streak
+        if (daysSinceCompletion > 1) {
           habit.streak = 0;
           await habit.save();
         }

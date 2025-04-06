@@ -55,8 +55,7 @@ import { CheckCircle } from "lucide-react";
 import Footer from "../../Components/Footer";
 
 // Replace with your actual RapidAPI key
-const RAPID_API_KEY = "fa25f44c92msh6e44cfe8fd832cfp1c7aa4jsnf460a4db635a";
-
+const RAPID_API_KEY = import.meta.env.VITE_RAPID_API_KEY;
 const API_BASE_URL = "http://localhost:4000";
 
 

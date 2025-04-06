@@ -15,6 +15,9 @@ import Layout from "../../Pages/Layout";
 import Footer from "../../Components/Footer"
 import FloatingButton from "../../Pages/FloatingButton";
 import WorkoutTutorial from "../../Pages/WorkoutTutorial";
+import HealthTips from "./HealthTips";
+
+
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -126,12 +129,13 @@ const Navbar = () => {
           </div>
         </div>
         <TodayTarget />
-       
+        <HealthTips/>
         <BodyProgress/>
         <MarketPlace />
-        <TodaySchedule />
-        <Layout/>
         <WorkoutTutorial/>
+        <TodaySchedule />
+     
+        <Layout/>
         <Footer/>
         <FloatingButton/>
       </div>

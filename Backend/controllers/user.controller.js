@@ -214,12 +214,6 @@ module.exports.getAllContactMessages = async (req, res) => {
 
 
 
-
-//Profile
-// module.exports.getUserProfile = async (req, res, next) => {
-//   res.status(200).json({ user: req.user });
-// }
-
 module.exports.getUserProfile = async (req, res) => {
   try {
     const user = req.user; // `req.user` is set by the `authUser` middleware
@@ -431,48 +425,6 @@ module.exports.getTarget = async (req, res) => {
   }
 };
 
-
-
-
-
-
-
-
-
-
-// Clear old data (can be run as a cron job)
-// module.exports.clearOldTargets = async () => {
-//   const yesterday = new Date();
-//   yesterday.setDate(yesterday.getDate() - 1);
-//   const oldDate = yesterday.toDateString();
-
-//   await Target.deleteMany({ date: { $lt: oldDate } });
-// };
-
-
-
-//Heart Rate
-// module.exports.getHeartRateData = async (req, res, next) => {
-//   try {
-//     const user = await userModel.findById(req.user._id);
-//     if (!user) {
-//       return res.status(404).json({ message: 'User not found' });
-//     }
-
-//     // Mock heart rate data (replace with real data retrieval logic if available)
-//     const heartRateData = [
-//       { time: '10:00', heartRate: 72 },
-//       { time: '10:05', heartRate: 78 },
-//       { time: '10:10', heartRate: 75 },
-//       { time: '10:15', heartRate: 80 },
-//       { time: '10:20', heartRate: 74 },
-//     ];
-
-//     res.status(200).json(heartRateData);
-//   } catch (error) {
-//     next(error);
-//   }
-// };
 
 // Add this new controller method
 module.exports.uploadProfilePhoto = async (req, res) => {

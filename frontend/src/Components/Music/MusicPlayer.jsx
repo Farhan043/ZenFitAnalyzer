@@ -5,12 +5,24 @@ const MusicPlayer = ({ currentSong, isPlaying, onPlayPause, onNext, onPrev, audi
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(1);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = volume;
     }
   }, [volume]);
+
+  useEffect(() => {
+    // Handle player view on smaller screens
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 480);
+    };
+    
+    handleResize(); // Set initial state
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleTimeUpdate = () => {
     setCurrentTime(audioRef.current.currentTime);
@@ -35,7 +47,7 @@ const MusicPlayer = ({ currentSong, isPlaying, onPlayPause, onNext, onPrev, audi
   };
 
   return (
-    <div className="h-24 bg-gray-900 border-t border-gray-800 px-4 flex items-center">
+    <div className="bg-gray-900 border-t border-gray-800 px-3 sm:px-4 py-3 sm:py-4 flex flex-col sm:flex-row items-center">
       <audio
         ref={audioRef}
         src={currentSong.file}
@@ -43,27 +55,35 @@ const MusicPlayer = ({ currentSong, isPlaying, onPlayPause, onNext, onPrev, audi
         onEnded={onNext}
       />
       
-      <div className="w-1/4 flex items-center">
-        <img src={currentSong.image} alt={currentSong.name} className="h-16 w-16 rounded" />
-        <div className="ml-4">
-          <div className="text-white font-medium">{currentSong.name}</div>
-          <div className="text-gray-400 text-sm">{currentSong.artist}</div>
+      {/* Song info */}
+      <div className="w-full sm:w-1/4 flex items-center justify-between mb-3 sm:mb-0">
+        <div className="flex items-center">
+          <img src={currentSong.image} alt={currentSong.name} className="h-12 w-12 sm:h-14 sm:w-14 rounded object-cover" />
+          <div className="ml-3 overflow-hidden max-w-[120px] sm:max-w-none">
+            <div className="text-white font-medium truncate text-sm sm:text-base">{currentSong.name}</div>
+            <div className="text-gray-400 text-xs sm:text-sm truncate">{currentSong.artist}</div>
+          </div>
         </div>
-        <button 
-          onClick={onLikeSong}
-          className="ml-4 p-2 hover:bg-gray-800 rounded-full transition-colors"
-        >
-          <svg 
-            className={`w-5 h-5 transition-colors ${isLiked ? 'text-red-500 fill-current' : 'text-gray-400'}`}
-            viewBox="0 0 24 24"
+        
+        {/* Like button only on larger screens */}
+        {!isMobile && (
+          <button 
+            onClick={onLikeSong}
+            className="p-2 hover:bg-gray-800 rounded-full transition-colors"
           >
-            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-          </svg>
-        </button>
+            <svg 
+              className={`w-5 h-5 transition-colors ${isLiked ? 'text-red-500 fill-current' : 'text-gray-400'}`}
+              viewBox="0 0 24 24"
+            >
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+            </svg>
+          </button>
+        )}
       </div>
 
-      <div className="flex-1 flex flex-col items-center">
-        <div className="flex items-center space-x-6">
+      {/* Controls and progress - always visible */}
+      <div className="w-full sm:flex-1 flex flex-col items-center">
+        <div className="flex items-center space-x-4 sm:space-x-6 mb-2">
           <button 
             onClick={onPrev}
             className="text-gray-400 hover:text-white transition-colors"
@@ -90,7 +110,7 @@ const MusicPlayer = ({ currentSong, isPlaying, onPlayPause, onNext, onPrev, audi
           </button>
         </div>
 
-        <div className="w-full flex items-center space-x-4 mt-2">
+        <div className="w-full flex items-center space-x-2 sm:space-x-4">
           <span className="text-xs text-gray-400">{formatTime(currentTime)}</span>
           <input
             type="range"
@@ -98,13 +118,14 @@ const MusicPlayer = ({ currentSong, isPlaying, onPlayPause, onNext, onPrev, audi
             max={duration || 0}
             value={currentTime}
             onChange={handleProgressChange}
-            className="flex-1 accent-green-500"
+            className="flex-1 accent-green-500 h-1"
           />
           <span className="text-xs text-gray-400">{formatTime(duration)}</span>
         </div>
       </div>
 
-      <div className="w-1/4 flex items-center justify-end">
+      {/* Volume control - hidden on mobile */}
+      <div className="hidden sm:flex w-1/4 items-center justify-end">
         <img src={assets.volume_icon} alt="Volume" className="w-5 h-5 mr-2" />
         <input
           type="range"
@@ -113,7 +134,7 @@ const MusicPlayer = ({ currentSong, isPlaying, onPlayPause, onNext, onPrev, audi
           step="0.01"
           value={volume}
           onChange={handleVolumeChange}
-          className="w-24 accent-green-500"
+          className="w-24 accent-green-500 h-1"
         />
       </div>
     </div>

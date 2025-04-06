@@ -5,25 +5,15 @@ import Start from "./Pages/Onboarding/Start";
 import Start2 from "./Pages/Onboarding/Start2";
 import Home from "./Pages/Home";
 import UserProtectWrapper from "./Pages/Register/UserProtectWrapper";
-// import Logout from './Pages/Logout'
 import Start3 from "./Pages/Onboarding/Start3";
 import Start4 from "./Pages/Onboarding/Start4";
 import Start5 from "./Pages/Onboarding/Start5";
-// import Goal from './Pages/Onboarding/Goal'
-// import Goal2 from './Pages/Onboarding/Goal2'
-// import Goal3 from './Pages/Onboarding/Goal3'
 import Welcome from "./Pages/Onboarding/Welcome";
 import Notification from "./Pages/Notification";
 import Profile from "./Pages/HomeFooter/Profile";
 import Meal from "./Pages/HomeFooter/Meal";
-
-
-
-// import Alarm from './Pages/Sleep/Alarm'
-// import SleepTracker from "./Pages/Sleep/SleepTracker";
 import Workout from "./Pages/HomeFooter/Workout";
 import ActivityTracker from "./Pages/ActivityTracker";
-// import { ThemeProvider } from './Context/ThemeContext'
 import Fitness from "./Pages/Advices/Fitness";
 import Nutrition from "./Pages/Advices/Nutrition";
 import Selfcare from "./Pages/Advices/Selfcare";
@@ -77,12 +67,12 @@ import NotFound from "./Components/NotFound";
 import PrivacyPolicy from "./Components/PrivacyPolicy";
 import TermsOfUse from "./Components/TermsOfUse";
 import SocialFeed from "./Components/Community/SocialFeed";
-// import PostCard from "./Components/Social/PostCard";
 import SocialFeeds from "./Components/Community/SocialFeeds";
 import Challenges from "./Components/Community/Challenges";
 import ZenFitMarketplace from "./Pages/ZenFitMarketplace";
 import Cart from "./Pages/Cart";
 import CartProvider from "./Context/CartContext";
+import Tutorial1 from "./Components/Tutorial.jsx/TutorialContent";
 
 
 
@@ -122,13 +112,8 @@ const App = () => {
           <Route path="/start4" element={<Start4 />} />
           <Route path="/start5" element={<Start5 />} />
           <Route path="/login" element={<Login />} />
-          {/* <Route path="/goal" element={<Goal />} />
-          <Route path="/goal2" element={<Goal2 />} />
-          <Route path="/goal3" element={<Goal3 />} /> */}
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/register" element={<Register />} />
-
-      
 
           <Route
             path="/home"
@@ -148,24 +133,16 @@ const App = () => {
           <Route path="/terms" element={<TermsOfUse/>} />
           <Route path="/socialfeed" element={<SocialFeed/>} />
           <Route path="/social" element={<SocialFeeds/>} />
-          {/* <Route path="/posts" element={<PostCard/>} /> */}
           <Route path="/challenges" element={<Challenges/>} />
-
           <Route path="/zenfitmarketplace" element={<ZenFitMarketplace/>} />
           <Route path="/cart" element={<Cart />} />
-
-
-
-      
-
           <Route path="/workout" element={<Workout />} />
-          {/* <Route path="/alarm" element={<Alarm />} /> */}
-          {/* <Route path="/sleeptracker" element={<SleepTracker />} /> */}
           <Route path="/activity-tracker" element={<ActivityTracker />} />
 
           <Route path="/gpstracker" element={<GPSTracker />} />
           <Route path="/progress" element={<Body />} />
           <Route path="/404" element={<NotFound />} />
+          <Route path="/tutorial" element={<Tutorial1 />} />
           
         
 
@@ -214,18 +191,8 @@ const App = () => {
           <Route path="/wellness9" element={<Wellness9 />} />
           <Route path="/wellness10" element={<Wellness10 />} />
           <Route path="/wellness11" element={<Wellness11 />} />
-          {/* <Route path='/wellness12' element={<Wellness12 />} />   */}
-
-          {/* <Route path="logout" element={
-            <UserProtectWrapper>
-              <Logout />
-            </UserProtectWrapper>
-          } /> */}
         </Routes>
       </CartProvider>
-
-     
-
       {/* Show Chatbot only on allowed pages */}
       {shouldShowChatbot && <Chatbot />}
       {/* </ThemeProvider> */}

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Target, ClipboardList, Repeat, PlusCircle, Activity, Trophy, Trash2, CheckCircle, Calendar, Zap, X, Star } from "lucide-react";
+import { Target, ClipboardList, Repeat, PlusCircle, Activity, Trophy, Trash2, CheckCircle, Calendar, Zap, X, Star, Info } from "lucide-react";
 
 const HabitTracker = () => {
   const [habits, setHabits] = useState([]);
@@ -189,6 +189,17 @@ const HabitTracker = () => {
               >
                 <PlusCircle className="w-5 h-5" /> Add Habit
               </button>
+            </div>
+
+            {/* Streak Info */}
+            <div className="w-full mt-3 text-xs text-gray-400 bg-slate-800/30 p-2 rounded-lg border border-blue-500/10">
+              <div className="flex items-start gap-2">
+                <Info className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                <div>
+                  <p><span className="text-blue-400 font-medium">Daily habits:</span> Complete every day to maintain streak.</p>
+                  <p><span className="text-purple-400 font-medium">Weekly habits:</span> Must complete at least once a day - missing more than a day will break your streak!</p>
+                </div>
+              </div>
             </div>
           </div>
         )}

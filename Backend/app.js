@@ -7,9 +7,7 @@ var logger = require('morgan');
 var cors = require('cors');
 var connectDb = require('./db/db')
 var usersRouter = require('./routes/users');
-var mealRouter = require('./routes/meal');
 var chatbotRouter = require("./routes/chatbot");
-const songsRouter = require("./routes/songs");
 const gpsRouter = require("./routes/gps");
 const bodyProgressRoutes = require("./routes/bodyProgress.routes");
 const sleepRoutes = require('./routes/sleep.routes');
@@ -20,23 +18,6 @@ const socialRoutes = require('./routes/social.routes');
 
 var app = express();
 
-
-// const http = require("http");
-// const socketio  = require("socket.io");
-
-// const server = http.createServer(app);
-// const io = socketio(server);
-
-
-
-// view engine setup
-// const server = http.createServer(app);
-// const io = new Server(server, {
-//   cors: {
-//     origin: "http://localhost:5173", // Update with frontend URL
-//     methods: ["GET", "POST"],
-//   },
-// });
 app.use(cors());
 
 app.set('views', path.join(__dirname, 'views'));
@@ -51,43 +32,8 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads"))); // Serve s
 
 app.use("/uploads", express.static("uploads"));
 
-// Socket.io connection
-// io.on("connection", function (socket) {
-//     console.log("User connected");
-
-//     // Handle location updates from client
-//     socket.on("send-location", (data) => {
-//         // Broadcast the location to all other connected clients
-//         io.emit("receive-location", {id: socket.id, ...data});
-//     });
-
-//     socket.on("disconnect", () => {
-//       io.emit("user-disconnected", socket.id);
-//     });
-// });
-
-// Remove these browser-specific code blocks
-// DELETE the following sections:
-// - if (navigator.geolocation) { ... }
-// - L.map("map");
-
-//  io.on("connection", function (socket) {
-//   console.log("User connected");
-// });
-
-//   socket.on("addWater", (data) => {
-//     io.emit("waterUpdate", data); // Send notification to all clients
-//   });
-
-//   socket.on("disconnect", () => {
-//     console.log("User disconnected", socket.id);
-//   });
-// });
-
 app.use('/users', usersRouter);
-app.use('/api', mealRouter);
 app.use("/chatbot", chatbotRouter);
-app.use("/api/songs", songsRouter);
 app.use("/api/gps", gpsRouter);
 app.use("/body-progress", bodyProgressRoutes);
 app.use('/sleep', sleepRoutes);
