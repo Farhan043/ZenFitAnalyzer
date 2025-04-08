@@ -266,6 +266,54 @@ exports.deletePost = async (req, res) => {
   }
 };
 
+exports.deleteComment = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.postId);
+    
+    if (!post) {
+      return res.status(404).json({ 
+        success: false,
+        error: 'Post not found' 
+      });
+    }
+
+    // Find the comment
+    const commentIndex = post.comments.findIndex(
+      comment => comment._id.toString() === req.params.commentId
+    );
+
+    if (commentIndex === -1) {
+      return res.status(404).json({ 
+        success: false,
+        error: 'Comment not found' 
+      });
+    }
+
+    // Check if the user is the comment owner
+    if (post.comments[commentIndex].user.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ 
+        success: false,
+        error: 'Unauthorized to delete this comment' 
+      });
+    }
+
+    // Remove the comment
+    post.comments.splice(commentIndex, 1);
+    await post.save();
+
+    res.status(200).json({ 
+      success: true,
+      message: 'Comment deleted successfully',
+      post
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      success: false,
+      error: error.message 
+    });
+  }
+};
+
 exports.getUserPostsCount = async (req, res) => {
   try {
     // Count only the posts created by the current user

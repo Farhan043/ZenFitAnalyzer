@@ -35,7 +35,7 @@ export default function Footer() {
         <div>
           <h3 className="text-lg font-semibold text-gray-300">Get In Touch</h3>
           <p className="mt-3 flex items-center cursor-pointer hover:text-blue-600 justify-center md:justify-start text-gray-400">
-          <a href="mailto:support@zenfitanalyzer.in" className="flex items-center"> <FaEnvelope className="mr-2 " /> support@zenfitanalyzer.in </a>
+          <a href="mailto:supp0rt.zenfitanalyzer@gmail.com">supp0rt@zenfitanalyzergmail.com</a>
           </p>
           <div className="mt-5 flex justify-center md:justify-start space-x-5">
             <a href="#" className="text-gray-400 hover:text-white text-2xl transition"><FaFacebook /></a>

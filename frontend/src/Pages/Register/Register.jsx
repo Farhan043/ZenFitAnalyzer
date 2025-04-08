@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { UserDataContext } from '../../Context/userContext';
+import { UserDataContext } from '../../Context/UserContext';
 import { toast, ToastContainer } from 'react-toastify';
 
 const Register = () => {
@@ -66,40 +66,148 @@ const Register = () => {
      setWeight(value);
    };
   
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-slate-500 to-slate-800 px-4">
-      <div className="bg-gradient-to-t from-slate-800 to-gray-950 p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h1 className="text-center text-2xl font-bold">Create an Account</h1>
-        <form onSubmit={submitHandler} className="mt-6">
-          <div className="space-y-4">
-            <input type="text" placeholder="Full Name" value={name} onChange={(e) => setName(e.target.value)}
-              className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
-            <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
-            <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
-            <select value={gender} onChange={(e) => setGender(e.target.value)}
-              className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-              <option value="">Select Gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </select>
-            <input type="date" value={dob} onChange={(e) => setDob(e.target.value)}
-              className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
-              <div className='flex gap-4'>
-            <input type="number" placeholder="Weight (kg)" value={weight} id='weight' onChange={handleWeightChange}
-              className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
-            <input type="number" placeholder="Height (ft)" value={height} id="height" onChange={handleHeightChange}
-              className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
-              </div>
-          </div>
-          <button type="submit" className="w-full mt-6 bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700">Register</button>
-        </form>
-        <p className="text-center mt-4">Already have an account? <Link to="/login" className="text-blue-600">Login here</Link></p>
-        <ToastContainer />
+    <div className="fixed inset-0 flex items-center justify-center bg-black">
+      {/* Background video - using the iStock particles video */}
+      <div className="absolute inset-0 w-full h-full z-0">
+        <video 
+          className="absolute min-w-full min-h-full object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
+          <source src="https://media.istockphoto.com/id/1937150599/video/blue-purple-particles-explode-into-energy-flowers.mp4?s=mp4-640x640-is&k=20&c=XZmx7x3EPKymG32dVStO3DBpTVwaSr6fHmJtGFZDj10=" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <div className="absolute inset-0 bg-black/30"></div>
       </div>
+
+      {/* Content */}
+      <div className="relative z-10 w-full max-w-md px-4 sm:px-0 max-h-screen">
+        <div className="bg-black/50 backdrop-blur-xl p-5 sm:p-6 rounded-3xl shadow-2xl border border-purple-500/20 overflow-y-auto max-h-[95vh]">
+          <div className="mb-4 text-center">
+            <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-400 via-purple-500 to-indigo-400 bg-clip-text text-transparent">
+              ENERGY FITNESS
+            </h1>
+            <p className="text-purple-200 mt-1 opacity-80 text-sm">Transform your body with power</p>
+          </div>
+          
+          <form onSubmit={submitHandler} className="mt-4 space-y-3">
+            <div className="space-y-3">
+              <div>
+                <label htmlFor="name" className="text-xs font-medium text-purple-200 block mb-1">Full Name</label>
+                <input 
+                  id="name"
+                  type="text" 
+                  placeholder="John Doe" 
+                  value={name} 
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full p-2.5 border border-purple-700/50 rounded-xl bg-purple-900/30 focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-purple-300/50 text-sm"
+                  required 
+                />
+              </div>
+              
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label htmlFor="email" className="text-xs font-medium text-purple-200 block mb-1">Email</label>
+                  <input 
+                    id="email"
+                    type="email" 
+                    placeholder="your@email.com" 
+                    value={email} 
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full p-2.5 border border-purple-700/50 rounded-xl bg-purple-900/30 focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-purple-300/50 text-sm"
+                    required 
+                  />
+                </div>
+                
+                <div>
+                  <label htmlFor="password" className="text-xs font-medium text-purple-200 block mb-1">Password</label>
+                  <input 
+                    id="password"
+                    type="password" 
+                    placeholder="Min. 6 characters" 
+                    value={password} 
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full p-2.5 border border-purple-700/50 rounded-xl bg-purple-900/30 focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-purple-300/50 text-sm"
+                    required 
+                  />
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label htmlFor="gender" className="text-xs font-medium text-purple-200 block mb-1">Gender</label>
+                  <select 
+                    id="gender"
+                    value={gender} 
+                    onChange={(e) => setGender(e.target.value)}
+                    className="w-full p-2.5 border border-purple-700/50 rounded-xl bg-purple-900/30 focus:outline-none focus:ring-2 focus:ring-purple-500 text-white text-sm"
+                    required
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label htmlFor="dob" className="text-xs font-medium text-purple-200 block mb-1">Date of Birth</label>
+                  <input 
+                    id="dob"
+                    type="date" 
+                    value={dob} 
+                    onChange={(e) => setDob(e.target.value)}
+                    className="w-full p-2.5 border border-purple-700/50 rounded-xl bg-purple-900/30 focus:outline-none focus:ring-2 focus:ring-purple-500 text-white text-sm"
+                    required 
+                  />
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label htmlFor="weight" className="text-xs font-medium text-purple-200 block mb-1">Weight (kg)</label>
+                  <input 
+                    id="weight"
+                    type="number" 
+                    placeholder="Weight" 
+                    value={weight} 
+                    onChange={handleWeightChange}
+                    className="w-full p-2.5 border border-purple-700/50 rounded-xl bg-purple-900/30 focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-purple-300/50 text-sm"
+                    required 
+                  />
+                </div>
+                <div>
+                  <label htmlFor="height" className="text-xs font-medium text-purple-200 block mb-1">Height (ft)</label>
+                  <input 
+                    id="height"
+                    type="number" 
+                    placeholder="Height" 
+                    value={height} 
+                    onChange={handleHeightChange}
+                    className="w-full p-2.5 border border-purple-700/50 rounded-xl bg-purple-900/30 focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-purple-300/50 text-sm"
+                    required 
+                  />
+                </div>
+              </div>
+            </div>
+            
+            <button 
+              type="submit" 
+              className="w-full mt-5 bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-500 text-white p-3 rounded-xl hover:opacity-90 transition duration-300 font-medium shadow-lg shadow-purple-700/30 text-sm"
+            >
+              Join Now
+            </button>
+          
+            <p className="text-center mt-3 text-purple-200/80 text-xs">
+              Already have an account? <Link to="/login" className="text-blue-400 hover:text-purple-300 font-medium">Log in</Link>
+            </p>
+          </form>
+        </div>
+      </div>
+      <ToastContainer />
     </div>
   );
 };
@@ -107,223 +215,5 @@ const Register = () => {
 export default Register;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { useState } from 'react'
-// import { Link, useNavigate } from 'react-router-dom';
-// import axios from 'axios'
-// import { UserDataContext } from '../../Context/userContext';
-// import { toast, ToastContainer } from 'react-toastify';
-
-// const Register = () => {
-//   const [name, setName] = useState('')
-//   const [email, setEmail] = useState('')
-//   const [password, setPassword] = useState('')
-//   const [gender, setGender] = useState('')
-//   const [dob, setDob] = useState('')
-//   const [weight, setWeight] = useState('')
-//   const [height, setHeight] = useState('')
-
-//   const [userData, setUserData] = useState({})
-//   const { user, setUser } = React.useContext(UserDataContext)
-//   const navigate = useNavigate();
-
-//   const validateForm = () => {
-//     if (!name || !email || !password || !gender || !dob || !weight || !height) {
-//       toast.error('All fields are required.', { position: 'top-right', theme: 'dark' });
-//       return false;
-//     }
-//     if (password.length < 6) {
-//       toast.error('Password must be at least 6 characters long.', { position: 'top-right', theme: 'dark' });
-//       return false;
-//     }
-//     return true;
-//   };
-
-//   const submitHandler = async (e) => {
-//     e.preventDefault();
-//     if (!validateForm()) return true;
-//     const newUser = {
-//       name: name,
-//       email: email,
-//       password: password,
-//       gender: gender,
-//       dob: dob,
-//       weight: weight,
-//       height: height
-//     }
-
- 
-
-//     try {
-//       const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`, newUser)
-//       if (response.status === 201) {
-//         const data = response.data
-//         setUser(data.user)
-//         localStorage.setItem('token', data.token)
-//         toast.success('Registration successful!', {
-//           position: 'top-right',
-//           theme: "dark",
-//         });
-//         setTimeout(() => navigate('/login'), 2000);
-//       }
-//     } catch (error) {
-//       toast.error(error.response?.data?.message || 'Registration failed. Please try again.', {
-//         position: 'top-right',
-//         theme: "dark",
-//       });
-//     }
-
-//     setName('')
-//     setEmail('')
-//     setPassword('')
-//     setGender('')
-//     setDob('')
-//     setWeight('')
-//     setHeight('')
-//   }
-//   const handleHeightChange = (e) => {
-//     let value = Number(e.target.value);
-//     if (value < 1) value = ""; // Prevent negative or zero values
-//     setHeight(value);
-//   };
-
-//   const handleWeightChange = (e) => {
-//     let value = Number(e.target.value);
-//     if (value < 1) value = ""; // Prevent negative or zero values
-//     setWeight(value);
-//   };
-//   return (
-//     <div className='p-7 flex flex-col justify-between  min-h-screen'>
-//       <div>
-//         <h1 className='text-center text-xl'>Hey there,</h1>
-//         <h1 className='text-3xl text-center mt-2 font-bold'>Create an Account</h1>
-
-//         <form onSubmit={(e) => {
-//           submitHandler(e);
-//         }}
-//         >
-//           <h3 className='text-xl font-medium mt-5 mb-2'>What's your name?</h3>
-//           <div className='flex gap-4'>
-//             <i className="glass flex gap-2 w-full rounded-lg mb-5 px-4 py-3  text-2xl placeholder:text-base ri-map-pin-user-line">
-//               <input className='bg-transparent w-full outline-none text-lg' type="text" required placeholder='Enter Your Name' value={name} onChange={(e) => setName(e.target.value)} />
-//             </i>
-//           </div>
-
-//           <h3 className='text-xl font-medium mb-2'>What's your email?</h3>
-//           <div className='flex gap-4'>
-//             <i className="glass flex gap-2 w-full rounded-lg mb-5 px-4 py-3  text-2xl placeholder:text-base ri-mail-ai-line">
-//               <input className=' bg-transparent w-full outline-none text-lg' required type="email" placeholder='Enter Your Email' value={email} onChange={(e) => setEmail(e.target.value)} />
-//             </i>
-//           </div>
-
-//           <h3 className='text-xl font-medium mb-2'>What's your Password?</h3>
-//           <div className='flex gap-4'>
-//             <i className="glass flex gap-2 w-full rounded-lg mb-5 px-4 py-3  text-2xl placeholder:text-base ri-lock-2-line">
-//               <input className='bg-transparent w-full outline-none text-lg' required type="password" placeholder='Enter Your Password' value={password} onChange={(e) => setPassword(e.target.value)} />
-//             </i>
-//           </div>
-
-//           <h3 className='text-xl font-medium mb-2'>What's your gender?</h3>
-//           <div className='flex gap-4'>
-//             <i className="glass flex gap-2 w-full rounded-lg mb-5 px-4 py-3 border-2 border-black text-2xl placeholder:text-base ri-user-heart-line">
-//               <select
-//                 id="gender"
-//                 value={gender}
-//                 onChange={(e) => setGender(e.target.value)}
-//                 className="w-full outline-none text-lg bg-transparent"
-//                 required
-//               >
-//                 <option value="">Select Your Gender</option>
-//                 <option value="male">Male</option>
-//                 <option value="female">Female</option>
-//                 <option value="other">Other</option>
-//               </select>
-//             </i>
-//           </div>
-
-//           <h3 className='text-xl font-medium mb-2'>What's your date of birth?</h3>
-//           <div className='flex gap-4'>
-//             <i className="glass flex gap-2 w-full rounded-lg mb-5 px-4 py-3 border-2 border-black text-2xl placeholder:text-base ri-calendar-line">
-//               <input
-//                 type="date"
-//                 id="dob"
-//                 value={dob}
-//                 onChange={(e) => setDob(e.target.value)}
-//                 className="w-full outline-none text-lg bg-transparent"
-//                 required
-//               />
-//             </i>
-//           </div>
-
-//           <h3 className='text-xl font-medium mb-2'>What's your weight?</h3>
-//           <div className='flex gap-4'>
-//             <i className="glass flex gap-2 w-full rounded-lg mb-5 px-4 py-3 border-2 border-black text-2xl placeholder:text-base ri-scales-3-line">
-//               <input
-//                 type="number"
-//                 id="weight"
-//                 value={weight}
-//                 onChange={handleWeightChange}
-//                 placeholder="Enter Your Weight in KG"
-//                 className="w-full outline-none text-lg bg-transparent"
-//                 required
-//               />
-//             </i>
-//           </div>
-
-//           <h3 className='text-xl font-medium mb-2'>What's your height?</h3>
-//           <div className='flex gap-4'>
-//             <i className="glass flex gap-2 w-full rounded-lg mb-5 px-4 py-3 border-2 border-black text-2xl placeholder:text-base ri-ruler-line">
-//               <input
-//                 type="number"
-//                 id="height"
-//                 value={height}
-//                 onChange={handleHeightChange}
-//                 placeholder="Enter Your Height in Feet & Inches"
-//                 className="w-full bg-black outline-none text-lg bg-transparent"
-//                 required
-//               />
-//             </i>
-//           </div>
-
-//           <div className='mt-5 '>
-//             <button className='glass text-white font-semibold rounded-xl mb-3 px-4 py-5  w-full text-lg '>Register</button>
-
-//             <div className='flex justify-center items-center'>
-//               <span className='px-3'>----------------------</span>
-//               <span className='text-3xl '>or</span>
-//               <span className=' px-3'>----------------------</span>
-//             </div>
-
-//             <div className='flex justify-center items-center gap-4 mt-3'>
-//               <button className='glass font-semibold rounded-xl mb-3 px-3 py-3 '><i className="text-2xl text-blue-700 ri-google-fill"></i></button>
-
-//               <button className='glass font-semibold rounded-xl mb-3 px-3 py-3 '><i className="text-2xl text-blue-700 ri-facebook-fill"></i></button>
-//             </div>
-//           </div>
-//         </form>
-//         <p className='text-center text-lg  font-semibold'> Already have an account? <Link to='/login' className='text-blue-600 text-xl cursor-pointer'>Login here</Link></p>
-//       </div>
-
-//       <div>
-
-//         <ToastContainer></ToastContainer>
-
-//       </div>
-//     </div>
-//   )
-// }
-
-// export default Register
 
 

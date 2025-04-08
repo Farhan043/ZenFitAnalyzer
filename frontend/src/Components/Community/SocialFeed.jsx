@@ -123,15 +123,14 @@ const SocialFeed = () => {
   };
 
   return (
-    <div className="min-h-screen  bg-gradient-to-br from-blue-200 to-blue-700 ">
-
-    {/* Navbar */}
-    <nav className="w-full max-w-7xl flex justify-between items-center py-4 px-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-200 to-blue-700">
+      {/* Navbar */}
+      <nav className="w-full max-w-7xl mx-auto flex justify-between items-center py-4 px-4 sm:px-6">
         <div className="flex items-center gap-2 text-blue-600 font-bold text-lg">
           <Trophy className="w-6 h-6" />{" "}
           <span className="text-xl">FitSocial</span>
         </div>
-        <div className="hidden md:flex gap-8  text-gray-700 text-base">
+        <div className="hidden md:flex gap-4 lg:gap-8 text-gray-700 text-base">
           <NavItem to="/social" icon={<Home size={18} />} text="Home" />
           <NavItem
             to="/challenges"
@@ -160,16 +159,16 @@ const SocialFeed = () => {
           <NavItem to="/profile" icon={<User size={18} />} text="Profile" />
         </div>
       )}
-     
 
-   {/* Tab Navigation */}
-   <div className="max-w-8xl  mx-auto mt-8 px-4">
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+        {/* Tab Navigation */}
         <div className="flex gap-4 mb-6">
           <button
             onClick={() => setActiveTab('feed')}
             className={`flex-1 py-2 px-4 rounded-lg transition ${
               activeTab === 'feed'
-                ? 'bg-white/10 backdrop-blur-lg border border-white/20  rounded-lg shadow-lg text-white'
+                ? 'bg-white/10 backdrop-blur-lg border border-white/20 text-white'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             }`}
           >
@@ -179,7 +178,7 @@ const SocialFeed = () => {
             onClick={() => setActiveTab('discover')}
             className={`flex-1 py-2 px-4 rounded-lg transition ${
               activeTab === 'discover'
-                ? 'bg-white/10 backdrop-blur-lg border border-white/20  rounded-lg shadow-lg text-white'
+                ? 'bg-white/10 backdrop-blur-lg border border-white/20 text-white'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             }`}
           >
@@ -190,9 +189,8 @@ const SocialFeed = () => {
         {activeTab === 'feed' ? (
           <>
             {/* Create Post Section */}
-            <div className="bg-white/10 backdrop-blur-lg border border-white/20  rounded-lg shadow-lg  p-4 mb-6">
+            <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg shadow-lg p-4 mb-6">
               <div className="flex items-start gap-4">
-            
                 <div className="flex-1">
                   <textarea
                     value={newPost}
@@ -201,8 +199,8 @@ const SocialFeed = () => {
                     className="w-full p-2 border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
                     rows="3"
                   />
-                  <div className="flex justify-between items-center mt-3">
-                    <label className="cursor-pointer flex items-center bg-blue-100 text-blue-950 gap-2  px-4 py-2 rounded-lg hover:bg-blue-600 transition">
+                  <div className="flex flex-col sm:flex-row justify-between items-center mt-3 gap-2">
+                    <label className="cursor-pointer flex items-center bg-blue-100 text-blue-950 gap-2 px-4 py-2 rounded-lg hover:bg-blue-600 transition w-full sm:w-auto justify-center">
                       <Image size={20} />
                       <span>Add Photo</span>
                       <input
@@ -215,7 +213,7 @@ const SocialFeed = () => {
                     <button
                       onClick={handleCreatePost}
                       disabled={loading}
-                      className="bg-blue-100 text-blue-950 px-4 py-2 rounded-lg hover:bg-blue-600 transition flex items-center gap-2"
+                      className="bg-blue-100 text-blue-950 px-4 py-2 rounded-lg hover:bg-blue-600 transition flex items-center gap-2 w-full sm:w-auto justify-center"
                     >
                       <Send size={20} />
                       {loading ? 'Posting...' : 'Post'}
@@ -226,7 +224,7 @@ const SocialFeed = () => {
             </div>
 
             {/* Posts Feed */}
-            <div className="  w-full flex items-center shadow-lg gap-5 flex-wrap">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {posts.map((post) => (
                 <PostCard
                   key={post._id}
@@ -242,7 +240,7 @@ const SocialFeed = () => {
           <UserDiscovery />
         )}
       </div>
-      </div>
+    </div>
   );
 };
 
@@ -251,6 +249,12 @@ const PostCard = ({ post, onLike, currentUser, onRefresh }) => {
   const [newComment, setNewComment] = useState('');
   const [loading, setLoading] = useState(false);
   const [comments, setComments] = useState(post.comments || []);
+  const [commentCount, setCommentCount] = useState(post.comments?.length || 0);
+
+  useEffect(() => {
+    setComments(post.comments || []);
+    setCommentCount(post.comments?.length || 0);
+  }, [post.comments]);
 
   const handleComment = async () => {
     if (!newComment.trim()) {
@@ -269,14 +273,13 @@ const PostCard = ({ post, onLike, currentUser, onRefresh }) => {
         }
       );
 
-      // Update local comments state with the new comment
       if (response.data.post.comments) {
         setComments(response.data.post.comments);
+        setCommentCount(response.data.post.comments.length);
       }
       setNewComment('');
       toast.success('Comment added successfully!');
       
-      // Refresh the entire feed to get updated data
       if (onRefresh) {
         onRefresh();
       }
@@ -285,6 +288,42 @@ const PostCard = ({ post, onLike, currentUser, onRefresh }) => {
       toast.error('Failed to add comment');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDeleteComment = async (commentId) => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        toast.error('Please login to delete comment');
+        return;
+      }
+
+      const response = await axios.delete(
+        `${import.meta.env.VITE_BASE_URL}/social/posts/${post._id}/comment/${commentId}`,
+        {
+          headers: { 
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      if (response.data.success) {
+        // Update local comments state
+        setComments(comments.filter(comment => comment._id !== commentId));
+        setCommentCount(commentCount - 1);
+        
+        // Update the post's comment count in the parent component
+        if (onRefresh) {
+          onRefresh();
+        }
+        
+        toast.success('Comment deleted successfully!');
+      }
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+      const errorMessage = error.response?.data?.error || 'Failed to delete comment';
+      toast.error(errorMessage);
     }
   };
 
@@ -319,26 +358,25 @@ const PostCard = ({ post, onLike, currentUser, onRefresh }) => {
   };
 
   return (
-    <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6 mb-6 w-full md:w-[48%] lg:w-[31%]">
+    <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-4 sm:p-6">
       {/* User Info with Delete Button */}
       <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-3">
           <ProfileImage 
             user={post.user} 
             size="md"
           />
           <div>
-            <h3 className="font-semibold text-white">{post.user.name}</h3>
-            <p className="text-sm text-white/70">
+            <h3 className="font-semibold text-white text-sm sm:text-base">{post.user.name}</h3>
+            <p className="text-xs text-white/70">
               {new Date(post.createdAt).toLocaleDateString()}
             </p>
           </div>
         </div>
-        {/* Only show delete button if the post is by current user */}
         {post.user._id === currentUser._id && (
           <button
             onClick={handleDeletePost}
-            className="text-red-500 hover:text-red-600 transition p-2 rounded-full hover:bg-red-100/10"
+            className="text-red-500 hover:text-red-600 transition p-1 rounded-full hover:bg-red-100/10"
             title="Delete post"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -349,9 +387,9 @@ const PostCard = ({ post, onLike, currentUser, onRefresh }) => {
       </div>
       
       {/* Post Content */}
-      <p className="mb-4 text-white">{post.content}</p>
+      <p className="mb-4 text-white text-sm sm:text-base">{post.content}</p>
 
-      {/* Post Image with improved sizing */}
+      {/* Post Image */}
       {post.image && (
         <div className="mb-4 relative aspect-[16/9] w-full overflow-hidden rounded-lg">
           <img
@@ -362,7 +400,7 @@ const PostCard = ({ post, onLike, currentUser, onRefresh }) => {
         </div>
       )}
 
-      {/* Action Buttons - Removed Share button */}
+      {/* Action Buttons */}
       <div className="flex items-center space-x-6 mb-4">
         <button
           onClick={() => onLike(post._id)}
@@ -374,38 +412,38 @@ const PostCard = ({ post, onLike, currentUser, onRefresh }) => {
             size={20} 
             className={`cursor-pointer ${post.likes.includes(currentUser._id) ? 'text-red-500' : 'text-white'}`} 
           />
-          <span className='text-white '>{post.likes.length}</span>
+          <span className='text-white text-sm sm:text-base'>{post.likes.length}</span>
         </button>
         <button
           onClick={() => setShowComments(!showComments)}
-          className="flex items-center gap-2 text-white "
+          className="flex items-center gap-2 text-white"
         >
           <MessageCircle size={20} />
-          <span>{post.comments.length}</span>
+          <span className="text-sm sm:text-base">{commentCount}</span>
         </button>
       </div>
 
-      {/* Comments Section with improved visibility */}
+      {/* Comments Section */}
       {showComments && (
         <div className="space-y-4">
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             <input
               type="text"
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
               placeholder="Add a comment..."
-              className="flex-1 px-3 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1 px-3 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
             />
             <button
               onClick={handleComment}
               disabled={loading}
-              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition disabled:opacity-50"
+              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition disabled:opacity-50 text-sm sm:text-base"
             >
               {loading ? 'Sending...' : 'Send'}
             </button>
           </div>
 
-          {/* Comments List with improved visibility */}
+          {/* Comments List */}
           <div className="space-y-3 mt-4">
             {comments.map((comment, index) => (
               <div key={index} className="flex items-start space-x-3 bg-white/10 p-3 rounded-lg">
@@ -415,23 +453,35 @@ const PostCard = ({ post, onLike, currentUser, onRefresh }) => {
                 />
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
-                    <p className="font-medium text-white">{comment.user?.name}</p>
-                    <p className="text-xs text-white/70">
-                      {new Date(comment.createdAt).toLocaleDateString()}
-                    </p>
+                    <p className="font-medium text-white text-sm sm:text-base">{comment.user?.name}</p>
+                    <div className="flex items-center gap-2">
+                      <p className="text-xs text-white/70">
+                        {new Date(comment.createdAt).toLocaleDateString()}
+                      </p>
+                      {comment.user._id === currentUser._id && (
+                        <button
+                          onClick={() => handleDeleteComment(comment._id)}
+                          className="text-red-500 hover:text-red-600 transition p-1 rounded-full hover:bg-red-100/10"
+                          title="Delete comment"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                            <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
+                          </svg>
+                        </button>
+                      )}
+                    </div>
                   </div>
-                  <p className="text-white mt-1">{comment.content}</p>
+                  <p className="text-white mt-1 text-sm sm:text-base">{comment.content}</p>
                 </div>
               </div>
             ))}
             {comments.length === 0 && (
-              <p className="text-center text-white/70">No comments yet</p>
+              <p className="text-center text-white/70 text-sm sm:text-base">No comments yet</p>
             )}
           </div>
         </div>
       )}
     </div>
- 
   );
 };
 
@@ -446,7 +496,7 @@ function NavItem({ icon, text, to, active }) {
         }`}
     >
       {icon}
-      {text}
+      <span className="text-sm sm:text-base">{text}</span>
     </Link>
   );
 }

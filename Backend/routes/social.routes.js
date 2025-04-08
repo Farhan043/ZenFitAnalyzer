@@ -9,6 +9,7 @@ router.post('/posts', authMiddleware.authUser, upload.single('image'), socialCon
 router.get('/posts', authMiddleware.authUser, socialController.getFeedPosts);
 router.post('/posts/:postId/like', authMiddleware.authUser, socialController.likePost);
 router.post('/posts/:postId/comment', authMiddleware.authUser, socialController.commentOnPost);
+router.delete('/posts/:postId/comment/:commentId', authMiddleware.authUser, socialController.deleteComment);
 router.post('/posts/:postId/share', authMiddleware.authUser, socialController.sharePost);
 router.delete('/posts/:postId', authMiddleware.authUser, socialController.deletePost);
 
