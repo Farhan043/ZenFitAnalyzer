@@ -7,7 +7,7 @@ const Start2 = () => {
     <>
       {/* Background Section */}
       <div className="relative w-full h-screen flex flex-col items-center justify-center bg-gradient-to-b from-pink-500 to-purple-600 text-white p-6">
-        
+      
         {/* AI-Generated Image */}
         <div className="w-[300px] h-[300px] mb-6">
           <img 

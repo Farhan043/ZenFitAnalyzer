@@ -5,10 +5,6 @@ var userService = require('../services/user.service');
 var blackListTokenModel = require('../models/blackListToken.model');
 
 
-
-
-
-
 //Register
 module.exports.registerUser = async (req, res, next) => {
   const errors = validationResult(req);

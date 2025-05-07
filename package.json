@@ -1,7 +1,7 @@
 {
   "devDependencies": {
     "@types/node": "^22.13.5",
-    "daisyui": "^4.12.23"
+    "daisyui": "^4.12.24"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

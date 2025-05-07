@@ -5,6 +5,7 @@ import { UserDataContext } from '../../Context/UserContext';
 import { toast, ToastContainer } from 'react-toastify';
 
 const Register = () => {
+  // Declare state variables for each input field
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -13,40 +14,61 @@ const Register = () => {
   const [weight, setWeight] = useState('');
   const [height, setHeight] = useState('');
 
+  // Get the setUser function from the UserDataContext
   const { setUser } = React.useContext(UserDataContext);
+  // Get the navigate function from the useNavigate hook
   const navigate = useNavigate();
 
+  // Function to validate the form
   const validateForm = () => {
+    // Check if any of the input fields are empty
     if (!name || !email || !password || !gender || !dob || !weight || !height) {
+      // If any of the input fields are empty, show an error message
       toast.error('All fields are required.', { position: 'top-right', theme: 'dark' });
       return false;
     }
+    // Check if the password is at least 6 characters long
     if (password.length < 6) {
+      // If the password is less than 6 characters, show an error message
       toast.error('Password must be at least 6 characters long.', { position: 'top-right', theme: 'dark' });
       return false;
     }
+    // If all the input fields are valid, return true
     return true;
   };
 
+  // Function to handle form submission
   const submitHandler = async (e) => {
+    // Prevent the default form submission behavior
     e.preventDefault();
+    // Validate the form
     if (!validateForm()) return;
 
+    // Create a new user object with the input values
     const newUser = { name, email, password, gender, dob, weight, height };
 
     try {
+      // Send a POST request to the server to register the new user
       const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`, newUser);
+      // If the response status is 201, the user was successfully registered
       if (response.status === 201) {
+        // Get the user data from the response
         const data = response.data;
+        // Set the user data in the UserDataContext
         setUser(data.user);
+        // Store the token in local storage
         localStorage.setItem('token', data.token);
+        // Show a success message
         toast.success('Registration successful!', { position: 'top-right', theme: 'dark' });
+        // Redirect the user to the login page after 2 seconds
         setTimeout(() => navigate('/login'), 2000);
       }
     } catch (error) {
+      // If there is an error, show an error message
       toast.error(error.response?.data?.message || 'Registration failed. Please try again.', { position: 'top-right', theme: 'dark' });
     }
     
+     // Reset the input fields
      setName('')
      setEmail('')
      setPassword('')
@@ -55,7 +77,9 @@ const Register = () => {
      setWeight('')
      setHeight('')
    }
+   // Function to handle height input change
    const handleHeightChange = (e) => {
+     // Get the value of the input field
      let value = Number(e.target.value);
      if (value < 1) value = ""; // Prevent negative or zero values
      setHeight(value);
