@@ -29,6 +29,15 @@ ZenFitAnalyzer is a comprehensive health and fitness tracking application built 
 
 ## Key Features
 
+## 🔥 Screenshots
+
+### 🏋️‍♂️ Dashboard Overview
+![Dashboard](https://github.com/your-username/your-repo/blob/main/frontend/public/images/dashboard.png?raw=true)
+
+### ⚖️ BMI Calculator
+![BMI Calculator](https://github.com/Farhan043/ZenFitAnalyzer/blob/main/frontend/public/images/bmi-calculator.png?raw=true)
+
+
 1. **User Authentication**
    - Registration and login system
    - Profile management
