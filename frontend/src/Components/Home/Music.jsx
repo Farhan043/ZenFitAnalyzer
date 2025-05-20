@@ -12,7 +12,7 @@ const Music = () => {
         <div className='p-10 rounded-lg  flex items-center justify-center flex-col'>
           {/* <h1 className=' '><i className="ri-spotify-fill text-5xl text-green-600 "></i></h1> */}
           <img src="/public/spotify.gif" alt="" className='w-36 h-32' />
-          <p className='text-2xl font-bold mb-6 text-gray-100'>Discover  And  Enjoy <br /> <span className='text-green-600 font-bold'>Your  Favorite Tunes</span> </p>
+          <p className='text-2xl font-bold mb-12 text-gray-100'>Discover  And  Enjoy <br /> <span className='text-green-600 font-bold'>Your  Favorite Tunes</span> </p>
           
           <button 
             className='text-xl text-white rounded-lg bg-slate-900 mt-28  px-6 py-3' 

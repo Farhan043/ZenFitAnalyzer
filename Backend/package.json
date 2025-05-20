@@ -1,11 +1,14 @@
 {
   "name": "backend",
   "version": "0.0.0",
-  "private": true,
+  "main": "app.js",
   "scripts": {
-    "start": "node ./app.js"
+    "start": "node ./app.js",
+    "dev": "nodemon ./app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@tensorflow/tfjs": "^4.22.0",
     "@tensorflow/tfjs-backend-webgl": "^4.22.0",
     "axios": "^1.7.9",
@@ -23,6 +26,7 @@
     "mongoose": "^8.9.4",
     "morgan": "~1.9.1",
     "multer": "^1.4.5-lts.1",
+    "multer-storage-cloudinary": "^4.0.0",
     "nodemailer": "^6.10.0",
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1",

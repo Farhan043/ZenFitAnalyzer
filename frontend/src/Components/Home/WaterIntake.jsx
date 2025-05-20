@@ -50,9 +50,9 @@ const WaterIntake = () => {
     <>
      {/* <div className="relative w-full h-screen flex items-center justify-center overflow-hidden"> */}
     
-      <div className="mockup-phone border-primary mt-5">
+      <div className="mockup-phone border-primary mt-5 ">
       <div className=" flex flex-col items-center justify-center w-full  md:w-5/5  p-6    mt-3 mb-3  rounded-md shadow-lg text-white">
-        <h2 className="text-2xl font-bold text-center mb-4">Water Intake <span className='text-blue-500'> Tracker</span></h2>
+        <h2 className="text-2xl font-bold text-center mb-4">Water Intake <span className='text-blue-500 '> Tracker</span></h2>
         
         <img src='/public/water.gif' alt="Water Animation" className="w-72 h-52 mb-10" />
 
@@ -69,7 +69,7 @@ const WaterIntake = () => {
         </div>
 
         {/* Progress Bar */}
-        <div className="w-full h-6 bg-gray-700 rounded-full mt-10  relative">
+        <div className="w-full h-6 bg-gray-700 rounded-full mt-10 mb-20   relative">
           <div 
             className="absolute top-0 left-0 h-6 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 transition-all duration-300" 
             style={{ width: `${(waterData.total / 4000) * 100}%` }}

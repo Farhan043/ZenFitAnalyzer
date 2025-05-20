@@ -236,26 +236,26 @@ const Navbar = () => {
       <div className=" overflow-y-auto scrollable w-full px-2 sm:px-4 md:px-6 max-w-[2000px] mx-auto scrollbar-thin scrollbar-rounded">
         <Bmi />
         <HabitTracker />
-      <div className='flex flex-col md:flex-row mt-5 text-white gap-5'>
-          <div className='w-full md:w-1/2 flex md:flex-row'>
+        <div className="flex flex-col md:flex-row mt-5 text-white gap-5 justify-center items-center">
+          <div className="w-full md:w-1/2 flex justify-center">
             <WaterIntake />
           </div>
-          <div className='w-full md:w-1/2 flex md:flex-row'>
+          <div className="w-full md:w-1/2 flex justify-center">
             <Music />
           </div>
         </div>
 
-      <TodayTarget />
-      <HealthTips />
-      <BodyProgress />
-      <MarketPlace />
-      <WorkoutTutorial />
-      <TodaySchedule />
+        <TodayTarget />
+        <HealthTips />
+        <BodyProgress />
+        <MarketPlace />
+        <WorkoutTutorial />
+        <TodaySchedule />
 
-      <Layout />
-      <Footer />
-      <FloatingButton />
-    </div>
+        <Layout />
+        <Footer />
+        <FloatingButton />
+      </div>
     </div>
   );
 };

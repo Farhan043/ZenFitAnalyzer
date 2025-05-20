@@ -129,7 +129,11 @@ const App = () => {
           <Route path="/meal" element={<Meal />} />
           <Route path="/musichome" element={<MusicHome />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/policy" element={<PrivacyPolicy />} />
+          <Route path="/policy" element={<PrivacyPolicy />} />console.log("App component rendered");
+console.log("Location:", location);
+console.log("Access token:", accessToken);
+console.log("Hidden routes:", hiddenRoutes);
+console.log("Should show chatbot:", shouldShowChatbot);
           <Route path="/terms" element={<TermsOfUse/>} />
           <Route path="/socialfeed" element={<SocialFeed/>} />
           <Route path="/social" element={<SocialFeeds/>} />

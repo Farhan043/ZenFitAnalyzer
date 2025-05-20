@@ -374,7 +374,6 @@ SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
 ### Frontend (.env)
 ```
 VITE_BASE_URL=http://localhost:4000
-VITE_SPOTIFY_CLIENT_ID=your_spotify_client_id
 VITE_SPOTIFY_REDIRECT_URI=http://localhost:5173/musichome
 ```
 
