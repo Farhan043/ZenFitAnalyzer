@@ -14,14 +14,15 @@ const Start = () => {
           <div className="bg-base-200 grid place-content-center text-9xl font-black">ZenFit</div>
         </div>
         <div className="diff-resizer"></div>
-        <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2">
-          <Link 
-            to='/start2' 
-            className="btn glass btn-lg  text-white "
-          >
-            Get Started
-          </Link>
-        </div>
+        <div className="absolute bottom-20 right-20">
+  <Link 
+    to='/start2' 
+    className="btn glass btn-lg text-white"
+  >
+    <i className="ri-arrow-right-line text-2xl"></i>
+  </Link>
+</div>
+
       </div>
     </>
   );
