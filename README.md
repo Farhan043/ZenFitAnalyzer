@@ -2,9 +2,9 @@
 
 ### ⚖️ BMI Calculator
 ### ⚖️ BMI Calculator
-![BMI Calculator](./frontend/public/images/bmi-calculator.png)
+![BMI Calculator](./frontend/public/bmi-calculator.png)
 
-![WaterTracker_and_SpotifyScreen](./frontend/public/images/WaterTracker_and_SpotifyScreen.png)
+![WaterTracker_and_SpotifyScreen](./frontend/public/WaterTracker_and_SpotifyScreen.png)
 
 ## Project Overview
 ZenFitAnalyzer is a comprehensive health and fitness tracking application built with a React frontend and Express.js backend. The platform offers various features to help users track their health, fitness, nutrition, and wellness journey.
