@@ -295,6 +295,7 @@ const Navbar = () => {
                     onClick={() => setIsMenuOpen(false)}
                   >
                     <FiUser className="mr-2" /> Login / Register
+
                   </Link>
                 )}
               </div>

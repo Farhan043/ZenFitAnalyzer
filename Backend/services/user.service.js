@@ -1,4 +1,4 @@
-var userModel = require('../models/user.model');
+var userModel = require('../Models/user.model');
 
 
 module.exports.createUser = async ({ name, email, password, gender, dob, weight, height }) => {
