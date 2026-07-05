@@ -2,7 +2,7 @@ var userModel = require('../Models/user.model');
 
 const { validationResult } = require('express-validator');
 var userService = require('../services/user.service');
-var blackListTokenModel = require('../Models/blackListToken.model');
+var blackListTokenModel = require('../Models/blacklistToken.model');
 
 
 //Register
