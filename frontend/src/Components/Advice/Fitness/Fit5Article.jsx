@@ -33,7 +33,7 @@ export default function Fit5Article() {
       <div className="bg-black text-white p-5 shadow-blue-500 shadow-md">
         <div className="container mx-auto flex justify-between items-center">
           <div className="text-2xl flex items-center gap-2 font-bold">
-            <img src="/public/logo.gif" alt="" />
+            <img src="/logo.gif" alt="" />
             <span className="text-blue-400">ZenFit</span> AnalyZer
           </div>
 
@@ -185,7 +185,7 @@ export default function Fit5Article() {
         </div>
 
         <img
-          src="/public/Fitness/fitness5.png"
+          src="/Fitness/fitness5.png"
           alt="posture"
           className="w-96 mt-5 rounded-lg flex mx-auto items-center shadow-lg mb-6"
         />

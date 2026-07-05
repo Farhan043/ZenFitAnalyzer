@@ -31,7 +31,7 @@ export default function FitnessArticle() {
       <div className="bg-black text-white p-5 shadow-blue-500 shadow-md">
         <div className="container mx-auto flex justify-between items-center">
           <div className="text-2xl flex items-center gap-2 font-bold">
-            <img src="/public/logo.gif" alt="" />
+            <img src="/logo.gif" alt="" />
             <span className="text-blue-400">ZenFit</span> AnalyZer
           </div>
 
@@ -188,7 +188,7 @@ export default function FitnessArticle() {
         </div>
 
         <img
-          src="/public/Fitness/fitness1.png"
+          src="/Fitness/fitness1.png"
           alt="Workout"
           className="w-96 rounded-lg flex mx-auto items-center shadow-lg mb-6"
         />
@@ -207,7 +207,7 @@ export default function FitnessArticle() {
             1. Prioritize Protein Intake
           </h2>
           <img
-            src="/public/Fitness/protienFood.png"
+            src="/Fitness/protienFood.png"
             alt="Protein food"
             className="w-96 flex mx-auto items-center rounded-md mb-4"
           />
@@ -231,7 +231,7 @@ export default function FitnessArticle() {
               2. Strength Train at Least 3 Times Per Week
             </h2>
             <img
-              src="/public/Fitness/strength.png"
+              src="/Fitness/strength.png"
               alt="Protein food"
               className="w-96 flex mx-auto items-center rounded-md mb-4"
             />
@@ -257,7 +257,7 @@ export default function FitnessArticle() {
               3. Stay Active Throughout the Day
             </h2>
             <img
-              src="/public/Fitness/walk.png"
+              src="/Fitness/walk.png"
               alt="Protein food"
               className="w-96 flex mx-auto items-center rounded-md mb-4"
             />
@@ -279,7 +279,7 @@ export default function FitnessArticle() {
               4. Prioritize Sleep for Recovery
             </h2>
             <img
-              src="/public/Fitness/sleep.png"
+              src="/Fitness/sleep.png"
               alt="Protein food"
               className="w-96 flex mx-auto items-center rounded-md mb-4"
             />
@@ -302,7 +302,7 @@ export default function FitnessArticle() {
               5. Consume Enough Calories
             </h2>
             <img
-              src="/public/Fitness/kcal.png"
+              src="/Fitness/kcal.png"
               alt="Protein food"
               className="w-96 flex mx-auto items-center rounded-md mb-4"
             />
@@ -324,7 +324,7 @@ export default function FitnessArticle() {
               6. Incorporate Mobility & Stretching Exercises
             </h2>
             <img
-              src="/public/Fitness/steching.png"
+              src="/Fitness/steching.png"
               alt="Protein food"
               className="w-96 flex mx-auto items-center rounded-md mb-4"
             />
@@ -346,7 +346,7 @@ export default function FitnessArticle() {
               7.  Stay Hydrated
             </h2>
             <img
-              src="/public/Fitness/hydrated.png"
+              src="/Fitness/hydrated.png"
               alt="Protein food"
               className="w-96 flex mx-auto items-center rounded-md mb-4"
             />
@@ -368,7 +368,7 @@ export default function FitnessArticle() {
               8.   Manage Stress Levels
             </h2>
             <img
-              src="/public/Fitness/stress.png"
+              src="/Fitness/stress.png"
               alt="Protein food"
               className="w-96 flex mx-auto items-center rounded-md mb-4"
             />

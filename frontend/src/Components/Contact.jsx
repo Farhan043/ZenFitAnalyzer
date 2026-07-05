@@ -65,7 +65,7 @@ import FloatingButton from '../Pages/FloatingButton';
             <div className="bg-black text-white p-5 shadow-blue-500 shadow-md">
               <div className="container mx-auto flex justify-between items-center">
                 <div className="text-2xl flex items-center gap-2 font-bold">
-                  <img src="/public/logo.gif" alt="" />
+                  <img src="/logo.gif" alt="" />
                   <span className="text-blue-400">ZenFit</span> AnalyZer
                 </div> 
                 <div className="hidden md:flex space-x-6 text-lg">
@@ -133,7 +133,7 @@ import FloatingButton from '../Pages/FloatingButton';
         <div className="flex flex-col md:flex-row justify-center items-center min-h-screen gap-20 ">
           <div className="hidden md:block w-1/2 max-w-md">
             <img 
-              src="/public/track.png" 
+              src="/track.png" 
               alt="Fitness Inspiration" 
               className="rounded-lg w-72 ml-20 h-96 shadow-lg "
             />

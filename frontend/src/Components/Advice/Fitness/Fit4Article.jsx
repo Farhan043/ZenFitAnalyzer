@@ -31,7 +31,7 @@ export default function Fit4Article() {
       <div className="bg-black text-white p-5 shadow-blue-500 shadow-md">
         <div className="container mx-auto flex justify-between items-center">
           <div className="text-2xl flex items-center gap-2 font-bold">
-            <img src="/public/logo.gif" alt="" />
+            <img src="/logo.gif" alt="" />
             <span className="text-blue-400">ZenFit</span> AnalyZer
           </div>
 
@@ -183,7 +183,7 @@ export default function Fit4Article() {
         </div>
 
         <img
-          src="/public/Fitness/fitness4.png"
+          src="/Fitness/fitness4.png"
           alt="posture"
           className="w-96 rounded-lg flex mx-auto items-center shadow-lg mb-6"
         />
@@ -216,7 +216,7 @@ export default function Fit4Article() {
               2.  Hydration & Proper Nutrition (Fuel Your Muscles for Faster Healing)
             </h2>
             <img
-              src="/public/Fitness/human.png"
+              src="/Fitness/human.png"
               alt="Protein food"
               className="w-96 flex mx-auto items-center rounded-md mb-4"
             />
@@ -242,7 +242,7 @@ export default function Fit4Article() {
               3.   Foam Rolling & Massage (Relieve Tight Muscles & Improve Mobility)
             </h2>
             <img
-              src="/public/Fitness/roller.png"
+              src="/Fitness/roller.png"
               alt="Protein food"
               className="w-96 flex mx-auto items-center rounded-md mb-4"
             />
@@ -266,7 +266,7 @@ export default function Fit4Article() {
               4.  Contrast Therapy (Alternating Hot & Cold Therapy for Muscle Recovery)
             </h2>
             <img
-              src="/public/Fitness/therapy.png"
+              src="/Fitness/therapy.png"
               alt="Protein food"
               className="w-96 flex mx-auto items-center rounded-md mb-4"
             />
@@ -291,7 +291,7 @@ export default function Fit4Article() {
               5.Quality Sleep & Rest (The #1 Muscle Repair Method)
             </h2>
             <img
-              src="/public/Fitness/L.png"
+              src="/Fitness/L.png"
               alt="Protein food"
               className="w-96 flex mx-auto items-center rounded-md mb-4"
             />

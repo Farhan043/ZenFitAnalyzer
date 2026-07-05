@@ -137,7 +137,7 @@ export default function Fit9Article() {
       <div className="bg-black text-white p-5 shadow-blue-500 shadow-md">
         <div className="container mx-auto flex justify-between items-center">
           <div className="text-2xl flex items-center gap-2 font-bold">
-            <img src="/public/logo.gif" alt="" />
+            <img src="/logo.gif" alt="" />
             <span className="text-blue-400">ZenFit</span> AnalyZer
           </div>
 
@@ -284,7 +284,7 @@ export default function Fit9Article() {
       Best Foods to Eat Before & After a Workout for Maximum Performance & Recovery
         </h2>
         <img
-          src="/public/Fitness/fitness9.png"
+          src="/Fitness/fitness9.png"
           alt="posture"
           className="w-96 mt-5 rounded-lg mx-auto shadow-lg mb-6"
         />

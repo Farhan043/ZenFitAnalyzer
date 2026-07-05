@@ -12,7 +12,7 @@ const Start5 = () => {
         {/* AI-Generated Image */}
         <div className="w-[300px] h-[300px] mb-6">
           <img 
-            src="/public/sleep.png" 
+            src="/sleep.png" 
             alt="Fitness AI Illustration" 
             className="w-full h-full bg-cover bg-center" 
           />

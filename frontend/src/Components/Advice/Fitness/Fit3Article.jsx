@@ -31,7 +31,7 @@ export default function Fit3Article() {
       <div className="bg-black text-white p-5 shadow-blue-500 shadow-md">
         <div className="container mx-auto flex justify-between items-center">
           <div className="text-2xl flex items-center gap-2 font-bold">
-            <img src="/public/logo.gif" alt="" />
+            <img src="/logo.gif" alt="" />
             <span className="text-blue-400">ZenFit</span> AnalyZer
           </div>
 
@@ -183,7 +183,7 @@ export default function Fit3Article() {
         </div>
 
         <img
-          src="/public/Fitness/fitness3.png"
+          src="/Fitness/fitness3.png"
           alt="posture"
           className="w-96 rounded-lg flex mx-auto items-center shadow-lg mb-6"
         />
@@ -211,7 +211,7 @@ export default function Fit3Article() {
             1. Chin Tucks (For Forward Head Posture)
           </h2>
           <img
-            src="/public/Fitness/chin.png"
+            src="/Fitness/chin.png"
             alt="Protein food"
             className="w-96 flex mx-auto items-center rounded-md mb-4"
           />
@@ -233,7 +233,7 @@ export default function Fit3Article() {
               2.  Shoulder Blade Squeeze (For Rounded Shoulders)
             </h2>
             <img
-              src="/public/Fitness/squeeze.png"
+              src="/Fitness/squeeze.png"
               alt="Protein food"
               className="w-96 flex mx-auto items-center rounded-md mb-4"
             />
@@ -258,7 +258,7 @@ export default function Fit3Article() {
               3.  Wall Angels (For Upper Back & Shoulder Mobility)
             </h2>
             <img
-              src="/public/Fitness/wall.png"
+              src="/Fitness/wall.png"
               alt="Protein food"
               className="w-96 flex mx-auto items-center rounded-md mb-4"
             />
@@ -284,7 +284,7 @@ export default function Fit3Article() {
               4.  Cat-Cow Stretch (For Spinal Mobility)
             </h2>
             <img
-              src="/public/Fitness/catCow.png"
+              src="/Fitness/catCow.png"
               alt="Protein food"
               className="w-96 flex mx-auto items-center rounded-md mb-4"
             />
@@ -309,7 +309,7 @@ export default function Fit3Article() {
               5. Plank (For Core & Postural Stability)
             </h2>
             <img
-              src="/public/Fitness/plank.png"
+              src="/Fitness/plank.png"
               alt="Protein food"
               className="w-96 flex mx-auto items-center rounded-md mb-4"
             />
@@ -334,7 +334,7 @@ export default function Fit3Article() {
               6. Doorway Chest Stretch (For Tight Chest Muscles)
             </h2>
             <img
-              src="/public/Fitness/chest.png"
+              src="/Fitness/chest.png"
               alt="Protein food"
               className="w-96 flex mx-auto items-center rounded-md mb-4"
             />
@@ -359,7 +359,7 @@ export default function Fit3Article() {
               7. Glute Bridge (For Lower Back & Core Support)
             </h2>
             <img
-              src="/public/Fitness/muscle.png"
+              src="/Fitness/muscle.png"
               alt="Protein food"
               className="w-96 flex mx-auto items-center rounded-md mb-4"
             />
@@ -384,7 +384,7 @@ export default function Fit3Article() {
               8. Standing Posture Check (For Mindful Awareness)
             </h2>
             <img
-              src="/public/Fitness/straight.png"
+              src="/Fitness/straight.png"
               alt="Protein food"
               className="w-96 flex mx-auto items-center rounded-md mb-4"
             />

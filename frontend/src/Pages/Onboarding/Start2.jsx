@@ -11,7 +11,7 @@ const Start2 = () => {
         {/* AI-Generated Image */}
         <div className="w-[300px] h-[300px] mb-6">
           <img 
-            src="/public/track.png" 
+            src="/track.png" 
             alt="Fitness AI Illustration" 
             className="w-full h-full bg-cover bg-center" 
           />

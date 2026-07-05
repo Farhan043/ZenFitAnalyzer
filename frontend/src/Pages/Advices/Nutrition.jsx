@@ -34,7 +34,7 @@ const Navbar = () => {
         <div className="bg-black text-white p-5 shadow-blue-500 shadow-md">
           <div className="container mx-auto flex justify-between items-center">
             <div className="text-2xl flex items-center gap-2 font-bold">
-              <img src="/public/logo.gif" alt="" />
+              <img src="/logo.gif" alt="" />
               <span className="text-blue-400">ZenFit</span> AnalyZer
             </div>
 
@@ -191,7 +191,7 @@ const Navbar = () => {
             {/* Image Section */}
             <div className="w-full md:w-1/2">
               <img
-                src="/public/Nutrition/nutrition1.png"
+                src="/Nutrition/nutrition1.png"
                 alt="Elderly woman doing plank exercise"
                 className="w-96 h-full object-cover"
               />
@@ -220,7 +220,7 @@ const Navbar = () => {
             {/* Image Section */}
             <div className="w-full md:w-1/2">
               <img
-                src="/public/Nutrition/nutrition2.png"
+                src="/Nutrition/nutrition2.png"
                 alt="Elderly woman doing plank exercise"
                 className="w-96 h-full object-cover"
               />
@@ -249,7 +249,7 @@ const Navbar = () => {
             {/* Image Section */}
             <div className="w-full md:w-1/2">
               <img
-                src="/public/Nutrition/nutrition3.png"
+                src="/Nutrition/nutrition3.png"
                 alt="Elderly woman doing plank exercise"
                 className="w-96 h-full object-cover"
               />
@@ -277,7 +277,7 @@ const Navbar = () => {
             {/* Image Section */}
             <div className="w-full md:w-1/2">
               <img
-                src="/public/Nutrition/nutrition4.png"
+                src="/Nutrition/nutrition4.png"
                 alt="Elderly woman doing plank exercise"
                 className="w-96 h-full object-cover"
               />
@@ -306,7 +306,7 @@ const Navbar = () => {
             {/* Image Section */}
             <div className="w-full md:w-1/2">
               <img
-                src="/public/Nutrition/nutrition5.png"
+                src="/Nutrition/nutrition5.png"
                 alt="Elderly woman doing plank exercise"
                 className="w-96 h-full object-cover"
               />
@@ -335,7 +335,7 @@ const Navbar = () => {
             {/* Image Section */}
             <div className="w-full md:w-1/2">
               <img
-                src="/public/Nutrition/nutrition6.png"
+                src="/Nutrition/nutrition6.png"
                 alt="Elderly woman doing plank exercise"
                 className="w-96 h-full object-cover"
               />
@@ -365,7 +365,7 @@ const Navbar = () => {
             {/* Image Section */}
             <div className="w-full md:w-1/2">
               <img
-                src="/public/Nutrition/nutrition7.png"
+                src="/Nutrition/nutrition7.png"
                 alt="Elderly woman doing plank exercise"
                 className="w-96 h-full object-cover"
               />
@@ -394,7 +394,7 @@ const Navbar = () => {
             {/* Image Section */}
             <div className="w-full md:w-1/2">
               <img
-                src="/public/Nutrition/nutrition8.png"
+                src="/Nutrition/nutrition8.png"
                 alt="Elderly woman doing plank exercise"
                 className="w-96 h-full object-cover"
               />
@@ -421,7 +421,7 @@ const Navbar = () => {
               {/* Image Section */}
               <div className="w-full md:w-1/2">
               <img
-                src="/public/Nutrition/nutrition9.png"
+                src="/Nutrition/nutrition9.png"
                 alt="Elderly woman doing plank exercise"
                 className="w-96 h-full object-cover"
               />
@@ -446,7 +446,7 @@ const Navbar = () => {
               {/* Image Section */}
               <div className="w-full md:w-1/2">
               <img
-                src="/public/Nutrition/nutrition10.png"
+                src="/Nutrition/nutrition10.png"
                 alt="Elderly woman doing plank exercise"
                 className="w-96 h-full object-cover"
               />

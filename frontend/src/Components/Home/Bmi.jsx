@@ -81,7 +81,7 @@ const Bmi = () => {
         {/* Logo Badge */}
         <div className="flex justify-center mb-6">
           <div className="px-4 py-2 rounded-full bg-gradient-to-r from-red-900/40 to-red-600/40 border border-red-500/50 inline-flex items-center gap-2">
-            <img src="/public/logo.gif" alt="ZenFitAnalyZer" className="w-6 h-6" />
+            <img src="/logo.gif" alt="ZenFitAnalyZer" className="w-6 h-6" />
             <span className="text-white font-semibold text-sm">ZenFitAnalyZer <span className="text-red-500">RED</span></span>
           </div>
         </div>

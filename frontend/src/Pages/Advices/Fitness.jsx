@@ -34,7 +34,7 @@ const Navbar = () => {
         <div className="bg-black text-white p-5 shadow-blue-500 shadow-md">
           <div className="container mx-auto flex justify-between items-center">
             <div className="text-2xl flex items-center gap-2 font-bold">
-              <img src="/public/logo.gif" alt="" />
+              <img src="/logo.gif" alt="" />
               <span className="text-blue-400">ZenFit</span> AnalyZer
             </div>
 
@@ -191,7 +191,7 @@ const Navbar = () => {
             {/* Image Section */}
             <div className="w-full md:w-1/2">
               <img
-                src="/public/Fitness/fitness1.png"
+                src="/Fitness/fitness1.png"
                 alt="Elderly woman doing plank exercise"
                 className="w-96 h-full object-cover"
               />
@@ -216,7 +216,7 @@ const Navbar = () => {
             {/* Image Section */}
             <div className="w-full md:w-1/2">
               <img
-                src="/public/Fitness/fitness2.png"
+                src="/Fitness/fitness2.png"
                 alt="Morning routine"
                 className="w-96 h-full object-cover"
               />
@@ -245,7 +245,7 @@ const Navbar = () => {
             {/* Image Section */}
             <div className="w-full md:w-1/2">
               <img
-                src="/public/Fitness/fitness3.png"
+                src="/Fitness/fitness3.png"
                 alt=" Improve Posture"
                 className="w-96 h-full object-cover"
               />
@@ -272,7 +272,7 @@ const Navbar = () => {
             {/* Image Section */}
             <div className="w-full md:w-1/2">
               <img
-                src="/public/Fitness/fitness4.png"
+                src="/Fitness/fitness4.png"
                 alt=" Improve Posture"
                 className="w-96 mt-5 h-full object-cover"
               />
@@ -301,7 +301,7 @@ const Navbar = () => {
             {/* Image Section */}
             <div className="w-full md:w-1/2">
               <img
-                src="/public/Fitness/fitness5.png"
+                src="/Fitness/fitness5.png"
                 alt=" Improve Posture"
                 className="w-96 mt-5 h-full object-cover"
               />
@@ -329,7 +329,7 @@ const Navbar = () => {
             {/* Image Section */}
             <div className="w-full md:w-1/2">
               <img
-                src="/public/Fitness/fitness6.png"
+                src="/Fitness/fitness6.png"
                 alt=" Improve Posture"
                 className="w-96 mt-5 h-full object-cover"
               />
@@ -358,7 +358,7 @@ const Navbar = () => {
             {/* Image Section */}
             <div className="w-full md:w-1/2">
               <img
-                src="/public/Fitness/fitness7.png"
+                src="/Fitness/fitness7.png"
                 alt=" Improve Posture"
                 className="w-96 mt-5 h-full object-cover"
               />
@@ -386,7 +386,7 @@ const Navbar = () => {
             {/* Image Section */}
             <div className="w-full md:w-1/2">
               <img
-                src="/public/Fitness/fitness8.png"
+                src="/Fitness/fitness8.png"
                 alt=" Improve Posture"
                 className="w-96 mt-5 h-full object-cover"
               />
@@ -414,7 +414,7 @@ const Navbar = () => {
             {/* Image Section */}
             <div className="w-full md:w-1/2">
               <img
-                src="/public/Fitness/fitness9.png"
+                src="/Fitness/fitness9.png"
                 alt=" Improve Posture"
                 className="w-96 mt-5 h-full object-cover"
               />
@@ -445,7 +445,7 @@ const Navbar = () => {
              {/* Image Section */}
              <div className="w-full md:w-1/2">
               <img
-                src="/public/Fitness/fitness10.png"
+                src="/Fitness/fitness10.png"
                 alt=" Improve Posture"
                 className="w-96 mt-5 h-full object-cover"
               />

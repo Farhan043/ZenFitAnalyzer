@@ -13,7 +13,7 @@ const NotFound = () => {
 
   return (
     <div className="h-screen flex flex-col items-center justify-center bg-black text-white">
-      <img src="/public/404.png" alt="404 Not Found" className="w-1/2" />
+      <img src="/404.png" alt="404 Not Found" className="w-1/2" />
       <button
         onClick={() => navigate("/home")}
         className="mt-4 bg-indigo-600 px-6 py-2 rounded-lg text-white hover:bg-indigo-500 transition-all"

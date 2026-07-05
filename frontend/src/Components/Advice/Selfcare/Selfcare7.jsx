@@ -61,16 +61,16 @@ export default function Selfcare7() {
   ];
   
   const hydrationFoods = [
-    { name: "Cucumber", image: "/public/Selfcare/cucumber.png" },
-    { name: "Orange", image: "/public/Selfcare/orange.png" },
-    { name: "Watermelon", image: "/public/Selfcare/watermelon.png" },
-    { name: "Avocado", image: "/public/Selfcare/avocado.png" },
-    { name: "Strawberries", image: "/public/Selfcare/strawberries.png" },
-    { name: "Pineapple", image: "/public/Selfcare/pineapple.png" },
-    { name: "Banana", image: "/public/Selfcare/banana.png" },
-    { name: "Mango", image: "/public/Selfcare/mango.png" },
-    { name: "Kiwi", image: "/public/Selfcare/kiwi.png" },
-    { name: "Papaya", image: "/public/Selfcare/papaya.png" },
+    { name: "Cucumber", image: "/Selfcare/cucumber.png" },
+    { name: "Orange", image: "/Selfcare/orange.png" },
+    { name: "Watermelon", image: "/Selfcare/watermelon.png" },
+    { name: "Avocado", image: "/Selfcare/avocado.png" },
+    { name: "Strawberries", image: "/Selfcare/strawberries.png" },
+    { name: "Pineapple", image: "/Selfcare/pineapple.png" },
+    { name: "Banana", image: "/Selfcare/banana.png" },
+    { name: "Mango", image: "/Selfcare/mango.png" },
+    { name: "Kiwi", image: "/Selfcare/kiwi.png" },
+    { name: "Papaya", image: "/Selfcare/papaya.png" },
   ];
   
   const donts = [
@@ -88,7 +88,7 @@ export default function Selfcare7() {
       comparison: "🔹 Vs. CeraVe Foaming Cleanser: Paula’s Choice provides a more lightweight feel and leaves skin softer,🔹 Vs. La Roche-Posay Effaclar Gel: Less drying and more suitable for combination skin",
       howToUse: "💧 Wet your face with lukewarm water,💆‍♀️ Apply a small amount and gently massage onto the skin,🚿 Rinse thoroughly and pat dry",
       bestTime: " Morning & Night",
-      image: "/public/Selfcare/paula.png",
+      image: "/Selfcare/paula.png",
     },
     {
       name: "Eucerin DermatoClean Mild Cleansing Gel",
@@ -98,7 +98,7 @@ export default function Selfcare7() {
       comparison: "🔹 Vs. Cetaphil Gentle Cleanser: Eucerin has a slightly deeper cleansing effect while remaining mild,🔹 Vs. Bioderma Sensibio H2O: More hydrating and does not require a cotton pad",
       howToUse: "💧 Apply to damp skin and gently lather,🧴 Massage in circular motions,🚿 Rinse thoroughly",
       bestTime: " Morning & Night",
-      image: "/public/Selfcare/eucerin.png",
+      image: "/Selfcare/eucerin.png",
     },
     {
       name: " Kiehl’s Ultra Facial Cleanser",
@@ -108,7 +108,7 @@ export default function Selfcare7() {
       comparison: "🔹 Vs. CeraVe Hydrating Cleanser: Kiehl’s provides a more thorough cleanse while keeping skin moisturized,🔹 Vs. La Roche-Posay Toleriane Hydrating Cleanser: Kiehl’s has a richer lather and includes nourishing oils",
       howToUse: "💧 Wet your face with lukewarm water,🧴 Take a small amount and massage onto damp skin,🚿 Rinse thoroughly with water and pat dry",
       bestTime: " Morning & Night",
-      image: "/public/Selfcare/ultra.png",
+      image: "/Selfcare/ultra.png",
     },
     {
       name: "CeraVe Hydrating Facial Cleanser",
@@ -122,7 +122,7 @@ export default function Selfcare7() {
     },
     {
       name: "Neutrogena Oil-Free Acne Wash",
-      image: "/public/Selfcare/oil.png",
+      image: "/Selfcare/oil.png",
       skinType: "Oily & Acne-Prone Skin",
       keyIngredients: 'Hyaluronic Acid',
       whyUse: "Contains salicylic acid to deeply cleanse pores and reduce breakouts.",
@@ -132,7 +132,7 @@ export default function Selfcare7() {
     },
     {
       name: "La Roche-Posay Toleriane Purifying Foaming Cleanser",
-      image: "/public/Selfcare/La.png",
+      image: "/Selfcare/La.png",
       skinType: "Combination & Normal Skin",
       keyIngredients: 'Salicylic Acid, Zinc',
       whyUse: "Balances oil production while keeping skin hydrated, enriched with niacinamide.",
@@ -148,7 +148,7 @@ export default function Selfcare7() {
       comparison: "Better for double cleansing compared to foaming cleansers.",
       howToUse: "Rub in palms until oil-like, massage onto dry face, rinse.",
       bestTime: "Night",
-      image: "/public/Selfcare/ordinary.png",
+      image: "/Selfcare/ordinary.png",
     },
     {
       name: "Innisfree Green Tea Foam Cleanser",
@@ -158,7 +158,7 @@ export default function Selfcare7() {
       comparison: " More soothing than The Face Shop Rice Water Cleanser",
       howToUse: "Lather onto damp face, massage, and rinse",
       bestTime: " Morning & After workouts",
-      image: "/public/Selfcare/greentea.png",
+      image: "/Selfcare/greentea.png",
     },
     {
       name: " Aveeno Calm + Restore Nourishing Oat Cleanser",
@@ -168,7 +168,7 @@ export default function Selfcare7() {
       comparison: " More calming than Cetaphil Daily Cleanser",
       howToUse: "Apply to wet skin, gently rub, and rinse",
       bestTime: "  Morning & Night",
-      image: "/public/Selfcare/calm.png",
+      image: "/Selfcare/calm.png",
     },
     {
       name: " Youth to the People Superfood Antioxidant Cleanser",
@@ -178,7 +178,7 @@ export default function Selfcare7() {
       comparison: "  More natural than La Roche-Posay Toleriane Cleanser",
       howToUse: "Apply to damp skin, massage, and rinse",
       bestTime: " Morning & After sun exposure",
-      image: "/public/Selfcare/youth.png",
+      image: "/Selfcare/youth.png",
     },
     {
       name: "Cetaphil Gentle Skin Cleanser",
@@ -188,7 +188,7 @@ export default function Selfcare7() {
       comparison: "Gentler than Neutrogena Daily Cleanser",
       howToUse: "Apply to skin, wipe or rinse off.",
       bestTime: " Morning & Night",
-      image: "/public/Selfcare/cetaphil.png",
+      image: "/Selfcare/cetaphil.png",
     },
    
     {
@@ -199,7 +199,7 @@ export default function Selfcare7() {
       comparison: " Milder than Nivea Face Wash",
       howToUse: "Lather, massage, and rinse",
       bestTime: " Morning & Night",
-      image: "/public/Selfcare/simple.png",
+      image: "/Selfcare/simple.png",
     },
 
   ];
@@ -209,22 +209,22 @@ export default function Selfcare7() {
     {
       name: "Hydrating Serum",
       description: "Instantly plumps skin with Hyaluronic Acid.",
-      image: "/public/Selfcare/vitalc.png",
+      image: "/Selfcare/vitalc.png",
     },
     {
       name: "Moisturizing Cream",
       description: "Locks in hydration with Ceramides & Aloe.",
-      image: "/public/Selfcare/cream.png",
+      image: "/Selfcare/cream.png",
     },
     {
       name: "Overnight Mask",
       description: "Repairs skin barrier while you sleep.",
-      image: "/public/Selfcare/mask.png",
+      image: "/Selfcare/mask.png",
     },
     {
       name: "Gentle Cleanser",
       description: "Won’t strip natural moisture, cream & gel-based.",
-      image: "/public/Selfcare/cleanser.png",
+      image: "/Selfcare/cleanser.png",
     },
   ];
   
@@ -234,7 +234,7 @@ export default function Selfcare7() {
       <div className="bg-black text-white p-5 shadow-blue-500 shadow-md">
         <div className="container mx-auto flex justify-between items-center">
           <div className="text-2xl flex items-center gap-2 font-bold">
-            <img src="/public/logo.gif" alt="" />
+            <img src="/logo.gif" alt="" />
             <span className="text-blue-400">ZenFit</span> AnalyZer
           </div>
 
@@ -395,7 +395,7 @@ export default function Selfcare7() {
       </motion.p>
       
       <motion.img 
-        src="/public/Selfcare/Selfcare7.png" 
+        src="/Selfcare/Selfcare7.png" 
         alt="Hydrated Skin" 
         className="w-80 mx-auto flex items-center rounded-lg mb-6 " 
         initial={{ opacity: 0 }}

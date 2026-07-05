@@ -47,7 +47,7 @@ const Navbar = () => {
         <div className="w-full max-w-[2000px] mx-auto flex justify-between items-center px-2 sm:px-4">
           <div className="text-xl sm:text-2xl flex items-center gap-2 font-bold">
             <img
-              src="/public/logo.gif"
+              src="/logo.gif"
               alt="ZenFit Logo"
               className="w-8 h-8 sm:w-10 sm:h-10"
             />

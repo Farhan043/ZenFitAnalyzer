@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-center md:text-left">
         {/* Logo and Description */}
         <div>
-          <h2 className="text-3xl flex items-center font-bold text-blue-400"><span><img src="/public/logo.gif" alt="" /></span>ZenFitAnalyzer</h2>
+          <h2 className="text-3xl flex items-center font-bold text-blue-400"><span><img src="/logo.gif" alt="" /></span>ZenFitAnalyzer</h2>
           <p className="mt-3 ml-2 text-gray-400">Your ultimate fitness companion to track and improve health, workouts, and lifestyle.</p>
         </div>
         

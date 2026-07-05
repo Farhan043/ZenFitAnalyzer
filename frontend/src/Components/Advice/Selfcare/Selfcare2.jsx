@@ -49,7 +49,7 @@ export default function Selfcare2() {
       <div className="bg-black text-white p-5 shadow-blue-500 shadow-md">
         <div className="container mx-auto flex justify-between items-center">
           <div className="text-2xl flex items-center gap-2 font-bold">
-            <img src="/public/logo.gif" alt="" />
+            <img src="/logo.gif" alt="" />
             <span className="text-blue-400">ZenFit</span> AnalyZer
           </div>
 
@@ -230,7 +230,7 @@ export default function Selfcare2() {
         {/* Image Section */}
         <div className="flex justify-center md:w-1/2">
           <img
-            src="/public/Selfcare/selfcare2.png"
+            src="/Selfcare/selfcare2.png"
             alt="Workout"
             className="w-full max-w-sm md:max-w-md rounded-lg shadow-lg"
           />

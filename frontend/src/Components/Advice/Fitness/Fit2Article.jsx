@@ -31,7 +31,7 @@ export default function Fit2Article() {
       <div className="bg-black text-white p-5 shadow-blue-500 shadow-md">
         <div className="container mx-auto flex justify-between items-center">
           <div className="text-2xl flex items-center gap-2 font-bold">
-            <img src="/public/logo.gif" alt="" />
+            <img src="/logo.gif" alt="" />
             <span className="text-blue-400">ZenFit</span> AnalyZer
           </div>
 
@@ -188,7 +188,7 @@ export default function Fit2Article() {
         </div>
 
         <img
-          src="/public/Fitness/fitness2.png"
+          src="/Fitness/fitness2.png"
           alt="Workout"
           className="w-96 rounded-lg flex mx-auto items-center shadow-lg mb-6"
         />
@@ -206,7 +206,7 @@ export default function Fit2Article() {
             1. Hydrate Immediately After Waking Up
           </h2>
           <img
-            src="/public/Fitness/wakeup.png"
+            src="/Fitness/wakeup.png"
             alt="Protein food"
             className="w-96 flex mx-auto items-center rounded-md mb-4"
           />
@@ -232,7 +232,7 @@ export default function Fit2Article() {
               2. Get Sunlight for 10-15 Minutes
             </h2>
             <img
-              src="/public/Fitness/time.png"
+              src="/Fitness/time.png"
               alt="Protein food"
               className="w-96 flex mx-auto items-center rounded-md mb-4"
             />
@@ -257,7 +257,7 @@ export default function Fit2Article() {
               3. Perform Gentle Movement & Stretching
             </h2>
             <img
-              src="/public/Fitness/stretch.png"
+              src="/Fitness/stretch.png"
               alt="Protein food"
               className="w-96 flex mx-auto items-center rounded-md mb-4"
             />
@@ -286,7 +286,7 @@ export default function Fit2Article() {
               4. Fuel Your Body with a Nutritious Breakfast
             </h2>
             <img
-              src="/public/Fitness/breakfast.png"
+              src="/Fitness/breakfast.png"
               alt="Protein food"
               className="w-96 flex mx-auto items-center rounded-md mb-4"
             />
@@ -310,7 +310,7 @@ export default function Fit2Article() {
               5. Avoid Checking Your Phone First Thing in the Morning
             </h2>
             <img
-              src="/public/Fitness/phone.png"
+              src="/Fitness/phone.png"
               alt="Protein food"
               className="w-96 flex mx-auto items-center rounded-md mb-4"
             />
@@ -335,7 +335,7 @@ export default function Fit2Article() {
               6. Engage in Light Physical Activity or a Short Workout
             </h2>
             <img
-              src="/public/Fitness/heart.png"
+              src="/Fitness/heart.png"
               alt="Protein food"
               className="w-96 flex mx-auto items-center rounded-md mb-4"
             />
@@ -361,7 +361,7 @@ export default function Fit2Article() {
           <div className="mt-8">
             <h2 className="text-xl font-semibold mb-2">7. Take a Cold or Contrast Shower</h2>
             <img
-              src="/public/Fitness/shower.png"
+              src="/Fitness/shower.png"
               alt="Protein food"
               className="w-96 flex mx-auto items-center rounded-md mb-4"
             />
@@ -382,7 +382,7 @@ export default function Fit2Article() {
               8. Set Intentions & Plan Your Day
             </h2>
             <img
-              src="/public/Fitness/goal.png"
+              src="/Fitness/goal.png"
               alt="Protein food"
               className="w-96 flex mx-auto items-center rounded-md mb-4"
             />

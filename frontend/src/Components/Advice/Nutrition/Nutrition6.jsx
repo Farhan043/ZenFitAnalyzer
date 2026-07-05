@@ -51,7 +51,7 @@ export default function Nutrition6() {
       <div className="bg-black text-white p-5 shadow-blue-500 shadow-md">
         <div className="container mx-auto flex justify-between items-center">
           <div className="text-2xl flex items-center gap-2 font-bold">
-            <img src="/public/logo.gif" alt="" />
+            <img src="/logo.gif" alt="" />
             <span className="text-blue-400">ZenFit</span> AnalyZer
           </div>
 
@@ -203,7 +203,7 @@ export default function Nutrition6() {
       </p>
 
       <img
-        src="/public/Nutrition/nutrition6.png"
+        src="/Nutrition/nutrition6.png"
         alt="Workout"
         className="w-96 rounded-lg mt-5 flex mx-auto items-center shadow-lg mb-6"
       />

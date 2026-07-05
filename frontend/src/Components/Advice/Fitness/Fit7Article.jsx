@@ -33,7 +33,7 @@ export default function Fit7Article() {
       <div className="bg-black text-white p-5 shadow-blue-500 shadow-md">
         <div className="container mx-auto flex justify-between items-center">
           <div className="text-2xl flex items-center gap-2 font-bold">
-            <img src="/public/logo.gif" alt="" />
+            <img src="/logo.gif" alt="" />
             <span className="text-blue-400">ZenFit</span> AnalyZer
           </div>
 
@@ -180,7 +180,7 @@ export default function Fit7Article() {
         🛌 The Importance of Rest Days & How to Use Them Effectively
       </h2>
       <img
-        src="/public/Fitness/fitness7.png"
+        src="/Fitness/fitness7.png"
         alt="posture"
         className="w-96 mt-5 rounded-lg mx-auto shadow-lg mb-6"
       />

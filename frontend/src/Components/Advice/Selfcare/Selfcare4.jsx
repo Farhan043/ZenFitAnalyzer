@@ -49,7 +49,7 @@ export default function Selfcare4() {
       <div className="bg-black text-white p-5 shadow-blue-500 shadow-md">
         <div className="container mx-auto flex justify-between items-center">
           <div className="text-2xl flex items-center gap-2 font-bold">
-            <img src="/public/logo.gif" alt="" />
+            <img src="/logo.gif" alt="" />
             <span className="text-blue-400">ZenFit</span> AnalyZer
           </div>
 
@@ -202,7 +202,7 @@ export default function Selfcare4() {
     
     {/* Relax & Unwind */}
     <div className="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center">
-      <img src="/public/Selfcare/relax.png" alt="Relaxing" className="w-32 h-32 mb-4"/>
+      <img src="/Selfcare/relax.png" alt="Relaxing" className="w-32 h-32 mb-4"/>
       <h3 className="text-xl font-bold text-blue-400">🛀 Relax & Unwind</h3>
       <p className="text-gray-300 mt-2">
         Take a long bath, light a candle, or listen to calming music. Self-care starts with relaxation.
@@ -211,7 +211,7 @@ export default function Selfcare4() {
 
     {/* Digital Detox */}
     <div className="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center">
-    <img src="/public/Selfcare/detox.png" alt="Digital Detox" className="w-32 h-32 mb-4"/>
+    <img src="/Selfcare/detox.png" alt="Digital Detox" className="w-32 h-32 mb-4"/>
       <h3 className="text-xl font-bold text-green-400">📵 Digital Detox</h3>
       <p className="text-gray-300 mt-2">
         Disconnect from screens and social media. Enjoy real-world moments with yourself or loved ones.
@@ -220,7 +220,7 @@ export default function Selfcare4() {
 
     {/* Nourish Your Body */}
     <div className="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center">
-    <img src="/public/Selfcare/healthy.png"  alt="Healthy Food" className="w-32 h-32 mb-4"/>
+    <img src="/Selfcare/healthy.png"  alt="Healthy Food" className="w-32 h-32 mb-4"/>
       <h3 className="text-xl font-bold text-yellow-400">🥗 Nourish Your Body</h3>
       <p className="text-gray-300 mt-2">
         Prepare a wholesome meal filled with nutrients. Eating well fuels both your body and mind.
@@ -229,7 +229,7 @@ export default function Selfcare4() {
 
     {/* Move Your Body */}
     <div className="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center">
-    <img src="/public/Selfcare/yoga.png" alt="Yoga" className="w-32 h-32 mb-4"/>
+    <img src="/Selfcare/yoga.png" alt="Yoga" className="w-32 h-32 mb-4"/>
       <h3 className="text-xl font-bold text-purple-400">🧘 Move Your Body</h3>
       <p className="text-gray-300 mt-2">
         Do yoga, stretch, or take a mindful walk. Physical activity releases stress and boosts energy.
@@ -238,7 +238,7 @@ export default function Selfcare4() {
 
     {/* Journaling */}
     <div className="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center">
-    <img src="/public/Selfcare/diaro.png" alt="Journaling" className="w-32 h-32 mb-4"/>
+    <img src="/Selfcare/diaro.png" alt="Journaling" className="w-32 h-32 mb-4"/>
       <h3 className="text-xl font-bold text-orange-400">📖 Journaling & Reflection</h3>
       <p className="text-gray-300 mt-2">
         Write down thoughts, gratitude, or weekly goals. Self-reflection is key for growth.
@@ -247,7 +247,7 @@ export default function Selfcare4() {
 
     {/* Quality Sleep */}
     <div className="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center">
-    <img src="/public/Selfcare/quality.png" alt="Sleep" className="w-32 h-32 mb-4"/>
+    <img src="/Selfcare/quality.png" alt="Sleep" className="w-32 h-32 mb-4"/>
       <h3 className="text-xl font-bold text-teal-400">💤 Quality Sleep</h3>
       <p className="text-gray-300 mt-2">
         End your Sunday early. A good night's sleep sets the tone for a fresh, energized week ahead.
@@ -268,7 +268,7 @@ export default function Selfcare4() {
     
     {/* Nutrition */}
     <div className="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center transition-transform transform hover:scale-105">
-      <img src="/public/Selfcare/nutr.png" alt="Nutrition" className="w-24 h-24 mb-4"/>
+      <img src="/Selfcare/nutr.png" alt="Nutrition" className="w-24 h-24 mb-4"/>
       <h3 className="text-xl font-bold text-yellow-400">🥗 Nutrition</h3>
       <p className="text-gray-300 mt-2">
         A balanced diet fuels both the body and mind, enhancing mood and cognitive function.
@@ -277,7 +277,7 @@ export default function Selfcare4() {
 
     {/* Sleep */}
     <div className="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center transition-transform transform hover:scale-105">
-    <img src="/public/Selfcare/sl.png" alt="Sleep" className="w-24 h-24 mb-4"/>
+    <img src="/Selfcare/sl.png" alt="Sleep" className="w-24 h-24 mb-4"/>
       <h3 className="text-xl font-bold text-blue-400">💤 Sleep</h3>
       <p className="text-gray-300 mt-2">
         Quality sleep supports emotional resilience and brain function, reducing stress levels.
@@ -286,7 +286,7 @@ export default function Selfcare4() {
 
     {/* Physical Activity */}
     <div className="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center transition-transform transform hover:scale-105">
-    <img src="/public/Selfcare/activity.png" alt="Exercise" className="w-24 h-24 mb-4"/>
+    <img src="/Selfcare/activity.png" alt="Exercise" className="w-24 h-24 mb-4"/>
       <h3 className="text-xl font-bold text-green-400">🏃‍♂️ Physical Activity</h3>
       <p className="text-gray-300 mt-2">
         Exercise releases endorphins, improving mood and energy levels while reducing anxiety.
@@ -295,7 +295,7 @@ export default function Selfcare4() {
 
     {/* Mental Relaxation */}
     <div className="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center transition-transform transform hover:scale-105">
-    <img src="/public/Selfcare/mental.png" alt="Relaxation" className="w-24 h-24 mb-4"/>
+    <img src="/Selfcare/mental.png" alt="Relaxation" className="w-24 h-24 mb-4"/>
       <h3 className="text-xl font-bold text-purple-400">🧘 Mental Relaxation</h3>
       <p className="text-gray-300 mt-2">
         Meditation, journaling, and mindfulness enhance emotional balance and focus.
@@ -320,7 +320,7 @@ export default function Selfcare4() {
     
     {/* Slow & Mindful Morning */}
     <div className="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col md:flex-row items-center transition-transform transform hover:scale-105">
-      <img src="/public/Selfcare/yoga.png" alt="Mindful Morning" className="w-24 h-24 md:mr-6"/>
+      <img src="/Selfcare/yoga.png" alt="Mindful Morning" className="w-24 h-24 md:mr-6"/>
       <div>
         <h3 className="text-2xl font-semibold text-blue-400">🌅 Start with a Slow and Mindful Morning</h3>
         <p className="text-gray-300 mt-2">
@@ -331,7 +331,7 @@ export default function Selfcare4() {
 
     {/* Engage in Physical Movement */}
     <div className="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col md:flex-row items-center transition-transform transform hover:scale-105">
-      <img src="/public/Selfcare/activity.png" alt="Physical Movement" className="w-24 h-24 md:mr-6"/>
+      <img src="/Selfcare/activity.png" alt="Physical Movement" className="w-24 h-24 md:mr-6"/>
       <div>
         <h3 className="text-2xl font-semibold text-green-400">🏃‍♀️ Engage in Physical Movement</h3>
         <p className="text-gray-300 mt-2">
@@ -342,7 +342,7 @@ export default function Selfcare4() {
 
     {/* Prioritize Mental Well-Being */}
     <div className="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col md:flex-row items-center transition-transform transform hover:scale-105">
-      <img src="/public/Selfcare/mental.png" alt="Mental Well-Being" className="w-24 h-24 md:mr-6"/>
+      <img src="/Selfcare/mental.png" alt="Mental Well-Being" className="w-24 h-24 md:mr-6"/>
       <div>
         <h3 className="text-2xl font-semibold text-yellow-400">🧘 Prioritize Mental Well-Being</h3>
         <p className="text-gray-300 mt-2">
@@ -353,7 +353,7 @@ export default function Selfcare4() {
 
     {/* Indulge in Self-Care Rituals */}
     <div className="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col md:flex-row items-center transition-transform transform hover:scale-105">
-      <img src="/public/Selfcare/yourself.png" alt="Self-Care Rituals" className="w-24 h-24 md:mr-6"/>
+      <img src="/Selfcare/yourself.png" alt="Self-Care Rituals" className="w-24 h-24 md:mr-6"/>
       <div>
         <h3 className="text-2xl font-semibold text-pink-400">🛀 Indulge in Self-Care Rituals</h3>
         <p className="text-gray-300 mt-2">
@@ -364,7 +364,7 @@ export default function Selfcare4() {
 
     {/* Plan for the Upcoming Week */}
     <div className="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col md:flex-row items-center transition-transform transform hover:scale-105">
-      <img src="/public/Selfcare/week.png" alt="Plan Week" className="w-24 h-24 md:mr-6"/>
+      <img src="/Selfcare/week.png" alt="Plan Week" className="w-24 h-24 md:mr-6"/>
       <div>
         <h3 className="text-2xl font-semibold text-orange-400">📅 Plan for the Upcoming Week</h3>
         <p className="text-gray-300 mt-2">

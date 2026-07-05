@@ -36,7 +36,7 @@ export default function Fit10Article() {
       duration: "30 seconds per move, repeat twice",
       exercises: ["Jump Squats", "Push-Ups", "Mountain Climbers", "Plank with Shoulder Taps", "High Knees"],
       tip: "Keep rest time minimal to maintain intensity.",
-      image: "/public/Fitness/full.png"
+      image: "/Fitness/full.png"
     },
     {
       title: "Core Crusher (Abs & Obliques)",
@@ -44,7 +44,7 @@ export default function Fit10Article() {
       duration: "40 seconds per exercise, repeat as needed",
       exercises: ["Bicycle Crunches", "Russian Twists", "Plank Hold", "Leg Raises", "Side Plank (switch sides at 20 seconds)"],
       tip: "Engage your core throughout for better results.",
-      image: "/public/Fitness/abs.png"
+      image: "/Fitness/abs.png"
     },
     {
       title: "Strength in 5 (Quick Bodyweight Strength Training)",
@@ -52,7 +52,7 @@ export default function Fit10Article() {
       duration: "45 seconds per exercise, minimal rest",
       exercises: ["Squats", "Push-Ups", "Lunges (switch legs)", "Triceps Dips (use a chair)", "Glute Bridges"],
       tip: "Focus on form over speed for muscle activation.",
-      image: "/public/Fitness/training.png"
+      image: "/Fitness/training.png"
     },
     {
       title: "Cardio Blaster (Heart-Pumping Cardio)",
@@ -60,7 +60,7 @@ export default function Fit10Article() {
       duration: "30 seconds per move, repeat once",
       exercises: ["Jumping Jacks", "Burpees", "High Knees", "Skaters", "Fast Feet"],
       tip: "Modify intensity based on fitness level (faster for more challenge).",
-      image: "/public/Fitness/cardio.png"
+      image: "/Fitness/cardio.png"
     },
     {
       title: "Desk Workout (Quick Office Routine)",
@@ -68,7 +68,7 @@ export default function Fit10Article() {
       duration: "30 seconds per move, repeat as needed",
       exercises: ["Seated Leg Lifts", "Chair Squats", "Desk Push-Ups", "Seated Twists (for core)", "Standing Calf Raises"],
       tip: "Perfect for lunch breaks or quick movement between meetings!",
-      image: "/public/Fitness/desk.png"
+      image: "/Fitness/desk.png"
     }
   ]; 
 
@@ -78,7 +78,7 @@ export default function Fit10Article() {
       <div className="bg-black text-white p-5 shadow-blue-500 shadow-md">
         <div className="container mx-auto flex justify-between items-center">
           <div className="text-2xl flex items-center gap-2 font-bold">
-            <img src="/public/logo.gif" alt="" />
+            <img src="/logo.gif" alt="" />
             <span className="text-blue-400">ZenFit</span> AnalyZer
           </div>
 
@@ -225,7 +225,7 @@ export default function Fit10Article() {
       5-Minute Workouts for Busy Schedules: Stay Fit Anytime
         </h2>
         <img
-          src="/public/Fitness/fitness10.png"
+          src="/Fitness/fitness10.png"
           alt="posture"
           className="w-96 mt-5 rounded-lg mx-auto shadow-lg mb-6"
         />

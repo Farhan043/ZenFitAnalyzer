@@ -45,7 +45,7 @@ const BodyProgress = () => {
           <div className="w-full md:w-1/2 flex justify-center mt-6 md:mt-0">
             <div className="relative bg-gradient-to-r from-blue-500/20 to-purple-500/20 p-2 rounded-2xl shadow-2xl backdrop-blur-sm animate-float">
               <img 
-                src="/public/running.gif" 
+                src="/running.gif" 
                 alt="Progress Animation" 
                 className="w-72 md:w-80 h-auto rounded-xl object-cover"
               />
