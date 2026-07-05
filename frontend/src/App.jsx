@@ -56,7 +56,7 @@ import Wellness8 from "./Components/Advice/Wellness/Wellness8";
 import Wellness9 from "./Components/Advice/Wellness/Wellness9";
 import Wellness10 from "./Components/Advice/Wellness/Wellness10";
 import Wellness11 from "./Components/Advice/Wellness/Wellness11";
-import Chatbot from "./components/Chatbot";
+import Chatbot from "./Components/Chatbot";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import MusicHome from "./Pages/Musics/MusicHome";

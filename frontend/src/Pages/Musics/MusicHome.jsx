@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { assets, songsData, albumsData } from '../../assets/spotify-assets/assets/assets';
-import Sidebar from '../../components/Music/Sidebar';
-import MusicPlayer from '../../components/Music/MusicPlayer';
-import SearchBar from '../../components/Music/SearchBar';
-import SongList from '../../components/Music/SongList';
-import AlbumGrid from '../../components/Music/AlbumGrid';
-import LikedSongs from '../../components/Music/LikedSongs';
+import Sidebar from '../../Components/Music/Sidebar';
+import MusicPlayer from '../../Components/Music/MusicPlayer';
+import SearchBar from '../../Components/Music/SearchBar';
+import SongList from '../../Components/Music/SongList';
+import AlbumGrid from '../../Components/Music/AlbumGrid';
+import LikedSongs from '../../Components/Music/LikedSongs';
 
 const MusicHome = () => {
   const [currentSong, setCurrentSong] = useState(songsData[0]);
