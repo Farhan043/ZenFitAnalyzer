@@ -1,4 +1,4 @@
-const challengeModel = require("../models/challenge.model");
+const challengeModel = require("../Models/challenge.model");
 const mongoose = require("mongoose");
 
 // Create a New Challenge

@@ -1,7 +1,7 @@
-var userModel = require('../models/user.model');
+var userModel = require('../Models/user.model');
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcrypt');
-var blackListTokenModel = require('../models/blackListToken.model');
+var blackListTokenModel = require('../Models/blackListToken.model');
 
 module.exports.authUser = async (req, res, next) => {
   try {

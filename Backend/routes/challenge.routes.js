@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const challengeController = require("../controllers/challenge.controller");
 const authMiddleware = require("../middlewares/auth.middleware");
-const challengeModel = require("../models/challenge.model");
+const challengeModel = require("../Models/challenge.model");
 
 // Apply auth middleware to all routes
 router.use(authMiddleware.authUser);
