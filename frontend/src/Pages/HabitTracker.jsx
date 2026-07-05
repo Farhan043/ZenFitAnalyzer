@@ -21,7 +21,7 @@ const HabitTracker = () => {
           return;
         }
 
-        const res = await axios.get("http://localhost:4000/habit", {
+        const res = await axios.get("https://zenfitanalyzer-27fd.onrender.com/habit", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -49,7 +49,7 @@ const HabitTracker = () => {
     
     try {
       const res = await axios.post(
-        "http://localhost:4000/habit",
+        "https://zenfitanalyzer-27fd.onrender.com/habit",
         { name: newHabit, frequency },
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -69,7 +69,7 @@ const HabitTracker = () => {
   const completeHabit = async (id) => {
     try {
       const res = await axios.put(
-        `http://localhost:4000/habit/${id}/complete`,
+        `https://zenfitanalyzer-27fd.onrender.com/habit/${id}/complete`,
         {},
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -94,7 +94,7 @@ const HabitTracker = () => {
         return;
       }
 
-      await axios.delete(`http://localhost:4000/habit/${id}`, {
+      await axios.delete(`https://zenfitanalyzer-27fd.onrender.com/habit/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setHabits(habits.filter((habit) => habit._id !== id));

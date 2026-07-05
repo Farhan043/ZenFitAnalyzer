@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 // import { io } from "socket.io-client";
 
 
-// const socket = io("http://localhost:4000");
+// const socket = io("https://zenfitanalyzer-27fd.onrender.com");
 
 const WaterIntake = () => {
   const [waterData, setWaterData] = useState({ logs: [], total: 0 });

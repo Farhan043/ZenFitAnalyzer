@@ -146,7 +146,7 @@ const TodaySchedule = () => {
       }
 
       const response = await axios.get(
-        "http://localhost:4000/sleep/today-schedule",
+        "https://zenfitanalyzer-27fd.onrender.com/sleep/today-schedule",
         {
           headers: { Authorization: `Bearer ${token}` },
           params: { userId }
@@ -201,7 +201,7 @@ const TodaySchedule = () => {
       if (!token) return;
       
       const response = await axios.get(
-        "http://localhost:4000/sleep/sleep-insights",
+        "https://zenfitanalyzer-27fd.onrender.com/sleep/sleep-insights",
         {
           headers: { Authorization: `Bearer ${token}` }
         }
@@ -247,7 +247,7 @@ const TodaySchedule = () => {
       }
 
       const response = await axios.put(
-        "http://localhost:4000/sleep/update-schedule",
+        "https://zenfitanalyzer-27fd.onrender.com/sleep/update-schedule",
         { 
           bedTime: bedTimeDate, 
           alarmTime: alarmTimeDate, 

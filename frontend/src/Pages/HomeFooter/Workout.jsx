@@ -56,7 +56,7 @@ import Footer from "../../Components/Footer";
 
 // Replace with your actual RapidAPI key
 const RAPID_API_KEY = import.meta.env.VITE_RAPID_API_KEY;
-const API_BASE_URL = "http://localhost:4000";
+const API_BASE_URL = "https://zenfitanalyzer-27fd.onrender.com";
 
 
 

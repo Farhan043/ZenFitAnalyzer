@@ -11,7 +11,7 @@ import ProfileImage from '../Common/ProfileImage';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const API_BASE_URL = "http://localhost:4000"; // Replace with your backend's base URL
+const API_BASE_URL = "https://zenfitanalyzer-27fd.onrender.com"; // Replace with your backend's base URL
 
 export default function Challenges() {
   const { user } = useContext(UserDataContext); // Access user data from context

@@ -129,7 +129,7 @@ export default function Body() {
       }
 
       const response = await axios.get(
-        "http://localhost:4000/body-progress/user",
+        "https://zenfitanalyzer-27fd.onrender.com/body-progress/user",
         {
           headers: { Authorization: `Bearer ${token}` },
           params: { userId } // Add userId to query params
@@ -159,7 +159,7 @@ export default function Body() {
       }
 
       const response = await axios.get(
-        "http://localhost:4000/body-progress/progress-by-date",
+        "https://zenfitanalyzer-27fd.onrender.com/body-progress/progress-by-date",
         {
           headers: { Authorization: `Bearer ${token}` },
           params: { startDate, endDate, userId }
@@ -327,7 +327,7 @@ export default function Body() {
     Object.keys(formData).forEach((key) => data.append(key, formData[key]));
 
     try {
-      await axios.post("http://localhost:4000/body-progress/add", data, {
+      await axios.post("https://zenfitanalyzer-27fd.onrender.com/body-progress/add", data, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
@@ -350,7 +350,7 @@ export default function Body() {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:4000/body-progress/${id}`, {
+      await axios.delete(`https://zenfitanalyzer-27fd.onrender.com/body-progress/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

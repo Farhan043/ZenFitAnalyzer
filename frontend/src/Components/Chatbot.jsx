@@ -51,7 +51,7 @@ const Chatbot = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/chatbot/chat",
+        "https://zenfitanalyzer-27fd.onrender.com/chatbot/chat",
         { message: input },
         { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
       );

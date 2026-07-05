@@ -183,7 +183,7 @@ const Sleep = () => {
       }
 
       const response = await axios.get(
-        "http://localhost:4000/sleep/user-sleep",
+        "https://zenfitanalyzer-27fd.onrender.com/sleep/user-sleep",
         {
           headers: { Authorization: `Bearer ${token}` },
           params: { userId }
@@ -209,7 +209,7 @@ const Sleep = () => {
       }
 
       const response = await axios.post(
-        "http://localhost:4000/sleep/add",
+        "https://zenfitanalyzer-27fd.onrender.com/sleep/add",
         { ...entry, userId },
         {
           headers: { Authorization: `Bearer ${token}` }
@@ -239,7 +239,7 @@ const Sleep = () => {
       }
 
       await axios.delete(
-        `http://localhost:4000/sleep/${entryId}`,
+        `https://zenfitanalyzer-27fd.onrender.com/sleep/${entryId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
           params: { userId }
