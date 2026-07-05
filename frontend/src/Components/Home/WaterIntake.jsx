@@ -54,7 +54,7 @@ const WaterIntake = () => {
       <div className=" flex flex-col items-center justify-center w-full  md:w-5/5  p-6    mt-3 mb-3  rounded-md shadow-lg text-white">
         <h2 className="text-2xl font-bold text-center mb-4">Water Intake <span className='text-blue-500 '> Tracker</span></h2>
         
-        <img src='/public/water.gif' alt="Water Animation" className="w-72 h-52 mb-10" />
+        <img src="/water.gif" alt="Water Animation" className="w-72 h-52 mb-10" />
 
         <div className='flex items-center item gap-5'>
 
